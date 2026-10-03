@@ -17,13 +17,13 @@ const price = (k: any) =>
 
 <template>
   <div v-if="item" class="ss-keizon">
-    <GameIcon v-if="item.icon" :src="item.icon" :alt="item.name" />
+    <GameIcon :src="item.icon" :alt="item.name" />
     <div v-if="!item.group" class="ss-badges">
       <span class="ss-badge gold">{{ price(item) }}</span>
       <span v-if="item.count > 1 && !item.sell" class="ss-badge">{{ item.count }}個</span>
     </div>
     <div v-else class="ss-badges">
-      <span v-for="s in item.items" :key="s.id" class="ss-badge"><GameIcon v-if="s.icon" :src="s.icon" :size="16" /> {{ s.name }}<b>{{ UNIT_LABEL[s.unit] }} × {{ s.cost }}</b></span>
+      <span v-for="s in item.items" :key="s.id" class="ss-badge"><GameIcon :src="s.icon" :size="16" /> {{ s.name }}<b>{{ UNIT_LABEL[s.unit] }} × {{ s.cost }}</b></span>
     </div>
   </div>
   <div v-else class="warning custom-block"><p>Keizonの商品「{{ id ?? name }}」が見つかりません(販売終了した可能性があります)</p></div>

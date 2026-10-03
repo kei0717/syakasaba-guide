@@ -1,46 +1,172 @@
-/* しゃかさば ガイドの見た目(色やカード)。色を変えたいときは :root の --vp-c-brand-* を変える */
+/* =====================================================================
+   しゃかさば ガイドの見た目
+   色を変えたいときは :root の --vp-c-brand-* と --ss-* を変える
+   ===================================================================== */
+
 :root {
-  --vp-c-brand-1: #2f8f5b;
-  --vp-c-brand-2: #3aa66b;
-  --vp-c-brand-3: #2a7d50;
-  --vp-c-brand-soft: rgba(47, 143, 91, 0.14);
-  --ss-gold: #c99a06;
-  --ss-gold-soft: rgba(230, 180, 20, 0.16);
-  --ss-card-bg: var(--vp-c-bg-soft);
-  --ss-radius: 12px;
+  --vp-font-family-base: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
 
+  --vp-c-brand-1: #2a8a57;
+  --vp-c-brand-2: #34a067;
+  --vp-c-brand-3: #237a4c;
+  --vp-c-brand-soft: rgba(42, 138, 87, 0.12);
+
+  --ss-gold: #b7860b;
+  --ss-gold-soft: rgba(231, 179, 26, 0.18);
+  --ss-surface: #ffffff;
+  --ss-surface-2: #f6f8f5;
+  --ss-border: rgba(30, 60, 40, 0.1);
+  --ss-shadow: 0 1px 2px rgba(20, 40, 30, 0.04), 0 6px 20px rgba(20, 40, 30, 0.06);
+  --ss-radius: 16px;
+
+  --vp-c-bg-alt: #f4f7f3;
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(120deg, #2f8f5b 20%, #d6a611 80%);
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, rgba(47, 143, 91, 0.35) 50%, rgba(214, 166, 17, 0.35) 50%);
-  --vp-home-hero-image-filter: blur(56px);
-}
-.dark {
-  --vp-c-brand-1: #5cc98d;
-  --vp-c-brand-2: #47b77a;
-  --vp-c-brand-3: #3a9f69;
-  --vp-c-brand-soft: rgba(92, 201, 141, 0.16);
-  --ss-gold: #f0c541;
+  --vp-home-hero-name-background: linear-gradient(120deg, #2a8a57 10%, #c9a227 90%);
+  --vp-home-hero-image-background-image: radial-gradient(circle, rgba(52, 160, 103, 0.35), rgba(231, 179, 26, 0.25) 60%, transparent 70%);
+  --vp-home-hero-image-filter: blur(48px);
 }
 
-/* マイクラのドット絵アイコンをぼかさない */
+.dark {
+  --vp-c-brand-1: #5fcf92;
+  --vp-c-brand-2: #4dbb80;
+  --vp-c-brand-3: #3ea56d;
+  --vp-c-brand-soft: rgba(95, 207, 146, 0.14);
+  --ss-gold: #f1c84b;
+  --ss-gold-soft: rgba(241, 200, 75, 0.14);
+  --ss-surface: #1c1f1d;
+  --ss-surface-2: #222623;
+  --ss-border: rgba(255, 255, 255, 0.08);
+  --ss-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+  --vp-c-bg-alt: #161917;
+}
+
+/* ---------- 全体の文字 ---------- */
+.vp-doc h1 {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.vp-doc h2 {
+  font-weight: 800;
+  border-top: none;
+  margin-top: 56px;
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vp-doc h2::before {
+  content: '';
+  width: 6px;
+  height: 1.1em;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--vp-c-brand-1), var(--ss-gold));
+  flex: none;
+}
+.vp-doc h3 {
+  font-weight: 700;
+}
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.85;
+}
+
+/* マイクラのドット絵をぼかさない */
 img.pixel,
 .VPNavBarTitle .logo,
-.VPImage.image-src {
+.VPImage.image-src,
+.VPFeature .VPImage {
   image-rendering: pixelated;
 }
 
-/* カード一覧 */
+/* ---------- アイテムなどのカード(Markdownで <div class="ss-item"> で囲む) ---------- */
+.ss-item {
+  background: var(--ss-surface);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius);
+  box-shadow: var(--ss-shadow);
+  padding: 4px 24px 20px;
+  margin: 20px 0;
+}
+.ss-item > h3:first-child,
+.ss-item > h2:first-child {
+  margin-top: 18px !important;
+  padding-top: 0 !important;
+}
+.ss-item h3 {
+  font-size: 19px;
+}
+.ss-item .ss-keizon {
+  margin-top: 4px;
+}
+@media (max-width: 640px) {
+  .ss-item {
+    padding: 2px 16px 16px;
+    margin: 16px -8px;
+  }
+}
+
+/* 小さい説明ラベル(レシピ本の入手方法など) */
+.ss-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin: 10px 0 !important;
+  font-size: 14px;
+}
+.ss-meta > b,
+.ss-meta > strong {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  padding: 1px 10px;
+  border-radius: 999px;
+}
+
+/* ---------- アイコン ---------- */
+.ss-icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  image-rendering: pixelated;
+  object-fit: contain;
+  background: var(--ss-surface-2);
+  border: 1px solid var(--ss-border);
+  border-radius: 10px;
+  padding: 5px;
+}
+.ss-icon.empty {
+  display: inline-block;
+}
+.vp-doc img.hicon {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  vertical-align: -5px;
+  margin-right: 4px;
+  display: inline-block;
+}
+.vp-doc h2 img.hicon,
+.vp-doc h3 img.hicon {
+  width: 30px;
+  height: 30px;
+  margin-right: 2px;
+  vertical-align: -6px;
+}
+
+/* ---------- 汎用カード ---------- */
 .ss-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
   margin: 16px 0 24px;
 }
 .ss-card {
-  background: var(--ss-card-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: var(--ss-radius);
-  padding: 16px;
+  background: var(--ss-surface);
+  border: 1px solid var(--ss-border);
+  border-radius: 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -55,7 +181,7 @@ img.pixel,
   margin: 0 !important;
   padding: 0 !important;
   border: none !important;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.4;
 }
 .ss-card p {
@@ -63,26 +189,12 @@ img.pixel,
   font-size: 14px;
   line-height: 1.7;
 }
-.ss-icon {
-  width: 40px;
-  height: 40px;
-  flex: none;
-  image-rendering: pixelated;
-  object-fit: contain;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  padding: 4px;
-}
-.ss-icon.empty {
-  display: inline-block;
-}
 .ss-sub {
   font-size: 13px;
   color: var(--vp-c-text-2);
 }
 
-/* 値段・素材のバッジ */
+/* ---------- バッジ(値段・素材) ---------- */
 .ss-badges {
   display: flex;
   flex-wrap: wrap;
@@ -93,7 +205,7 @@ img.pixel,
   align-items: center;
   gap: 4px;
   font-size: 13px;
-  padding: 2px 10px;
+  padding: 3px 11px;
   border-radius: 999px;
   background: var(--vp-c-default-soft);
   color: var(--vp-c-text-1);
@@ -102,30 +214,51 @@ img.pixel,
 .ss-badge.gold {
   background: var(--ss-gold-soft);
   color: var(--vp-c-text-1);
-  font-weight: 600;
+  font-weight: 700;
+}
+.ss-badge.gold::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #ffe680, #d9a100);
+  box-shadow: inset 0 0 0 1px rgba(120, 80, 0, 0.35);
 }
 .ss-badge img {
   width: 16px;
   height: 16px;
   image-rendering: pixelated;
 }
+.ss-badge b {
+  margin-left: 6px;
+}
 
-/* スクショ */
+/* ---------- スクショ ---------- */
 .ss-shots {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
 }
 .ss-shots img {
   width: 100%;
-  border-radius: 8px;
-  border: 1px solid var(--vp-c-divider);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
   cursor: zoom-in;
-  background: var(--vp-c-bg);
+  background: var(--ss-surface-2);
+  transition: transform 0.15s, box-shadow 0.15s;
 }
+.ss-shots img:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ss-shadow);
+}
+/* レシピや色一覧などのドット絵画像 */
 .ss-shots img.small {
-  image-rendering: pixelated;
   object-fit: contain;
+  image-rendering: pixelated;
+  padding: 10px;
+  border: 1px solid var(--ss-border);
 }
 
 /* 画像の拡大表示 */
@@ -133,7 +266,8 @@ img.pixel,
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(10, 14, 12, 0.85);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,10 +277,10 @@ img.pixel,
 .ss-lightbox img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
-/* 絞り込みボタン */
+/* ---------- 切り替えボタン ---------- */
 .ss-filter {
   display: flex;
   flex-wrap: wrap;
@@ -158,53 +292,63 @@ img.pixel,
   align-items: center;
   gap: 4px;
   font-size: 14px;
-  padding: 4px 14px;
+  padding: 5px 16px;
   border-radius: 999px;
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
+  border: 1px solid var(--ss-border);
+  background: var(--ss-surface);
   color: var(--vp-c-text-2);
   transition: all 0.15s;
 }
 .ss-filter button.active {
-  background: var(--vp-c-brand-soft);
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
-  font-weight: 600;
-}
-
-/* 表を少し詰める */
-.vp-doc table {
-  font-size: 14px;
-}
-
-/* 手順(番号付き見出し) */
-.ss-step {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
   background: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
   color: #fff;
-  font-size: 15px;
   font-weight: 700;
-  margin-right: 8px;
-  vertical-align: 2px;
 }
 
-/* コマンド表記 */
-.vp-doc code.cmd {
-  font-weight: 600;
+/* ---------- レシピ・Keizon の自動表示 ---------- */
+.ss-recipe details,
+.ss-recipe table {
+  margin: 0 !important;
+}
+.ss-recipe {
+  gap: 8px;
+  margin: 14px 0 0;
+  background: var(--ss-surface-2);
+  border: none;
+}
+.ss-icons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ss-icons-row .ss-icon {
+  background: var(--ss-surface);
+}
+.ss-keizon {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 4px;
+}
+.ss-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 6px;
+}
+.vp-doc details summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vp-c-brand-1);
+}
+.vp-doc details table {
+  margin-top: 8px;
 }
 
-@media (max-width: 640px) {
-  .ss-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* スキルツリー */
+/* ---------- スキルツリー(今はページに出していないが部品として残している) ---------- */
 .ss-skill-tree,
 .ss-skill-children {
   list-style: none !important;
@@ -227,81 +371,143 @@ img.pixel,
   white-space: pre-line;
   margin: 0 0 6px !important;
 }
-.ss-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--vp-c-brand-1);
-  margin-bottom: 4px;
-}
-.ss-filter button .ss-icon {
-  padding: 1px;
-  vertical-align: -3px;
-  border: none;
-  background: transparent;
-}
 
-/* レシピ・Keizon(説明文の下に付く自動表示) */
-.ss-recipe {
-  margin: 12px 0 8px;
-}
-.ss-icons-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.ss-keizon {
-  display: flex;
+/* ---------- 手順 ---------- */
+.ss-step {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  margin: 8px 0 12px;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  flex: none;
 }
-.ss-keizon .ss-badge b {
-  margin-left: 6px;
-}
-.vp-doc details summary {
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--vp-c-brand-1);
-}
-
-/* 見出しの横のアイコン */
-.vp-doc img.hicon {
-  width: 24px;
-  height: 24px;
-  image-rendering: pixelated;
-  vertical-align: -5px;
-  margin-right: 4px;
-  display: inline-block;
-}
-.vp-doc h2 img.hicon,
-.vp-doc h3 img.hicon {
-  width: 32px;
-  height: 32px;
-  image-rendering: pixelated;
-  vertical-align: -6px;
-  margin-right: 8px;
-  display: inline-block;
+.vp-doc h2:has(.ss-step)::before {
+  display: none;
 }
 
 /* ボタン風リンク */
 .vp-doc a.ss-button {
   display: inline-block;
   margin: 8px 0 16px;
-  padding: 0 22px;
-  line-height: 40px;
-  border-radius: 20px;
+  padding: 0 24px;
+  line-height: 42px;
+  border-radius: 21px;
   background: var(--vp-c-brand-1);
   color: #fff;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(42, 138, 87, 0.3);
 }
 .vp-doc a.ss-button:hover {
   background: var(--vp-c-brand-2);
 }
 
+/* ---------- 表 ---------- */
+.vp-doc table {
+  font-size: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ---------- ホーム ---------- */
+.VPHome .VPFeature {
+  border-radius: var(--ss-radius);
+  border: 1px solid var(--ss-border);
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow);
+  transition: transform 0.15s;
+}
+.VPHome .VPFeature:hover {
+  transform: translateY(-3px);
+}
+.VPHome .VPFeature .icon {
+  background: var(--vp-c-brand-soft);
+  border-radius: 12px;
+}
+.VPHero .name {
+  font-weight: 800;
+}
+
 @media (max-width: 640px) {
+  .ss-grid {
+    grid-template-columns: 1fr;
+  }
+  .ss-shots {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .ss-skill-children {
     margin-left: 6px !important;
     padding-left: 10px !important;
   }
+}
+
+/* ---------- ホームの「はじめて参加する方へ」 ---------- */
+.ss-home {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+@media (min-width: 640px) {
+  .ss-home { padding: 40px 48px 72px; }
+}
+@media (min-width: 960px) {
+  .ss-home { padding: 40px 64px 80px; }
+}
+.ss-home h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 8px 0 16px;
+  border: none;
+}
+.ss-home-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.ss-home-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: var(--ss-radius);
+  border: 1px solid var(--ss-border);
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow);
+  text-decoration: none !important;
+  color: var(--vp-c-text-1) !important;
+  transition: transform 0.15s;
+}
+.ss-home-step:hover {
+  transform: translateY(-3px);
+}
+.ss-home-step .ss-step {
+  grid-row: 1 / 3;
+}
+.ss-home-step b {
+  font-size: 16px;
+}
+.ss-home-step small {
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+}
+@media (max-width: 760px) {
+  .ss-home-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* バッジや表の中の小さいアイコン */
+.ss-badge .ss-icon,
+td .ss-icon {
+  padding: 0;
+  border: none;
+  background: none;
+  vertical-align: -4px;
 }

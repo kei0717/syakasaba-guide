@@ -14,7 +14,7 @@ const rest = computed(() => (keizon as any[]).filter((k) => !done.has(k.id ?? k.
   <div class="ss-grid">
     <div v-for="k in rest" :key="k.id ?? k.name" class="ss-card">
       <div class="ss-card-head">
-        <GameIcon v-if="k.icon" :src="k.icon" :alt="k.name" />
+        <GameIcon :src="k.icon" :alt="k.name" />
         <h4>{{ k.name }}</h4>
       </div>
       <div class="ss-badges">

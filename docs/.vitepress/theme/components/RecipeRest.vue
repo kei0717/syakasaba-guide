@@ -15,7 +15,7 @@ const rest = computed(() => allRecipes.filter((r) => (!props.kind || r.kind === 
   <div class="ss-grid">
     <div v-for="r in rest" :key="r.tag" class="ss-card">
       <div class="ss-card-head">
-        <GameIcon v-if="r.icon" :src="r.icon" :alt="r.name" />
+        <GameIcon :src="r.icon" :alt="r.name" />
         <h4>{{ r.name }}</h4>
       </div>
       <div v-for="it in r.items" :key="it.id" class="ss-sub">

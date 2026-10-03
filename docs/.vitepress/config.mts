@@ -26,16 +26,19 @@ export default defineConfig({
   cleanUrls: true,
   markdown: { anchor: { slugify } },
   lastUpdated: true,
-  head: [['link', { rel: 'icon', href: `${base}favicon.png` }]],
+  head: [
+    ['link', { rel: 'icon', href: `${base}favicon.png` }]
+  ],
 
   themeConfig: {
     siteTitle: 'しゃかさば ガイド',
     logo: '/game/textures/items/telephone.png',
 
     nav: [
-      { text: 'はじめに', link: '/guide/join', activeMatch: '/guide/' },
+      { text: 'はじめに', link: '/guide/rules', activeMatch: '/guide/(rules|join)' },
       { text: '遊び方', link: '/play/commands', activeMatch: '/play/' },
       { text: 'アイテム図鑑', link: '/items/', activeMatch: '/items/' },
+      { text: 'よくある質問', link: '/guide/faq' },
       { text: '変更履歴', link: '/changelog' }
     ],
 
@@ -43,9 +46,8 @@ export default defineConfig({
       {
         text: 'はじめに',
         items: [
-          { text: '参加方法', link: '/guide/join' },
           { text: '参加規約', link: '/guide/rules' },
-          { text: 'よくある質問', link: '/guide/faq' }
+          { text: '参加方法', link: '/guide/join' }
         ]
       },
       {
@@ -66,7 +68,13 @@ export default defineConfig({
           { text: 'そのほかの仕様', link: '/items/others' }
         ]
       },
-      { text: '変更履歴', link: '/changelog' }
+      {
+        text: 'サポート',
+        items: [
+          { text: 'よくある質問', link: '/guide/faq' },
+          { text: '変更履歴', link: '/changelog' }
+        ]
+      }
     ],
 
     outline: { level: [2, 3], label: 'このページの内容' },
