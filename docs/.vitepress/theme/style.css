@@ -1,0 +1,307 @@
+/* しゃかさば ガイドの見た目(色やカード)。色を変えたいときは :root の --vp-c-brand-* を変える */
+:root {
+  --vp-c-brand-1: #2f8f5b;
+  --vp-c-brand-2: #3aa66b;
+  --vp-c-brand-3: #2a7d50;
+  --vp-c-brand-soft: rgba(47, 143, 91, 0.14);
+  --ss-gold: #c99a06;
+  --ss-gold-soft: rgba(230, 180, 20, 0.16);
+  --ss-card-bg: var(--vp-c-bg-soft);
+  --ss-radius: 12px;
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #2f8f5b 20%, #d6a611 80%);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, rgba(47, 143, 91, 0.35) 50%, rgba(214, 166, 17, 0.35) 50%);
+  --vp-home-hero-image-filter: blur(56px);
+}
+.dark {
+  --vp-c-brand-1: #5cc98d;
+  --vp-c-brand-2: #47b77a;
+  --vp-c-brand-3: #3a9f69;
+  --vp-c-brand-soft: rgba(92, 201, 141, 0.16);
+  --ss-gold: #f0c541;
+}
+
+/* マイクラのドット絵アイコンをぼかさない */
+img.pixel,
+.VPNavBarTitle .logo,
+.VPImage.image-src {
+  image-rendering: pixelated;
+}
+
+/* カード一覧 */
+.ss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+.ss-card {
+  background: var(--ss-card-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: var(--ss-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ss-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ss-card-head h3,
+.ss-card-head h4 {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: 17px;
+  line-height: 1.4;
+}
+.ss-card p {
+  margin: 0 !important;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.ss-icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  image-rendering: pixelated;
+  object-fit: contain;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 4px;
+}
+.ss-icon.empty {
+  display: inline-block;
+}
+.ss-sub {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+
+/* 値段・素材のバッジ */
+.ss-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ss-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--vp-c-default-soft);
+  color: var(--vp-c-text-1);
+  white-space: nowrap;
+}
+.ss-badge.gold {
+  background: var(--ss-gold-soft);
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+.ss-badge img {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+/* スクショ */
+.ss-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+.ss-shots img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-divider);
+  cursor: zoom-in;
+  background: var(--vp-c-bg);
+}
+.ss-shots img.small {
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+
+/* 画像の拡大表示 */
+.ss-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: zoom-out;
+}
+.ss-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+}
+
+/* 絞り込みボタン */
+.ss-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.ss-filter button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-2);
+  transition: all 0.15s;
+}
+.ss-filter button.active {
+  background: var(--vp-c-brand-soft);
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+/* 表を少し詰める */
+.vp-doc table {
+  font-size: 14px;
+}
+
+/* 手順(番号付き見出し) */
+.ss-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  margin-right: 8px;
+  vertical-align: 2px;
+}
+
+/* コマンド表記 */
+.vp-doc code.cmd {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .ss-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* スキルツリー */
+.ss-skill-tree,
+.ss-skill-children {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+.ss-skill-children {
+  margin-left: 22px !important;
+  padding-left: 18px !important;
+  border-left: 2px solid var(--vp-c-brand-soft);
+}
+.ss-skill {
+  margin: 12px 0 0 !important;
+}
+.ss-skill-level + .ss-skill-level {
+  border-top: 1px dashed var(--vp-c-divider);
+  padding-top: 8px;
+}
+.ss-desc {
+  white-space: pre-line;
+  margin: 0 0 6px !important;
+}
+.ss-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 4px;
+}
+.ss-filter button .ss-icon {
+  padding: 1px;
+  vertical-align: -3px;
+  border: none;
+  background: transparent;
+}
+
+/* レシピ・Keizon(説明文の下に付く自動表示) */
+.ss-recipe {
+  margin: 12px 0 8px;
+}
+.ss-icons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ss-keizon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 12px;
+}
+.ss-keizon .ss-badge b {
+  margin-left: 6px;
+}
+.vp-doc details summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--vp-c-brand-1);
+}
+
+/* 見出しの横のアイコン */
+.vp-doc img.hicon {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  vertical-align: -5px;
+  margin-right: 4px;
+  display: inline-block;
+}
+.vp-doc h2 img.hicon,
+.vp-doc h3 img.hicon {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  vertical-align: -6px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+/* ボタン風リンク */
+.vp-doc a.ss-button {
+  display: inline-block;
+  margin: 8px 0 16px;
+  padding: 0 22px;
+  line-height: 40px;
+  border-radius: 20px;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.vp-doc a.ss-button:hover {
+  background: var(--vp-c-brand-2);
+}
+
+@media (max-width: 640px) {
+  .ss-skill-children {
+    margin-left: 6px !important;
+    padding-left: 10px !important;
+  }
+}

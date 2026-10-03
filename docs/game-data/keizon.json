@@ -1,0 +1,348 @@
+[
+  {
+    "name": "車",
+    "id": "kei:item_car",
+    "unit": "block",
+    "cost": 128,
+    "count": 1,
+    "icon": "/game/textures/items/item_car.png"
+  },
+  {
+    "name": "ヘリコプター",
+    "id": "kei:item_heri",
+    "unit": "block",
+    "cost": 256,
+    "count": 1,
+    "icon": "/game/textures/items/item_heri.png"
+  },
+  {
+    "name": "トラック",
+    "id": "kei:item_truck",
+    "unit": "block",
+    "cost": 192,
+    "count": 1,
+    "icon": "/game/textures/items/item_truck.png"
+  },
+  {
+    "name": "ロボット",
+    "id": "kei:item_robot",
+    "unit": "block",
+    "cost": 384,
+    "count": 1,
+    "icon": "/game/textures/items/item_robot.png"
+  },
+  {
+    "name": "マリカ",
+    "id": "kei:item_merio_b_dare",
+    "unit": "block",
+    "cost": 192,
+    "count": 1,
+    "icon": "/game/textures/items/item_merio_b_dare.png"
+  },
+  {
+    "name": "マリカダッシュ板",
+    "id": "kei:speed_boost_1",
+    "unit": "ingot",
+    "cost": 5,
+    "count": 1,
+    "icon": "/game/textures/icon/speed_boost_1.png"
+  },
+  {
+    "name": "マリカジャンプ台",
+    "id": "kei:speed_boost_2",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": "/game/textures/icon/speed_boost_2.png"
+  },
+  {
+    "name": "イカT（人速1.3）",
+    "id": "kei:item_ika_t",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": "/game/textures/items/item_ika_t.png"
+  },
+  {
+    "name": "しゃかさばT",
+    "id": "kei:item_syakasaba_huku_4",
+    "unit": "ingot",
+    "cost": 5,
+    "count": 1,
+    "icon": "/game/textures/items/item_syakasaba_huku_4.png"
+  },
+  {
+    "name": "ギター",
+    "id": "kei:item_guitar",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": "/game/textures/items/item_guitar.png"
+  },
+  {
+    "name": "くるくるレインボー",
+    "id": "kei:item_kurukuru",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": "/game/textures/items/item_kurukuru.png"
+  },
+  {
+    "name": "ストップウォッチ",
+    "id": "kei:item_timer",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": "/game/textures/items/item_timer.png"
+  },
+  {
+    "name": "ラジオ",
+    "id": "kei:item_radio",
+    "unit": "ingot",
+    "cost": 5,
+    "count": 1,
+    "icon": "/game/textures/items/item_radio.png"
+  },
+  {
+    "name": "和傘",
+    "id": "kei:item_umbrella_jp",
+    "unit": "ingot",
+    "cost": 15,
+    "count": 1,
+    "icon": "/game/textures/items/item_umbrella_jp.png"
+  },
+  {
+    "name": "サンタコス",
+    "id": null,
+    "unit": null,
+    "cost": null,
+    "count": 1,
+    "icon": "/game/textures/items/item_santa_head.png",
+    "group": true,
+    "items": [
+      {
+        "name": "帽子",
+        "id": "kei:item_santa_head",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_santa_head.png"
+      },
+      {
+        "name": "服",
+        "id": "kei:item_santa_chest",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_santa_chest.png"
+      },
+      {
+        "name": "服（レディース）",
+        "id": "kei:item_santa_chest_2",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_santa_chest_2.png"
+      },
+      {
+        "name": "ズボン",
+        "id": "kei:item_santa_legs",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_santa_legs.png"
+      },
+      {
+        "name": "ズボン（レディース）",
+        "id": "kei:item_santa_legs_2",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_santa_legs_2.png"
+      },
+      {
+        "name": "靴",
+        "id": "kei:item_santa_feet",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_santa_feet.png"
+      }
+    ]
+  },
+  {
+    "name": "お正月サングラス2024",
+    "id": "kei:item_new_year",
+    "unit": "ingot",
+    "cost": 5,
+    "count": 1,
+    "icon": "/game/textures/items/item_new_year.png"
+  },
+  {
+    "name": "お正月サングラス2025",
+    "id": "kei:item_new_year_2025",
+    "unit": "ingot",
+    "cost": 5,
+    "count": 1,
+    "icon": "/game/textures/items/item_new_year_2025.png"
+  },
+  {
+    "name": "体操着",
+    "id": null,
+    "unit": null,
+    "cost": null,
+    "count": 1,
+    "icon": "/game/textures/items/item_taiiku_bou_red.png",
+    "group": true,
+    "items": [
+      {
+        "name": "帽子（赤）",
+        "id": "kei:item_taiiku_bou_red",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_taiiku_bou_red.png"
+      },
+      {
+        "name": "帽子（白）",
+        "id": "kei:item_taiiku_bou_white",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_taiiku_bou_white.png"
+      },
+      {
+        "name": "帽子（ウルトラ）",
+        "id": "kei:item_taiiku_bou_urutora",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_taiiku_bou_urutora.png"
+      },
+      {
+        "name": "服",
+        "id": "kei:item_taiiku_huku_ue",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_taiiku_huku_ue.png"
+      },
+      {
+        "name": "長ズボン",
+        "id": "kei:item_taiiku_huku_sita",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_taiiku_huku_sita.png"
+      },
+      {
+        "name": "短パン",
+        "id": "kei:item_taiiku_huku_sita_tanpan",
+        "unit": "ingot",
+        "cost": 5,
+        "count": 1,
+        "icon": "/game/textures/items/item_taiiku_huku_sita_tanpan.png"
+      }
+    ]
+  },
+  {
+    "name": "本日の主役タスキ",
+    "id": "kei:item_tasuki_syuyaku",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": "/game/textures/items/item_tasuki_syuyaku.png"
+  },
+  {
+    "name": "じゃんけん棒",
+    "id": "kei:item_sign_default",
+    "unit": "ingot",
+    "cost": 5,
+    "count": 1,
+    "icon": "/game/textures/items/sign/item_sign_default.png"
+  },
+  {
+    "name": "パイプ椅子",
+    "id": null,
+    "unit": null,
+    "cost": null,
+    "count": 1,
+    "icon": "/game/textures/items/item_paipu_isu_2.png",
+    "group": true,
+    "items": [
+      {
+        "name": "黒",
+        "id": "kei:item_paipu_isu_2",
+        "unit": "ingot",
+        "cost": 10,
+        "count": 1,
+        "icon": "/game/textures/items/item_paipu_isu_2.png"
+      },
+      {
+        "name": "グレー",
+        "id": "kei:item_paipu_isu_1",
+        "unit": "ingot",
+        "cost": 10,
+        "count": 1,
+        "icon": "/game/textures/items/item_paipu_isu_1.png"
+      }
+    ]
+  },
+  {
+    "name": "メガホン",
+    "id": "kei:item_megaphone",
+    "unit": "ingot",
+    "cost": 20,
+    "count": 1,
+    "icon": "/game/textures/items/item_megaphone.png"
+  },
+  {
+    "name": "文字ブロック",
+    "id": "kei:moji_space",
+    "unit": "ingot",
+    "cost": 3,
+    "count": 1,
+    "icon": "/game/textures/moji/あ.png"
+  },
+  {
+    "name": "エンダーチェスト",
+    "id": "ender_chest",
+    "unit": "ingot",
+    "cost": 10,
+    "count": 1,
+    "icon": null
+  },
+  {
+    "name": "シュルカーボックス",
+    "id": "undyed_shulker_box",
+    "unit": "ingot",
+    "cost": 15,
+    "count": 1,
+    "icon": null
+  },
+  {
+    "name": "エリトラ",
+    "id": "elytra",
+    "unit": "block",
+    "cost": 10,
+    "count": 1,
+    "icon": null
+  },
+  {
+    "name": "ロケット花火 × 32",
+    "id": "firework_rocket",
+    "unit": "ingot",
+    "cost": 16,
+    "count": 32,
+    "icon": null
+  },
+  {
+    "name": "ダイヤモンド売却",
+    "id": "diamond",
+    "unit": "ingot",
+    "cost": 1,
+    "count": 5,
+    "icon": null,
+    "sell": true
+  }
+]

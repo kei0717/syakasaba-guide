@@ -1,0 +1,1419 @@
+{
+  "categories": [
+    {
+      "id": "life",
+      "name": "生活",
+      "icon": "/game/textures/items/telephone.png",
+      "requiresSkill": null
+    },
+    {
+      "id": "life_2",
+      "name": "生活2",
+      "icon": null,
+      "requiresSkill": "life_more_paths"
+    },
+    {
+      "id": "temp",
+      "name": "仮置きスペース",
+      "icon": null,
+      "requiresSkill": null
+    }
+  ],
+  "skills": [
+    {
+      "id": "merio_b_dare_drift",
+      "category": "temp",
+      "name": "不便になってでもロマン",
+      "icon": "/game/textures/items/item_merio_b_dare.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "既存の空を飛ぶ機能やダッシュボードの機能を放棄する代わりに、\nドリフトなどの本格的な車の挙動を導入する。\n※負荷などにより正常な操作ができない可能性があります。",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 2
+            },
+            {
+              "id": "minecraft:rabbit_foot",
+              "name": "ウサギの足",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "マリカの仕様の変更"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "takekoputa",
+      "category": "temp",
+      "name": "昔の空をもう一度",
+      "icon": null,
+      "parent": null,
+      "levels": [
+        {
+          "description": "昔見た自由な空を手に入れる。",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 2
+            },
+            {
+              "id": "minecraft:rabbit_foot",
+              "name": "ウサギの足",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "???×1"
+          ],
+          "gives": [
+            "kei:item_takekoputa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "robot_gold",
+      "category": "temp",
+      "name": "富の象徴",
+      "icon": "/game/textures/items/item_robot.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "ロボットの色が金色になる。",
+          "materials": [
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "ロボットの色が金色に変更"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "robot_strong",
+      "category": "temp",
+      "name": "エンジニアを呼んでください",
+      "icon": "/game/textures/items/item_robot.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "ロボットのジェット移動の力を増加させる。",
+          "materials": [
+            {
+              "id": "minecraft:firework_rocket",
+              "name": "花火ロケット",
+              "count": 3
+            },
+            {
+              "id": "minecraft:blaze_powder",
+              "name": "ブレイズパウダー",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "ロボットのジェット移動の力を増幅"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "area_mining",
+      "category": "temp",
+      "name": "真の効率厨へ",
+      "icon": null,
+      "parent": null,
+      "levels": [
+        {
+          "description": "スニーク中にツルハシで採掘を行うと3×3の範囲を採掘をする。",
+          "materials": [
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_pickaxe",
+              "name": "鉄のツルハシ",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "範囲採掘機能の追加。"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "jet_boots_jump",
+      "category": "temp",
+      "name": "もっと足に力を込めて",
+      "icon": "/game/textures/items/item_jet_boots.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "ジェットブーツのジャンプ力を増加させる。",
+          "materials": [
+            {
+              "id": "minecraft:slime_ball",
+              "name": "スライムボール",
+              "count": 2
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "ジェットブーツのジャンプ力を増加"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "jet_boots_charge",
+      "category": "temp",
+      "name": "もっと早く踏み込んで",
+      "icon": "/game/textures/items/item_jet_boots.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "ジェットブーツのチャージ速度を高速化する。",
+          "materials": [
+            {
+              "id": "minecraft:firework_rocket",
+              "name": "花火ロケット",
+              "count": 3
+            },
+            {
+              "id": "minecraft:blaze_powder",
+              "name": "ブレイズパウダー",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "ジェットブーツのチャージ速度を高速化"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "sign_ikari",
+      "category": "life_2",
+      "name": "怒りをその手に",
+      "icon": "/game/textures/items/sign/item_sign_ikari.png",
+      "parent": "sign_paths",
+      "levels": [
+        {
+          "description": "じゃんけん棒の切り替えメニューに「怒り」のデザインが追加される。",
+          "materials": [
+            {
+              "id": "minecraft:blaze_powder",
+              "name": "ブレイズパウダー",
+              "count": 1
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "じゃんけん棒[怒り]の解放"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "sign_saikyo",
+      "category": "life_2",
+      "name": "誰にも負けない",
+      "icon": "/game/textures/items/sign/item_sign_saikyo.png",
+      "parent": "sign_paths",
+      "levels": [
+        {
+          "description": "じゃんけん棒の切り替えメニューに「最強」のデザインが追加される。",
+          "materials": [
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "じゃんけん棒[最強]の解放"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "sign_pien",
+      "category": "life_2",
+      "name": "ぴえんが過ぎる",
+      "icon": "/game/textures/items/sign/item_sign_pien.png",
+      "parent": "sign_paths",
+      "levels": [
+        {
+          "description": "じゃんけん棒の切り替えメニューに「ぴえん」のデザインが追加される。",
+          "materials": [
+            {
+              "id": "minecraft:glass",
+              "name": "ガラス",
+              "count": 1
+            },
+            {
+              "id": "minecraft:water_bucket",
+              "name": "水入りバケツ",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "じゃんけん棒[ぴえん]の解放"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "pien_ball",
+      "category": "life_2",
+      "name": "まるまるぴえん",
+      "icon": "/game/textures/items/item_pien.png",
+      "parent": "sign_pien",
+      "levels": [
+        {
+          "description": "ぴえんの被り物をかぶってスニークすると、体が消えて被り物がボールのように床を転がるようになる。",
+          "materials": [
+            {
+              "id": "kei:item_pien",
+              "name": "ぴえんの被り物",
+              "count": 1
+            },
+            {
+              "id": "minecraft:slime_ball",
+              "name": "スライムボール",
+              "count": 8
+            }
+          ],
+          "reward": [
+            "スニーク中にボールになれる"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "pien_ball_size",
+      "category": "life_2",
+      "name": "大きなぴえん",
+      "icon": "/game/textures/items/item_pien.png",
+      "parent": "pien_ball",
+      "levels": [
+        {
+          "description": "スニーク中のぴえんボールが1.5倍の大きさになる。",
+          "materials": [
+            {
+              "id": "minecraft:slime_ball",
+              "name": "スライムボール",
+              "count": 16
+            }
+          ],
+          "reward": [
+            "ボールのサイズ1.5倍"
+          ],
+          "gives": []
+        },
+        {
+          "description": "スニーク中のぴえんボールが2倍の大きさになる。",
+          "materials": [
+            {
+              "id": "minecraft:slime",
+              "name": "スライムブロック",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "ボールのサイズ2倍"
+          ],
+          "gives": []
+        },
+        {
+          "description": "スニーク中のぴえんボールが2.5倍の大きさになる。",
+          "materials": [
+            {
+              "id": "minecraft:slime",
+              "name": "スライムブロック",
+              "count": 8
+            },
+            {
+              "id": "minecraft:honey_block",
+              "name": "ハチミツブロック",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "ボールのサイズ2.5倍"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "grapple_no_marker",
+      "category": "temp",
+      "name": "グラップルフック",
+      "icon": "/game/textures/items/item_grapple.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "スパイダーマン風にロープで建物などに引っかかって移動できるようになる。\n※負荷などにより正常な操作ができない可能性があります。",
+          "materials": [
+            {
+              "id": "minecraft:lead",
+              "name": "リード",
+              "count": 1
+            },
+            {
+              "id": "minecraft:tripwire_hook",
+              "name": "トリップワイヤーフック",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "グラップルフック×1"
+          ],
+          "gives": [
+            "kei:item_grapple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transceiver_unlock",
+      "category": "temp",
+      "name": "トランシーバー",
+      "icon": "/game/textures/items/item_transceiver.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "仲間と無線で会話できるトランシーバーが手に入る。",
+          "materials": [
+            {
+              "id": "minecraft:copper_ingot",
+              "name": "銅インゴット",
+              "count": 2
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "トランシーバー×1"
+          ],
+          "gives": [
+            "kei:item_transceiver"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dice",
+      "category": "temp",
+      "name": "丁か半か",
+      "icon": "/game/textures/blocks/dice/dice_6.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "サイコロを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:bone",
+              "name": "骨",
+              "count": 2
+            },
+            {
+              "id": "minecraft:emerald",
+              "name": "エメラルド",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "サイコロのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_dice"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chinchiro",
+      "category": "temp",
+      "name": "勝負はチンチロで",
+      "icon": "/game/textures/blocks/chinchiro/chinchiro_front.png",
+      "parent": "dice",
+      "levels": [
+        {
+          "description": "サイコロ3つの役をレッドストーン信号で出すチンチロ判定機を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 8
+            },
+            {
+              "id": "minecraft:emerald",
+              "name": "エメラルド",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "チンチロ判定機のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_chinchiro"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sign_paths",
+      "category": "life_2",
+      "name": "じゃんけん棒の種類追加",
+      "icon": "/game/textures/items/sign/item_sign_default.png",
+      "parent": "life_more_paths",
+      "levels": [
+        {
+          "description": "じゃんけん棒の新しいデザインを探し求めている方へ...。",
+          "materials": [
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "minecraft_root",
+      "category": "life",
+      "name": "サバイバルの始まり",
+      "icon": null,
+      "parent": null,
+      "levels": [
+        {
+          "description": "マイクラサバイバルの基本。",
+          "materials": [
+            {
+              "id": "minecraft:oak_log",
+              "name": "オークの原木",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "life_root",
+      "category": "life",
+      "name": "しゃかさばの始まり",
+      "icon": null,
+      "parent": "minecraft_root",
+      "levels": [
+        {
+          "description": "しゃかさばで一番最初に入手を目指すアイテム。一か月の生活はここから始まる。",
+          "materials": [
+            {
+              "id": "kei:telephone",
+              "name": "K-phone",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "life_paths",
+      "category": "life",
+      "name": "いろんな道へ",
+      "icon": null,
+      "parent": "life_root",
+      "levels": [
+        {
+          "description": "いろんな道への第一歩。",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "life_more_paths",
+      "category": "life",
+      "name": "さらに進む生活",
+      "icon": null,
+      "parent": "life_paths",
+      "levels": [
+        {
+          "description": "まだまだ続く道を目指す。",
+          "materials": [
+            {
+              "id": "minecraft:compass",
+              "name": "コンパス",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "life_more_paths",
+      "category": "life_2",
+      "name": "さらに進む生活",
+      "icon": null,
+      "parent": null,
+      "levels": [
+        {
+          "description": "まだまだ続く道を目指す。",
+          "materials": [
+            {
+              "id": "minecraft:compass",
+              "name": "コンパス",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "backpack_skill",
+      "category": "life",
+      "name": "たくさん持ちたい欲張りさんへ",
+      "icon": null,
+      "parent": "life_paths",
+      "levels": [
+        {
+          "description": "真下を向いてスニークすることでバックパックを開くことができる。",
+          "materials": [
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "バックパック機能の獲得"
+          ],
+          "gives": []
+        },
+        {
+          "description": "さらに多くのバックパックを持つことができる。",
+          "materials": [
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 4
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "バックパック機能の2ページ目を獲得"
+          ],
+          "gives": []
+        },
+        {
+          "description": "さらに多くのバックパックを持つことができる。",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "バックパック機能の3ページ目を獲得"
+          ],
+          "gives": []
+        },
+        {
+          "description": "さらに多くのバックパックを持つことができる。",
+          "materials": [
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "バックパック機能の4ページ目を獲得"
+          ],
+          "gives": []
+        },
+        {
+          "description": "さらに多くのバックパックを持つことができる。",
+          "materials": [
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 2
+            },
+            {
+              "id": "minecraft:shulker_shell",
+              "name": "シュルカーシェル",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "バックパック機能の5ページ目を獲得"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "backpack_sort",
+      "category": "life",
+      "name": "整理の極意",
+      "icon": "/game/textures/items/btn_sort.png",
+      "parent": "backpack_skill",
+      "levels": [
+        {
+          "description": "バックパックスキルに自動整理ボタンを追加する。",
+          "materials": [
+            {
+              "id": "minecraft:hopper",
+              "name": "ホッパー",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "バックパックスキルに自動整理機能の追加"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "compass_navigation",
+      "category": "life",
+      "name": "方向音痴の為に",
+      "icon": "/game/textures/items/item_compass.png",
+      "parent": "life_paths",
+      "levels": [
+        {
+          "description": "デジタルコンパスに方向視認、距離表示機能を追加する。",
+          "materials": [
+            {
+              "id": "kei:item_compass",
+              "name": "デジタルコンパス",
+              "count": 1
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "デジタルコンパスに方向視認、距離表示機能を追加"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "buy_luck",
+      "category": "life",
+      "name": "運を金で買う",
+      "icon": "/game/textures/icon/hukubukuro.png",
+      "parent": "life_paths",
+      "levels": [
+        {
+          "description": "プレゼントボックスと福袋の中身が豪華になる。",
+          "materials": [
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 8
+            }
+          ],
+          "reward": [
+            "プレゼントボックスと福袋の中身の質が向上"
+          ],
+          "gives": []
+        },
+        {
+          "description": "さらにプレゼントボックスと福袋の中身が豪華になる。",
+          "materials": [
+            {
+              "id": "minecraft:emerald",
+              "name": "エメラルド",
+              "count": 8
+            }
+          ],
+          "reward": [
+            "さらにプレゼントボックスと福袋の中身の質が向上"
+          ],
+          "gives": []
+        },
+        {
+          "description": "さらにプレゼントボックスと福袋の中身が豪華になる。",
+          "materials": [
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 4
+            },
+            {
+              "id": "minecraft:gold_block",
+              "name": "金ブロック",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "さらにプレゼントボックスと福袋の中身の質が向上"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "craft_paths",
+      "category": "life",
+      "name": "いろんなものを作りたい",
+      "icon": null,
+      "parent": "life_paths",
+      "levels": [
+        {
+          "description": "工作レシピを探し求めている方へ...。",
+          "materials": [
+            {
+              "id": "minecraft:crafting_table",
+              "name": "作業台",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "craft_kazaguruma",
+      "category": "life",
+      "name": "頭の上でもくるくる",
+      "icon": "/game/textures/items/item_kazaguruma.png",
+      "parent": "craft_paths",
+      "levels": [
+        {
+          "description": "風車を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:green_dye",
+              "name": "緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:orange_dye",
+              "name": "橙色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:blue_dye",
+              "name": "青色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            },
+            {
+              "id": "kei:item_kurukuru",
+              "name": "くるくるレインボー",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "風車のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_kazaguruma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_umbrella_clear",
+      "category": "life",
+      "name": "脱色",
+      "icon": "/game/textures/items/item_umbrella_clear.png",
+      "parent": "craft_paths",
+      "levels": [
+        {
+          "description": "透明傘を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "kei:item_umbrella",
+              "name": "虹色の傘",
+              "count": 1
+            },
+            {
+              "id": "kei:item_umbrella_jp",
+              "name": "和傘",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "透明傘のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_umbrella_clear"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_desk_and_chair",
+      "category": "life",
+      "name": "勤勉な人はここにいないはずなのに",
+      "icon": "/game/textures/icon/desk_and_chair.png",
+      "parent": "craft_paths",
+      "levels": [
+        {
+          "description": "机と椅子を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 6
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "机と椅子のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_desk_and_chair"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_kakigooriki",
+      "category": "life",
+      "name": "キーン",
+      "icon": "/game/textures/icon/kakigooriki.png",
+      "parent": "craft_paths",
+      "levels": [
+        {
+          "description": "かき氷機を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 2
+            },
+            {
+              "id": "minecraft:ice",
+              "name": "氷",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "かき氷機のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_kakigooriki"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_wind_chime",
+      "category": "life",
+      "name": "やかましい音",
+      "icon": "/game/textures/icon/wind_chime.png",
+      "parent": "craft_paths",
+      "levels": [
+        {
+          "description": "風鈴を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:glass",
+              "name": "ガラス",
+              "count": 2
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "風鈴のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_wind_chime"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_description_free",
+      "category": "life",
+      "name": "伝えたいことがある",
+      "icon": "/game/textures/icon/description.png",
+      "parent": "craft_paths",
+      "levels": [
+        {
+          "description": "自分で文章を書ける説明パネル(大・小)を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 8
+            },
+            {
+              "id": "minecraft:ink_sac",
+              "name": "イカスミ",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "説明パネルのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_description"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app_paths",
+      "category": "life",
+      "name": "K-phoneを使いこなしたい",
+      "icon": "/game/textures/items/telephone.png",
+      "parent": "life_root",
+      "levels": [
+        {
+          "description": "K-phoneをもっと便利にしたい方へ...。",
+          "materials": [
+            {
+              "id": "kei:telephone",
+              "name": "K-phone",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "digital_wallet",
+      "category": "life",
+      "name": "デジタル財布",
+      "icon": "/game/textures/icon/bank.png",
+      "parent": "app_paths",
+      "levels": [
+        {
+          "description": "K-phoneにATMアプリを追加する。",
+          "materials": [
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "K-phoneにATMアプリの追加"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "inner_camera",
+      "category": "life",
+      "name": "自撮りの極意",
+      "icon": "/game/textures/icon/camera.png",
+      "parent": "app_paths",
+      "levels": [
+        {
+          "description": "カメラアプリに、内カメラを追加する。",
+          "materials": [
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "カメラアプリに内カメラ機能の追加"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "recipe_paths",
+      "category": "life",
+      "name": "新しい作業台が欲しい",
+      "icon": "/game/textures/items/item_crafting_recipe.png",
+      "parent": "minecraft_root",
+      "levels": [
+        {
+          "description": "新しい作業台のレシピを探し求めている方へ...。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "なし"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "recipe_crafting",
+      "category": "life",
+      "name": "ものづくりの心得",
+      "icon": "/game/textures/icon/add_crafting.png",
+      "parent": "recipe_paths",
+      "levels": [
+        {
+          "description": "工作ブロックを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:crafting_table",
+              "name": "作業台",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "工作ブロックのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_add_crafting"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recipe_cooking",
+      "category": "life",
+      "name": "一家に一枚フライパン",
+      "icon": "/game/textures/icon/add_cooking.png",
+      "parent": "recipe_paths",
+      "levels": [
+        {
+          "description": "料理ブロックを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:furnace",
+              "name": "かまど",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "料理ブロックのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_add_cooking"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cooking_kagamimoti",
+      "category": "life",
+      "name": "縁起物の一品",
+      "icon": "/game/textures/icon/food_kagamimoti.png",
+      "parent": "recipe_cooking",
+      "levels": [
+        {
+          "description": "料理ブロックで鏡餅を作れるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:glow_berries",
+              "name": "グロウベリー",
+              "count": 1
+            },
+            {
+              "id": "minecraft:white_wool",
+              "name": "白色の羊毛",
+              "count": 1
+            },
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "鏡餅のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_cooking_recipe_kagamimoti"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cooking_roast_chicken",
+      "category": "life",
+      "name": "香ばしい一皿",
+      "icon": "/game/textures/icon/food_roast_chicken.png",
+      "parent": "recipe_cooking",
+      "levels": [
+        {
+          "description": "料理ブロックでローストチキンを作れるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:chicken",
+              "name": "生の鶏肉",
+              "count": 7
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            },
+            {
+              "id": "minecraft:charcoal",
+              "name": "木炭",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "ローストチキンのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_cooking_recipe_roast_chicken"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recipe_tailoring",
+      "category": "life",
+      "name": "愛着のある服",
+      "icon": "/game/textures/icon/add_tailoring.png",
+      "parent": "recipe_paths",
+      "levels": [
+        {
+          "description": "裁断ブロックを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:shears",
+              "name": "ハサミ",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "裁断ブロックのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_add_tailoring"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recipe_alchemy",
+      "category": "life",
+      "name": "生み出す力",
+      "icon": "/game/textures/icon/add_alchemy.png",
+      "parent": "recipe_paths",
+      "levels": [
+        {
+          "description": "錬金ブロックを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:brewing_stand",
+              "name": "醸造台",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "錬金ブロックのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_add_alchemy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recipe_smithing",
+      "category": "life",
+      "name": "自分だけの武器",
+      "icon": "/game/textures/icon/add_smithing.png",
+      "parent": "recipe_paths",
+      "levels": [
+        {
+          "description": "鍛冶ブロックを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:smithing_table",
+              "name": "鍛冶台",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "鍛冶ブロックのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_add_smithing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recipe_skill",
+      "category": "life",
+      "name": "それぞれの道",
+      "icon": "/game/textures/icon/add_skill.png",
+      "parent": "recipe_paths",
+      "levels": [
+        {
+          "description": "スキルブロックを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:enchanting_table",
+              "name": "エンチャントテーブル",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "スキルブロックのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_add_skill"
+          ]
+        }
+      ]
+    }
+  ]
+}

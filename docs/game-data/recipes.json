@@ -1,0 +1,2239 @@
+{
+  "crafting": [
+    {
+      "tag": "crafting_recipe_coaster",
+      "name": "コースター",
+      "icon": "/game/textures/icon/coaster.png",
+      "items": [
+        {
+          "id": "kei:coaster",
+          "name": "コースター",
+          "count": 1,
+          "icon": "/game/textures/icon/coaster.png",
+          "materials": [
+            {
+              "id": "minecraft:clay_ball",
+              "name": "粘土",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_dice",
+      "name": "サイコロ",
+      "icon": "/game/textures/blocks/dice/dice_6.png",
+      "items": [
+        {
+          "id": "kei:dice",
+          "name": "サイコロ",
+          "count": 1,
+          "icon": "/game/textures/blocks/dice/dice_6.png",
+          "materials": [
+            {
+              "id": "minecraft:bone",
+              "name": "骨",
+              "count": 2
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_chinchiro",
+      "name": "チンチロ判定機",
+      "icon": "/game/textures/blocks/chinchiro/chinchiro_front.png",
+      "items": [
+        {
+          "id": "kei:chinchiro",
+          "name": "チンチロ判定機",
+          "count": 1,
+          "icon": "/game/textures/blocks/chinchiro/chinchiro_front.png",
+          "materials": [
+            {
+              "id": "minecraft:comparator",
+              "name": "レッドストーンコンパレーター",
+              "count": 1
+            },
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_ride_chair",
+      "name": "椅子",
+      "icon": "/game/textures/icon/ride_chair/ride_chair_acacia.png",
+      "items": [
+        {
+          "id": "kei:ride_chair_acacia",
+          "name": "座れるアカシアの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_acacia.png",
+          "materials": [
+            {
+              "id": "kei:ride_acacia",
+              "name": "座れるアカシアの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_bamboo",
+          "name": "座れる竹の椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_bamboo.png",
+          "materials": [
+            {
+              "id": "kei:ride_bamboo",
+              "name": "座れる竹の階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_birch",
+          "name": "座れるシラカバの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_birch.png",
+          "materials": [
+            {
+              "id": "kei:ride_birch",
+              "name": "座れるシラカバの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_cherry",
+          "name": "座れるサクラの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_cherry.png",
+          "materials": [
+            {
+              "id": "kei:ride_cherry",
+              "name": "座れるサクラの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_dark_oak",
+          "name": "座れるダークオークの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_dark_oak.png",
+          "materials": [
+            {
+              "id": "kei:ride_dark_oak",
+              "name": "座れるダークオークの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_jungle",
+          "name": "座れるジャングルの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_jungle.png",
+          "materials": [
+            {
+              "id": "kei:ride_jungle",
+              "name": "座れるジャングルの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_mangrove",
+          "name": "座れるマングローブの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_mangrove.png",
+          "materials": [
+            {
+              "id": "kei:ride_mangrove",
+              "name": "座れるマングローブの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_oak",
+          "name": "座れるオークの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_oak.png",
+          "materials": [
+            {
+              "id": "kei:ride_oak",
+              "name": "座れるオークの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_spruce",
+          "name": "座れるトウヒの椅子",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_chair/ride_chair_spruce.png",
+          "materials": [
+            {
+              "id": "kei:ride_spruce",
+              "name": "座れるトウヒの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_pale_oak",
+          "name": "座れるペールオークの椅子",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "kei:ride_pale_oak",
+              "name": "座れるペールオークの階段",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:ride_chair_gaming",
+          "name": "ゲーミングチェア",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "kei:ride_gaming",
+              "name": "座れる虹色の階段",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_balloon",
+      "name": "風船",
+      "icon": "/game/textures/items/balloon/item_balloon_1.png",
+      "items": [
+        {
+          "id": "kei:item_balloon_1",
+          "name": "風船(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_2",
+          "name": "風船(青)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_3",
+          "name": "風船(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_4",
+          "name": "風船(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_5",
+          "name": "風船(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_6",
+          "name": "風船(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_7",
+          "name": "風船(白)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_balloon_8",
+          "name": "風船(黒)",
+          "count": 1,
+          "icon": "/game/textures/items/balloon/item_balloon_8.png",
+          "materials": [
+            {
+              "id": "minecraft:black_dye",
+              "name": "黒色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:pufferfish",
+              "name": "フグ",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_happi",
+      "name": "法被",
+      "icon": "/game/textures/items/happi/item_happi_1.png",
+      "items": [
+        {
+          "id": "kei:item_happi_1",
+          "name": "法被(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_2",
+          "name": "法被(青)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_3",
+          "name": "法被(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_4",
+          "name": "法被(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_5",
+          "name": "法被(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_6",
+          "name": "法被(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_7",
+          "name": "法被(白)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "id": "kei:item_happi_8",
+          "name": "法被(黒)",
+          "count": 1,
+          "icon": "/game/textures/items/happi/item_happi_8.png",
+          "materials": [
+            {
+              "id": "minecraft:black_dye",
+              "name": "黒色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:leather",
+              "name": "革",
+              "count": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_hukimodosi",
+      "name": "ふき戻し",
+      "icon": "/game/textures/items/item_hukimodosi.png",
+      "items": [
+        {
+          "id": "kei:item_hukimodosi",
+          "name": "ふき戻し",
+          "count": 1,
+          "icon": "/game/textures/items/item_hukimodosi.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:bamboo",
+              "name": "竹",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_jet",
+      "name": "ジェットブーツ/ジェットチャージャー",
+      "icon": "/game/textures/items/item_jet_boots.png",
+      "items": [
+        {
+          "id": "kei:item_jet_boots",
+          "name": "ジェットブーツ",
+          "count": 1,
+          "icon": "/game/textures/items/item_jet_boots.png",
+          "materials": [
+            {
+              "id": "minecraft:gold_block",
+              "name": "金ブロック",
+              "count": 48
+            },
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "id": "kei:item_jet_charger",
+          "name": "ジェットチャージャー",
+          "count": 1,
+          "icon": "/game/textures/items/item_jet_charger.png",
+          "materials": [
+            {
+              "id": "minecraft:gold_block",
+              "name": "金ブロック",
+              "count": 10
+            },
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_omen",
+      "name": "お面",
+      "icon": "/game/textures/items/omen/item_omen_creeper.png",
+      "items": [
+        {
+          "id": "kei:item_omen_creeper",
+          "name": "お面(クリーパー)",
+          "count": 1,
+          "icon": "/game/textures/items/omen/item_omen_creeper.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_dispenser",
+          "name": "お面(ディスペンサー)",
+          "count": 1,
+          "icon": "/game/textures/items/omen/item_omen_dispenser.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_dropper",
+          "name": "お面(ドロッパー)",
+          "count": 1,
+          "icon": "/game/textures/items/omen/item_omen_dropper.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_observer",
+          "name": "お面(オブザーバー)",
+          "count": 1,
+          "icon": "/game/textures/items/omen/item_omen_observer.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_skeleton",
+          "name": "お面(スケルトン)",
+          "count": 1,
+          "icon": "/game/textures/items/omen/item_omen_skeleton.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_zombie",
+          "name": "お面(ゾンビ)",
+          "count": 1,
+          "icon": "/game/textures/items/omen/item_omen_zombie.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_player_hira",
+          "name": "お面(ひいらぎ)",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_player_kei",
+          "name": "お面(けい)",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_player_min",
+          "name": "お面(みんてぃあ)",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_player_oka",
+          "name": "お面(おか)",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_omen_player_take",
+          "name": "お面(たゃけたゅけ)",
+          "count": 1,
+          "icon": null,
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_reji",
+      "name": "レジブロック",
+      "icon": "/game/textures/icon/reji.png",
+      "items": [
+        {
+          "id": "kei:reji",
+          "name": "レジブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/reji.png",
+          "materials": [
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 10
+            },
+            {
+              "id": "minecraft:chest",
+              "name": "チェスト",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_ride_gaming",
+      "name": "座れる虹色の階段ブロック",
+      "icon": "/game/textures/icon/ride_gaming.png",
+      "items": [
+        {
+          "id": "kei:ride_gaming",
+          "name": "座れる虹色の階段ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/ride_gaming.png",
+          "materials": [
+            {
+              "id": "kei:item_rainbow_feather",
+              "name": "虹色の羽",
+              "count": 1
+            },
+            {
+              "id": "minecraft:saddle",
+              "name": "サドル",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_sairiumu",
+      "name": "サイリウム",
+      "icon": "/game/textures/items/sairiumu/item_sairiumu_1.png",
+      "items": [
+        {
+          "id": "kei:item_sairiumu_1",
+          "name": "サイリウム(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_2",
+          "name": "サイリウム(青)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_3",
+          "name": "サイリウム(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_4",
+          "name": "サイリウム(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_5",
+          "name": "サイリウム(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_6",
+          "name": "サイリウム(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_7",
+          "name": "サイリウム(白)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu/item_sairiumu_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_sairiumu_hosi",
+      "name": "星カチューシャ",
+      "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_1.png",
+      "items": [
+        {
+          "id": "kei:item_sairiumu_hosi_1",
+          "name": "星カチューシャ(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_hosi_2",
+          "name": "星カチューシャ(青)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_hosi_3",
+          "name": "星カチューシャ(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_hosi_4",
+          "name": "星カチューシャ(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_hosi_5",
+          "name": "星カチューシャ(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_hosi_6",
+          "name": "星カチューシャ(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_hosi_7",
+          "name": "星カチューシャ(白)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_hosi/item_sairiumu_hosi_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_sairiumu_neko",
+      "name": "猫カチューシャ",
+      "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_1.png",
+      "items": [
+        {
+          "id": "kei:item_sairiumu_neko_1",
+          "name": "猫カチューシャ(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_neko_2",
+          "name": "猫カチューシャ(青)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_neko_3",
+          "name": "猫カチューシャ(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_neko_4",
+          "name": "猫カチューシャ(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_neko_5",
+          "name": "猫カチューシャ(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_neko_6",
+          "name": "猫カチューシャ(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_neko_7",
+          "name": "猫カチューシャ(白)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_neko/item_sairiumu_neko_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_sairiumu_ring",
+      "name": "サイリウムリング",
+      "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_1.png",
+      "items": [
+        {
+          "id": "kei:item_sairiumu_ring_1",
+          "name": "サイリウムリング(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_ring_2",
+          "name": "サイリウムリング(青)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_ring_3",
+          "name": "サイリウムリング(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_ring_4",
+          "name": "サイリウムリング(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_ring_5",
+          "name": "サイリウムリング(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_ring_6",
+          "name": "サイリウムリング(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:item_sairiumu_ring_7",
+          "name": "サイリウムリング(白)",
+          "count": 1,
+          "icon": "/game/textures/items/sairiumu_ring/item_sairiumu_ring_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glow_ink_sac",
+              "name": "輝くイカスミ",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_tyoutin",
+      "name": "提灯ブロック",
+      "icon": "/game/textures/icon/tyoutin.png",
+      "items": [
+        {
+          "id": "kei:tyoutin",
+          "name": "提灯ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/tyoutin.png",
+          "materials": [
+            {
+              "id": "minecraft:lantern",
+              "name": "ランタン",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_umbrella",
+      "name": "虹色の傘",
+      "icon": "/game/textures/items/item_umbrella.png",
+      "items": [
+        {
+          "id": "kei:item_umbrella",
+          "name": "虹色の傘",
+          "count": 1,
+          "icon": "/game/textures/items/item_umbrella.png",
+          "materials": [
+            {
+              "id": "kei:item_umbrella_jp",
+              "name": "和傘",
+              "count": 1
+            },
+            {
+              "id": "kei:item_rainbow_feather",
+              "name": "虹色の羽",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_kazaguruma",
+      "name": "風車",
+      "icon": "/game/textures/items/item_kazaguruma.png",
+      "items": [
+        {
+          "id": "kei:item_kazaguruma",
+          "name": "風車",
+          "count": 1,
+          "icon": "/game/textures/items/item_kazaguruma.png",
+          "materials": [
+            {
+              "id": "minecraft:green_dye",
+              "name": "緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:orange_dye",
+              "name": "橙色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:blue_dye",
+              "name": "青色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_umbrella_clear",
+      "name": "透明傘",
+      "icon": "/game/textures/items/item_umbrella_clear.png",
+      "items": [
+        {
+          "id": "kei:item_umbrella_clear",
+          "name": "透明傘",
+          "count": 1,
+          "icon": "/game/textures/items/item_umbrella_clear.png",
+          "materials": [
+            {
+              "id": "kei:item_umbrella",
+              "name": "虹色の傘",
+              "count": 1
+            },
+            {
+              "id": "minecraft:glass",
+              "name": "ガラス",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_wind_chime",
+      "name": "風鈴",
+      "icon": "/game/textures/blocks/wind_chime_0.png",
+      "items": [
+        {
+          "id": "kei:wind_chime",
+          "name": "風鈴",
+          "count": 1,
+          "icon": "/game/textures/blocks/wind_chime_0.png",
+          "materials": [
+            {
+              "id": "minecraft:glass",
+              "name": "ガラス",
+              "count": 2
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_electric_fan",
+      "name": "扇風機",
+      "icon": "/game/textures/blocks/electric_fan_off.png",
+      "items": [
+        {
+          "id": "kei:electric_fan",
+          "name": "扇風機",
+          "count": 1,
+          "icon": "/game/textures/blocks/electric_fan_off.png",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 3
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_kakigooriki",
+      "name": "かき氷機",
+      "icon": "/game/textures/blocks/kakigooriki.png",
+      "items": [
+        {
+          "id": "kei:kakigooriki",
+          "name": "かき氷機",
+          "count": 1,
+          "icon": "/game/textures/blocks/kakigooriki.png",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 2
+            },
+            {
+              "id": "minecraft:ice",
+              "name": "氷",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_description",
+      "name": "説明パネル",
+      "icon": "/game/textures/icon/description.png",
+      "items": [
+        {
+          "id": "kei:description_free",
+          "name": "説明パネル(大)",
+          "count": 1,
+          "icon": "/game/textures/icon/description.png",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 4
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 2
+            },
+            {
+              "id": "minecraft:ink_sac",
+              "name": "イカスミ",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "id": "kei:description_free_1",
+          "name": "説明パネル(小)",
+          "count": 1,
+          "icon": "/game/textures/icon/description_1.png",
+          "materials": [
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 2
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            },
+            {
+              "id": "minecraft:ink_sac",
+              "name": "イカスミ",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_desk_and_chair",
+      "name": "机と椅子",
+      "icon": "/game/textures/blocks/desk/desk_and_chair.png",
+      "items": [
+        {
+          "id": "kei:desk",
+          "name": "机",
+          "count": 1,
+          "icon": "/game/textures/blocks/desk/desk.png",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 4
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "id": "kei:desk_inverted",
+          "name": "机(裏)",
+          "count": 1,
+          "icon": "/game/textures/blocks/desk/desk.png",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 4
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "id": "kei:desk_and_chair",
+          "name": "机と椅子",
+          "count": 1,
+          "icon": "/game/textures/blocks/desk/desk_and_chair.png",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 6
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "id": "kei:chair",
+          "name": "椅子",
+          "count": 1,
+          "icon": "/game/textures/blocks/desk/chair.png",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 2
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "id": "kei:chair_inverted",
+          "name": "椅子(裏)",
+          "count": 1,
+          "icon": "/game/textures/blocks/desk/chair.png",
+          "materials": [
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 2
+            },
+            {
+              "id": "minecraft:stick",
+              "name": "棒",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_utiwa",
+      "name": "うちわ",
+      "icon": "/game/textures/items/utiwa/item_utiwa_1.png",
+      "items": [
+        {
+          "id": "kei:item_utiwa_1",
+          "name": "うちわ(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_1.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_2",
+          "name": "うちわ(青)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_2.png",
+          "materials": [
+            {
+              "id": "minecraft:light_blue_dye",
+              "name": "空色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_3",
+          "name": "うちわ(緑)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_3.png",
+          "materials": [
+            {
+              "id": "minecraft:lime_dye",
+              "name": "黄緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_4",
+          "name": "うちわ(黄)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_4.png",
+          "materials": [
+            {
+              "id": "minecraft:yellow_dye",
+              "name": "黄色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_5",
+          "name": "うちわ(マゼンタ)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_5.png",
+          "materials": [
+            {
+              "id": "minecraft:magenta_dye",
+              "name": "赤紫色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_6",
+          "name": "うちわ(赤)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_6.png",
+          "materials": [
+            {
+              "id": "minecraft:cyan_dye",
+              "name": "青緑色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_7",
+          "name": "うちわ(白)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_7.png",
+          "materials": [
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "id": "kei:item_utiwa_8",
+          "name": "うちわ(黒)",
+          "count": 1,
+          "icon": "/game/textures/items/utiwa/item_utiwa_8.png",
+          "materials": [
+            {
+              "id": "minecraft:black_dye",
+              "name": "黒色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_hatimaki",
+      "name": "ハチマキ",
+      "icon": "/game/textures/items/item_hatimaki.png",
+      "items": [
+        {
+          "id": "kei:item_hatimaki",
+          "name": "ハチマキ",
+          "count": 1,
+          "icon": "/game/textures/items/item_hatimaki.png",
+          "materials": [
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:white_dye",
+              "name": "白色の染料",
+              "count": 1
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_compass",
+      "name": "デジタルコンパス",
+      "icon": "/game/textures/items/item_compass_dummy.png",
+      "items": [
+        {
+          "id": "kei:item_compass_dummy",
+          "name": "デジタルコンパス",
+          "count": 1,
+          "icon": "/game/textures/items/item_compass_dummy.png",
+          "materials": [
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_crafting",
+      "name": "工作ブロック",
+      "icon": "/game/textures/icon/add_crafting.png",
+      "items": [
+        {
+          "id": "kei:add_crafting",
+          "name": "工作ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_crafting.png",
+          "materials": [
+            {
+              "id": "minecraft:crafting_table",
+              "name": "作業台",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_cooking",
+      "name": "料理ブロック",
+      "icon": "/game/textures/icon/add_cooking.png",
+      "items": [
+        {
+          "id": "kei:add_cooking",
+          "name": "料理ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_cooking.png",
+          "materials": [
+            {
+              "id": "minecraft:furnace",
+              "name": "かまど",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_tailoring",
+      "name": "裁断ブロック",
+      "icon": "/game/textures/icon/add_tailoring.png",
+      "items": [
+        {
+          "id": "kei:add_tailoring",
+          "name": "裁断ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_tailoring.png",
+          "materials": [
+            {
+              "id": "minecraft:shears",
+              "name": "ハサミ",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_alchemy",
+      "name": "錬金ブロック",
+      "icon": "/game/textures/icon/add_alchemy.png",
+      "items": [
+        {
+          "id": "kei:add_alchemy",
+          "name": "錬金ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_alchemy.png",
+          "materials": [
+            {
+              "id": "minecraft:brewing_stand",
+              "name": "醸造台",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_smithing",
+      "name": "鍛冶ブロック",
+      "icon": "/game/textures/icon/add_smithing.png",
+      "items": [
+        {
+          "id": "kei:add_smithing",
+          "name": "鍛冶ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_smithing.png",
+          "materials": [
+            {
+              "id": "minecraft:smithing_table",
+              "name": "鍛冶台",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_skill",
+      "name": "スキルブロック",
+      "icon": "/game/textures/icon/add_skill.png",
+      "items": [
+        {
+          "id": "kei:add_skill",
+          "name": "スキルブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_skill.png",
+          "materials": [
+            {
+              "id": "minecraft:enchanting_table",
+              "name": "エンチャントテーブル",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cooking": [
+    {
+      "tag": "cooking_recipe_roast_chicken",
+      "name": "ローストチキン",
+      "icon": "/game/textures/icon/food_roast_chicken.png",
+      "items": [
+        {
+          "id": "kei:food_roast_chicken",
+          "name": "ローストチキン",
+          "count": 1,
+          "icon": "/game/textures/icon/food_roast_chicken.png",
+          "materials": [
+            {
+              "id": "minecraft:chicken",
+              "name": "生の鶏肉",
+              "count": 7
+            },
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            },
+            {
+              "id": "minecraft:charcoal",
+              "name": "木炭",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "cooking_recipe_kagamimoti",
+      "name": "鏡餅",
+      "icon": "/game/textures/icon/food_kagamimoti.png",
+      "items": [
+        {
+          "id": "kei:food_kagamimoti",
+          "name": "鏡餅",
+          "count": 1,
+          "icon": "/game/textures/icon/food_kagamimoti.png",
+          "materials": [
+            {
+              "id": "minecraft:glow_berries",
+              "name": "グロウベリー",
+              "count": 1
+            },
+            {
+              "id": "minecraft:white_wool",
+              "name": "白色の羊毛",
+              "count": 1
+            },
+            {
+              "id": "minecraft:oak_planks",
+              "name": "オークの板材",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
