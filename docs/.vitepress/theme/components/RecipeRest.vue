@@ -5,10 +5,18 @@ import { useData } from 'vitepress'
 import GameIcon from './GameIcon.vue'
 import { allRecipes, skillGives, recipeBookId, pageSet } from '../lib/game'
 
-const props = defineProps<{ kind?: 'crafting' | 'cooking' }>()
+// source: 'skill' = スキルツリーでレシピ本が手に入るものだけ / 'other' = それ以外だけ
+const props = defineProps<{ kind?: 'crafting' | 'cooking'; source?: 'skill' | 'other' }>()
 const { page } = useData()
 const done = pageSet(page.value.relativePath, 'recipe')
-const rest = computed(() => allRecipes.filter((r) => (!props.kind || r.kind === props.kind) && !done.has(r.tag)))
+const bySource = (tag: string) => {
+  if (!props.source) return true
+  const fromSkill = skillGives.has(recipeBookId(tag))
+  return props.source === 'skill' ? fromSkill : !fromSkill
+}
+const rest = computed(() =>
+  allRecipes.filter((r) => (!props.kind || r.kind === props.kind) && !done.has(r.tag) && bySource(r.tag))
+)
 </script>
 
 <template>
@@ -27,5 +35,5 @@ const rest = computed(() => allRecipes.filter((r) => (!props.kind || r.kind === 
       </div>
     </div>
   </div>
-  <p v-if="!rest.length" class="ss-sub">(すべて上で紹介しています)</p>
+  <p v-if="!rest.length && !props.source" class="ss-sub">(すべて上で紹介しています)</p>
 </template>

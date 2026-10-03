@@ -2,34 +2,90 @@
 
 **レシピ本** を使ってレシピを覚えると、**工作ブロック** や **料理ブロック** で、素材を使ってそのアイテムを作れるようになります。工作ブロック・料理ブロックのレシピ本は [スキルツリー](/play/skilltree) で手に入ります。
 
-::: info
-「素材」と「スキルツリーでの入手」の部分は、ゲームのデータから自動で表示しています。
-:::
+レシピ本の **手に入れ方ごと** に並べています。「素材」と「スキルツリーでの入手」の部分は、ゲームのデータから自動で表示しています。
 
-## 身につけるもの
+## 最初から持っているレシピ {#first}
+
+ゲームを始めたときから使えるレシピです。
 
 <div class="ss-item">
 
-### ![](/game/textures/items/happi/item_happi_1.png){.hicon} 法被 {#happi}
+### ![](/game/textures/icon/coaster.png){.hicon} コースター {#coaster}
 
-夏を彷彿とさせるただの法被。着ることで心は燃えるかもだが、普通に現実は冬。全8色。
+置くと、ポーション・水入り瓶・はちみつ瓶・ガラス瓶を、コップのように置けるブロック。
 
-<p class="ss-meta"><b>レシピ本</b>行商人のレアトレード。</p>
+- 素手でクリックすると取り出せます。ポーションなどは取り出すとアイテム名がなくなるので注意。
+- スニークしながら素手でクリックすると、ストローのオン・オフができます。
+- [Discord botで追加した飲み物](/play/bot#add_item) も置けます。追加したときに選んだ色とグラスで表示され、取り出すと名前ごと戻ってきます。
 
-<Recipe tag="crafting_recipe_happi" />
-<Shots :images="['happi.webp', 'happi_colors.png']" alt="法被" />
+<p class="ss-meta"><b>レシピ本</b>最初から持っています。</p>
+
+<Recipe tag="crafting_recipe_coaster" />
+<Shots :images="['coaster.webp']" alt="コースター" />
 </div>
 
 <div class="ss-item">
 
-### お面 {#omen}
+### ![](/game/textures/items/item_compass.png){.hicon} デジタルコンパス {#compass}
 
-つけるだけでそいつになった気分になれるお面。つけても結局自分は自分。全11種類。
+使うと座標を記録でき、記録した方角・位置を教えてくれる。未使用のものに記録をコピーしたり、記録を消して未使用に戻したりもできる。見た目に見覚えがある気がするのは気のせい。
 
-<p class="ss-meta"><b>レシピ本</b>プレゼントボックスの中からレアドロップ。</p>
+<p class="ss-meta"><b>レシピ本</b>最初から持っています。</p>
 
-<Recipe tag="crafting_recipe_omen" />
-<Shots :images="['omen.webp', 'omen_list.png']" alt="お面" />
+<Recipe tag="crafting_recipe_compass" />
+<Shots :images="['compass.webp']" alt="デジタルコンパス" />
+</div>
+
+## モブから手に入るレシピ {#mob}
+
+モブを倒すと、レシピ本がドロップすることがあります。
+
+<div class="ss-item">
+
+### ![](/game/textures/items/balloon/item_balloon_1.png){.hicon} 風船 {#balloon}
+
+かわいらしい見た目をした、ただの風船。全8色。
+
+<p class="ss-meta"><b>レシピ本</b>ヴェックスからレアドロップ。</p>
+
+<Recipe tag="crafting_recipe_balloon" />
+<Shots :images="['balloon.webp', 'balloon_colors.png']" alt="風船" />
+</div>
+
+<div class="ss-item">
+
+### ![](/game/textures/items/item_hukimodosi.png){.hicon} ふき戻し {#hukimodosi}
+
+右クリックでピーピーできる。普通にうるさい。
+
+<p class="ss-meta"><b>レシピ本</b>ガーディアンからレアドロップ。</p>
+
+<Recipe tag="crafting_recipe_hukimodosi" />
+<Shots :images="['hukimodosi.webp']" alt="ふき戻し" />
+</div>
+
+<div class="ss-item">
+
+### ![](/game/textures/items/item_jet_boots.png){.hicon} ジェットブーツ / ジェットチャージャー {#jet}
+
+ジェットブーツは、履いてスニークすることでジャンプ力をチャージし、ジャンプすることで高く飛べるブーツ。ジャンプ力に応じて耐久力を消費するが、耐久力のエンチャントの効果を受ける。ジェットチャージャーは、履いているブーツの耐久力を回復する。
+
+<p class="ss-meta"><b>レシピ本</b>ブリーズからレアドロップ。</p>
+
+<Recipe tag="crafting_recipe_jet" />
+<Shots :images="['jet.webp']" alt="ジェットブーツ" />
+</div>
+
+<div class="ss-item">
+
+### ![](/game/textures/items/sairiumu/item_sairiumu_1.png){.hicon} サイリウム {#sairiumu}
+
+オフハンドにも持てるただのサイリウム。オタ芸がしたいのか、交通安全の警備員がしたいのかわからない。全7色。
+
+<p class="ss-meta"><b>レシピ本</b>光るイカからレアドロップ。</p>
+
+<Recipe tag="crafting_recipe_sairiumu" />
+<Shots :images="['sairiumu.webp', 'sairiumu_colors.png']" alt="サイリウム" />
 </div>
 
 <div class="ss-item">
@@ -70,6 +126,58 @@
 
 <div class="ss-item">
 
+### 座れる虹色の階段ブロック {#ride-gaming}
+
+虹色の椅子。陽キャの気分になれるかもしれない。
+
+<p class="ss-meta"><b>レシピ本</b>とある虹色のモブを倒すと確定でドロップ。</p>
+
+<Recipe tag="crafting_recipe_ride_gaming" />
+<Shots :images="['ride_gaming.webp']" alt="座れる虹色の階段ブロック" />
+</div>
+
+## 宝箱・福袋から手に入るレシピ {#box}
+
+チェストや福袋、プレゼントボックスの中から見つかることがあります。
+
+<div class="ss-item">
+
+### ![](/game/textures/icon/ride_chair/ride_chair_oak.png){.hicon} 椅子 {#ride-chair}
+
+座れる装飾された椅子。斜めにも設置できる。木の種類で全10種と、ゲーミングチェア。
+
+<p class="ss-meta"><b>レシピ本</b>村のチェストに低確率で入っている。</p>
+
+<Recipe tag="crafting_recipe_ride_chair" />
+<Shots :images="['ride_chairs.webp', 'ride_chair_gaming.webp']" alt="椅子" />
+</div>
+
+<div class="ss-item">
+
+### お面 {#omen}
+
+つけるだけでそいつになった気分になれるお面。つけても結局自分は自分。全11種類。
+
+<p class="ss-meta"><b>レシピ本</b>プレゼントボックスの中からレアドロップ。</p>
+
+<Recipe tag="crafting_recipe_omen" />
+<Shots :images="['omen.webp', 'omen_list.png']" alt="お面" />
+</div>
+
+<div class="ss-item">
+
+### ![](/game/textures/icon/tyoutin.png){.hicon} 提灯 {#tyoutin}
+
+設置すると一気にお祭り気分になれる提灯。実は光っていない。
+
+<p class="ss-meta"><b>レシピ本</b>福袋の中からレアドロップ。</p>
+
+<Recipe tag="crafting_recipe_tyoutin" />
+<Shots :images="['tyoutin.webp']" alt="提灯" />
+</div>
+
+<div class="ss-item">
+
 ### ![](/game/textures/items/item_hatimaki.png){.hicon} ハチマキ {#hatimaki}
 
 つけることで暑苦しく見えるただのハチマキ。
@@ -80,54 +188,32 @@
 <Shots :images="['hatimaki.webp']" alt="ハチマキ" />
 </div>
 
-<div class="ss-item">
+## 取引・行動で手に入るレシピ {#action}
 
-### ![](/game/textures/items/item_jet_boots.png){.hicon} ジェットブーツ / ジェットチャージャー {#jet}
-
-ジェットブーツは、履いてスニークすることでジャンプ力をチャージし、ジャンプすることで高く飛べるブーツ。ジャンプ力に応じて耐久力を消費するが、耐久力のエンチャントの効果を受ける。ジェットチャージャーは、履いているブーツの耐久力を回復する。
-
-<p class="ss-meta"><b>レシピ本</b>ブリーズからレアドロップ。</p>
-
-<Recipe tag="crafting_recipe_jet" />
-<Shots :images="['jet.webp']" alt="ジェットブーツ" />
-</div>
-
-## 手に持つもの
+行商人との取引や、特定の行動をすると手に入ります。
 
 <div class="ss-item">
 
-### ![](/game/textures/items/balloon/item_balloon_1.png){.hicon} 風船 {#balloon}
+### ![](/game/textures/items/happi/item_happi_1.png){.hicon} 法被 {#happi}
 
-かわいらしい見た目をした、ただの風船。全8色。
+夏を彷彿とさせるただの法被。着ることで心は燃えるかもだが、普通に現実は冬。全8色。
 
-<p class="ss-meta"><b>レシピ本</b>ヴェックスからレアドロップ。</p>
+<p class="ss-meta"><b>レシピ本</b>行商人のレアトレード。</p>
 
-<Recipe tag="crafting_recipe_balloon" />
-<Shots :images="['balloon.webp', 'balloon_colors.png']" alt="風船" />
+<Recipe tag="crafting_recipe_happi" />
+<Shots :images="['happi.webp', 'happi_colors.png']" alt="法被" />
 </div>
 
 <div class="ss-item">
 
-### ![](/game/textures/items/item_hukimodosi.png){.hicon} ふき戻し {#hukimodosi}
+### ![](/game/textures/icon/reji.png){.hicon} レジブロック {#reji}
 
-右クリックでピーピーできる。普通にうるさい。
+クリックでATM機能を使えるブロック。どういう理屈かはわからない。金持ちの象徴。
 
-<p class="ss-meta"><b>レシピ本</b>ガーディアンからレアドロップ。</p>
+<p class="ss-meta"><b>レシピ本</b><span>ATM・Bankに金ブロックを10スタック(金インゴット5760個)預けた状態で <code>/giftcode money</code> を実行する。(<a href="../play/commands#giftcode">チャットコマンド</a>)</span></p>
 
-<Recipe tag="crafting_recipe_hukimodosi" />
-<Shots :images="['hukimodosi.webp']" alt="ふき戻し" />
-</div>
-
-<div class="ss-item">
-
-### ![](/game/textures/items/sairiumu/item_sairiumu_1.png){.hicon} サイリウム {#sairiumu}
-
-オフハンドにも持てるただのサイリウム。オタ芸がしたいのか、交通安全の警備員がしたいのかわからない。全7色。
-
-<p class="ss-meta"><b>レシピ本</b>光るイカからレアドロップ。</p>
-
-<Recipe tag="crafting_recipe_sairiumu" />
-<Shots :images="['sairiumu.webp', 'sairiumu_colors.png']" alt="サイリウム" />
+<Recipe tag="crafting_recipe_reji" />
+<Shots :images="['reji.webp']" alt="レジブロック" />
 </div>
 
 <div class="ss-item">
@@ -154,85 +240,9 @@
 <Shots :images="['utiwa.webp', 'utiwa_black.webp', 'utiwa_colors.png']" alt="うちわ" />
 </div>
 
-<div class="ss-item">
+## スキルツリーで手に入るレシピ {#skill}
 
-### ![](/game/textures/items/item_compass.png){.hicon} デジタルコンパス {#compass}
-
-使うと座標を記録でき、記録した方角・位置を教えてくれる。未使用のものに記録をコピーしたり、記録を消して未使用に戻したりもできる。見た目に見覚えがある気がするのは気のせい。
-
-<p class="ss-meta"><b>レシピ本</b>最初から持っています。</p>
-
-<Recipe tag="crafting_recipe_compass" />
-<Shots :images="['compass.webp']" alt="デジタルコンパス" />
-</div>
-
-## 家具・ブロック
-
-<div class="ss-item">
-
-### ![](/game/textures/icon/ride_chair/ride_chair_oak.png){.hicon} 椅子 {#ride-chair}
-
-座れる装飾された椅子。斜めにも設置できる。木の種類で全10種と、ゲーミングチェア。
-
-<p class="ss-meta"><b>レシピ本</b>村のチェストに低確率で入っている。</p>
-
-<Recipe tag="crafting_recipe_ride_chair" />
-<Shots :images="['ride_chairs.webp', 'ride_chair_gaming.webp']" alt="椅子" />
-</div>
-
-<div class="ss-item">
-
-### 座れる虹色の階段ブロック {#ride-gaming}
-
-虹色の椅子。陽キャの気分になれるかもしれない。
-
-<p class="ss-meta"><b>レシピ本</b>とある虹色のモブを倒すと確定でドロップ。</p>
-
-<Recipe tag="crafting_recipe_ride_gaming" />
-<Shots :images="['ride_gaming.webp']" alt="座れる虹色の階段ブロック" />
-</div>
-
-<div class="ss-item">
-
-### ![](/game/textures/icon/tyoutin.png){.hicon} 提灯 {#tyoutin}
-
-設置すると一気にお祭り気分になれる提灯。実は光っていない。
-
-<p class="ss-meta"><b>レシピ本</b>福袋の中からレアドロップ。</p>
-
-<Recipe tag="crafting_recipe_tyoutin" />
-<Shots :images="['tyoutin.webp']" alt="提灯" />
-</div>
-
-<div class="ss-item">
-
-### ![](/game/textures/icon/reji.png){.hicon} レジブロック {#reji}
-
-クリックでATM機能を使えるブロック。どういう理屈かはわからない。金持ちの象徴。
-
-<p class="ss-meta"><b>レシピ本</b><span>ATM・Bankに金ブロックを10スタック(金インゴット5760個)預けた状態で <code>/giftcode money</code> を実行する。(<a href="../play/commands#giftcode">チャットコマンド</a>)</span></p>
-
-<Recipe tag="crafting_recipe_reji" />
-<Shots :images="['reji.webp']" alt="レジブロック" />
-</div>
-
-<div class="ss-item">
-
-### ![](/game/textures/icon/coaster.png){.hicon} コースター {#coaster}
-
-置くと、ポーション・水入り瓶・はちみつ瓶・ガラス瓶を、コップのように置けるブロック。
-
-- 素手でクリックすると取り出せます。ポーションなどは取り出すとアイテム名がなくなるので注意。
-- スニークしながら素手でクリックすると、ストローのオン・オフができます。
-- [Discord botで追加した飲み物](/play/bot#add_item) も置けます。追加したときに選んだ色とグラスで表示され、取り出すと名前ごと戻ってきます。
-
-<p class="ss-meta"><b>レシピ本</b>最初から持っています。</p>
-
-<Recipe tag="crafting_recipe_coaster" />
-<Shots :images="['coaster.webp']" alt="コースター" />
-</div>
-
-## 遊べるブロック
+[スキルツリー](/play/skilltree) でスキルを解放すると手に入ります。
 
 <div class="ss-item">
 
@@ -261,8 +271,14 @@
 <Recipe tag="crafting_recipe_chinchiro" />
 </div>
 
+### そのほかのスキルツリーのレシピ {#skill-more}
+
+工作ブロックなどの作業台や、ちょっとした家具・料理のレシピです。スキルツリーに新しく追加されたレシピもここに出ます。
+
+<RecipeRest source="skill" />
+
 ## そのほかのレシピ {#others}
 
-上で紹介していないレシピです(新しく追加されたものもここに出ます)。
+手に入れ方がまだ決まっていない・上のどれにも当てはまらないレシピです。
 
-<RecipeRest />
+<RecipeRest source="other" />
