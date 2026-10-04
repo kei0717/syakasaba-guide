@@ -511,3 +511,49 @@ td .ss-icon {
   background: none;
   vertical-align: -4px;
 }
+
+/* 外部ツールへのリンクカード */
+.ss-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.vp-doc a.ss-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius);
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow);
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.vp-doc a.ss-tool:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: translateY(-2px);
+}
+.ss-tool b {
+  font-size: 16px;
+  color: var(--vp-c-brand-1);
+}
+.ss-tool b::after {
+  content: ' ↗';
+  font-weight: 400;
+}
+.ss-tool span {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.ss-tool small {
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+}
+@media (max-width: 640px) {
+  .ss-tools {
+    grid-template-columns: 1fr;
+  }
+}
