@@ -86,6 +86,27 @@ export default defineConfig({
     search: {
       provider: 'local',
       options: {
+        // 標準の検索は「空白で区切られた単語」でしか探せず、空白のない日本語だと探せない。
+        // そこで日本語は2文字ずつに区切って登録・検索する(英数字はそのまま単語として扱う)。
+        // ※この関数はブラウザ側にも文字列のまま送られるので、外の変数を使わないこと
+        miniSearch: {
+          options: {
+            tokenize: (text) => {
+              const tokens = []
+              const parts = text.toLowerCase().match(/[a-z0-9_]+|[^\sa-z0-9_\p{P}\p{S}]+/gu) || []
+              for (const p of parts) {
+                if (/^[a-z0-9_]+$/.test(p) || p.length === 1) tokens.push(p)
+                else for (let i = 0; i < p.length - 1; i++) tokens.push(p.slice(i, i + 2))
+              }
+              return tokens
+            }
+          },
+          searchOptions: {
+            combineWith: 'AND',
+            fuzzy: false,
+            prefix: true
+          }
+        },
         translations: {
           button: { buttonText: '検索', buttonAriaLabel: '検索' },
           modal: {

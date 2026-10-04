@@ -4,7 +4,10 @@
    ===================================================================== */
 
 :root {
-  --vp-font-family-base: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  /* 本文はパソコン・スマホに入っている文字を使う(Windowsでもくっきり表示される)。
+     丸ゴシックは小さい文字だとWindowsでにじんで見えるので、見出しだけに使う */
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'BIZ UDPGothic', 'Meiryo', 'Noto Sans JP', sans-serif;
+  --ss-font-round: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', var(--vp-font-family-base);
 
   --vp-c-brand-1: #2a8a57;
   --vp-c-brand-2: #34a067;
@@ -41,6 +44,17 @@
 }
 
 /* ---------- 全体の文字 ---------- */
+/* 丸ゴシックを使う大きな文字 */
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.VPHero .name,
+.VPHero .text,
+.VPNavBarTitle .title,
+.VPFeature .title,
+.ss-home h2 {
+  font-family: var(--ss-font-round);
+}
 .vp-doc h1 {
   font-weight: 800;
   letter-spacing: 0.02em;

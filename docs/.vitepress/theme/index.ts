@@ -1,7 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
 // 丸ゴシックの文字(サイト内に同梱しているので外部サービスに頼らない)
-import '@fontsource/m-plus-rounded-1c/400.css'
 import '@fontsource/m-plus-rounded-1c/700.css'
 import '@fontsource/m-plus-rounded-1c/800.css'
 import './style.css'
