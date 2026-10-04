@@ -71,6 +71,31 @@
       ]
     },
     {
+      "tag": "crafting_recipe_mohikan",
+      "name": "モヒカン",
+      "icon": "/game/textures/items/item_mohikan.png",
+      "items": [
+        {
+          "id": "kei:item_mohikan",
+          "name": "モヒカン",
+          "count": 1,
+          "icon": "/game/textures/items/item_mohikan.png",
+          "materials": [
+            {
+              "id": "minecraft:red_wool",
+              "name": "赤色の羊毛",
+              "count": 3
+            },
+            {
+              "id": "minecraft:string",
+              "name": "糸",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
       "tag": "crafting_recipe_ride_chair",
       "name": "椅子",
       "icon": "/game/textures/icon/ride_chair/ride_chair_acacia.png",

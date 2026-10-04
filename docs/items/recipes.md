@@ -244,6 +244,8 @@
 
 [スキルツリー](/play/skilltree) でスキルを解放すると手に入ります。
 
+<p class="ss-group-label">サイコロ遊び</p>
+
 <div class="ss-item">
 
 ### サイコロ {#dice}
@@ -271,9 +273,165 @@
 <Recipe tag="crafting_recipe_chinchiro" />
 </div>
 
-### そのほかのスキルツリーのレシピ {#skill-more}
+<p class="ss-group-label">作業台</p>
 
-工作ブロックなどの作業台や、ちょっとした家具・料理のレシピです。スキルツリーに新しく追加されたレシピもここに出ます。
+アイテムを作ったり、Discord botで追加したものを受け取ったりするためのブロックです。
+
+<div class="ss-item">
+
+### 工作ブロック {#add-crafting}
+
+クリックすると、レシピ本で覚えたレシピの一覧が開き、素材を使ってアイテムを作れる作業台。このページの「工作」のレシピは、すべてこのブロックで作る。
+
+<Recipe tag="crafting_recipe_add_crafting" />
+</div>
+
+<div class="ss-item">
+
+### 料理ブロック {#add-cooking}
+
+料理のレシピ本で覚えた料理を、素材を使って作れる作業台。
+
+<Recipe tag="crafting_recipe_add_cooking" />
+</div>
+
+<div class="ss-item">
+
+### 裁断ブロック {#add-tailoring}
+
+[Discord botで追加したオシャレ装備](/play/bot#add_clothing) を、パスワードを入力して受け取るためのブロック。
+
+<Recipe tag="crafting_recipe_add_tailoring" />
+</div>
+
+<div class="ss-item">
+
+### 錬金ブロック {#add-alchemy}
+
+[Discord botで追加したアイテム・食べ物・飲み物・ブロック](/play/bot#add_item) を、パスワードを入力して受け取るためのブロック。
+
+<Recipe tag="crafting_recipe_add_alchemy" />
+</div>
+
+<div class="ss-item">
+
+### 鍛冶ブロック {#add-smithing}
+
+ネザライトのツールを右手に持ってパスワードを入力すると、[Discord botで追加した見た目](/play/bot#add_tool) に変えられるブロック。
+
+<Recipe tag="crafting_recipe_add_smithing" />
+</div>
+
+<div class="ss-item">
+
+### スキルブロック {#add-skill}
+
+クリックすると [スキルツリー](/play/skilltree) が開くブロック。`/skill` を打たなくても開けるので、拠点に置いておくと便利。
+
+<Recipe tag="crafting_recipe_add_skill" />
+</div>
+
+<p class="ss-group-label">家具・飾り</p>
+
+<div class="ss-item">
+
+### 机と椅子 {#desk}
+
+教室にありそうな机と椅子。机・椅子・机と椅子のセットと、向きが反対のものがある。椅子はクリックすると座れる。
+
+<Recipe tag="crafting_recipe_desk_and_chair" />
+</div>
+
+<div class="ss-item">
+
+### 説明パネル {#description}
+
+自分で文章を書けるパネル(大・小)。置いた人が最初にクリックすると文章を書く画面が開き、書いたあとは誰がクリックしても読める。置いた人はスニークしながらクリックで書き直せる。壊すと文章は消える。
+
+<Recipe tag="crafting_recipe_description" />
+</div>
+
+<div class="ss-item">
+
+### 風鈴 {#wind-chime}
+
+夏っぽさを出せる風鈴。置いた向きに合わせて飾れる。クリックすると色が変わる(全5色)。
+
+<Recipe tag="crafting_recipe_wind_chime" />
+</div>
+
+<div class="ss-item">
+
+### 扇風機 {#electric-fan}
+
+クリックで電源のオン・オフを切り替えられる扇風機。置いた向きに合わせて飾れる。
+
+<Recipe tag="crafting_recipe_electric_fan" />
+</div>
+
+<div class="ss-item">
+
+### かき氷機 {#kakigooriki}
+
+かき氷を作れる機械。
+
+1. **氷** と **紙** を手に持って、1つずつクリックで入れる(順番はどちらでもOK)。
+2. クリックを続けて氷を削る。
+3. 削り終わったら **素手** でクリックすると、かき氷(イチゴ・ブルーハワイ・レモン・メロンのどれか)を受け取れる。
+
+<Recipe tag="crafting_recipe_kakigooriki" />
+</div>
+
+<p class="ss-group-label">身につけるもの</p>
+
+<div class="ss-item">
+
+### 風車 {#kazaguruma}
+
+頭につけられる風車。頭の上でくるくる回る。
+
+<Recipe tag="crafting_recipe_kazaguruma" />
+</div>
+
+<div class="ss-item">
+
+### 透明傘 {#umbrella-clear}
+
+[虹色の傘](#umbrella) を脱色した、透明なビニール傘。
+
+<Recipe tag="crafting_recipe_umbrella_clear" />
+</div>
+
+<div class="ss-item">
+
+### モヒカン {#mohikan}
+
+頭につけると、一瞬で世紀末になれるモヒカン。
+
+<Recipe tag="crafting_recipe_mohikan" />
+</div>
+
+<p class="ss-group-label">料理</p>
+
+料理ブロックで作る、飾って楽しむ料理です。
+
+<div class="ss-item">
+
+### 鏡餅 {#kagamimoti}
+
+お正月に飾りたい縁起物。
+
+<Recipe tag="cooking_recipe_kagamimoti" />
+</div>
+
+<div class="ss-item">
+
+### ローストチキン {#roast-chicken}
+
+パーティーの主役になれる、こんがり焼けたチキン。
+
+<Recipe tag="cooking_recipe_roast_chicken" />
+</div>
 
 <RecipeRest source="skill" />
 

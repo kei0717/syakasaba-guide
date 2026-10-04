@@ -326,7 +326,7 @@
     "unit": "block",
     "cost": 10,
     "count": 1,
-    "icon": null
+    "icon": "/game/textures/items/elytra.png"
   },
   {
     "name": "ロケット花火 × 32",
@@ -334,7 +334,7 @@
     "unit": "ingot",
     "cost": 16,
     "count": 32,
-    "icon": null
+    "icon": "/game/textures/items/fireworks.png"
   },
   {
     "name": "ダイヤモンド売却",
@@ -342,7 +342,7 @@
     "unit": "ingot",
     "cost": 1,
     "count": 5,
-    "icon": null,
+    "icon": "/game/textures/items/diamond.png",
     "sell": true
   }
 ]

@@ -35,5 +35,5 @@ const rest = computed(() =>
       </div>
     </div>
   </div>
-  <p v-if="!rest.length && !props.source" class="ss-sub">(すべて上で紹介しています)</p>
+  <p v-if="!rest.length && props.source !== 'skill'" class="ss-sub">{{ props.source ? '(今はありません)' : '(すべて上で紹介しています)' }}</p>
 </template>

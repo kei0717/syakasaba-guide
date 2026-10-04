@@ -25,6 +25,12 @@ for (const s of skilltree.skills as any[]) {
 export const recipeBookId = (tag: string) => 'kei:item_' + tag
 
 export const UNIT_LABEL: Record<string, string> = { ingot: '金インゴット', block: '金ブロック', emerald: 'エメラルド' }
+export const UNIT_ICON: Record<string, string> = {
+  ingot: '/images/currency/gold_ingot.png',
+  block: '/images/currency/gold_block.png',
+  emerald: '/images/currency/emerald.png',
+  diamond: '/images/currency/diamond.png'
+}
 
 // ページ内で「個別に説明済み」の項目を覚えておき、最後の「そのほか」一覧から除くための仕組み
 const registry = new Map<string, Set<string>>()

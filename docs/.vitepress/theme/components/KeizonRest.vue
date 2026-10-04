@@ -3,7 +3,8 @@
 import { computed } from 'vue'
 import { useData } from 'vitepress'
 import GameIcon from './GameIcon.vue'
-import { keizon, UNIT_LABEL, pageSet } from '../lib/game'
+import Price from './Price.vue'
+import { keizon, pageSet } from '../lib/game'
 
 const { page } = useData()
 const done = pageSet(page.value.relativePath, 'keizon')
@@ -18,10 +19,9 @@ const rest = computed(() => (keizon as any[]).filter((k) => !done.has(k.id ?? k.
         <h4>{{ k.name }}</h4>
       </div>
       <div class="ss-badges">
-        <span v-if="k.sell" class="ss-badge gold">ダイヤモンド × {{ k.count }} → {{ UNIT_LABEL[k.unit] }} × {{ k.cost }}</span>
-        <span v-else-if="!k.group" class="ss-badge gold">{{ UNIT_LABEL[k.unit] }} × {{ k.cost }}</span>
+        <span v-if="!k.group" class="ss-badge gold"><Price :unit="k.unit" :cost="k.cost" :sell="k.sell ? k.count : undefined" /></span>
         <template v-else>
-          <span v-for="s in k.items" :key="s.id" class="ss-badge">{{ s.name }} {{ UNIT_LABEL[s.unit] }} × {{ s.cost }}</span>
+          <span v-for="s in k.items" :key="s.id" class="ss-badge">{{ s.name }}<b><Price :unit="s.unit" :cost="s.cost" /></b></span>
         </template>
       </div>
     </div>

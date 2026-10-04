@@ -230,13 +230,20 @@ img.pixel,
   color: var(--vp-c-text-1);
   font-weight: 700;
 }
-.ss-badge.gold::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background: linear-gradient(135deg, #ffe680, #d9a100);
-  box-shadow: inset 0 0 0 1px rgba(120, 80, 0, 0.35);
+/* 値段(通貨アイコン付き) */
+.ss-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ss-price img {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+.ss-price-arrow {
+  margin: 0 2px;
+  color: var(--vp-c-text-2);
 }
 .ss-badge img {
   width: 16px;
@@ -570,4 +577,14 @@ td .ss-icon {
   .ss-tools {
     grid-template-columns: 1fr;
   }
+}
+
+/* ページ内の小さな区切り(見出しにはしない) */
+.vp-doc .ss-group-label {
+  margin: 36px 0 12px;
+  font-family: var(--ss-font-round);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--vp-c-brand-1);
+  letter-spacing: 0.04em;
 }

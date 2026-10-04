@@ -9,7 +9,7 @@
     {
       "id": "life_2",
       "name": "生活2",
-      "icon": null,
+      "icon": "/game/textures/items/compass.png",
       "requiresSkill": "life_more_paths"
     },
     {
@@ -502,6 +502,76 @@
       ]
     },
     {
+      "id": "craft_electric_fan",
+      "category": "temp",
+      "name": "そよ風をあなたに",
+      "icon": "/game/textures/blocks/electric_fan_off.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "扇風機を工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 4
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "扇風機のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_electric_fan"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_mohikan",
+      "category": "temp",
+      "name": "世紀末スタイル",
+      "icon": "/game/textures/items/item_mohikan.png",
+      "parent": null,
+      "levels": [
+        {
+          "description": "モヒカンを工作できるようになるレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "minecraft:red_dye",
+              "name": "赤色の染料",
+              "count": 4
+            },
+            {
+              "id": "minecraft:emerald",
+              "name": "エメラルド",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "モヒカンのレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_mohikan"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sign_paths",
       "category": "life_2",
       "name": "じゃんけん棒の種類追加",
@@ -647,7 +717,7 @@
       "parent": "life_paths",
       "levels": [
         {
-          "description": "真下を向いてスニークすることでバックパックを開くことができる。",
+          "description": "真下を向いてスニークを長押しした後、クリックすることでバックパックを開くことができる。",
           "materials": [
             {
               "id": "minecraft:leather",
