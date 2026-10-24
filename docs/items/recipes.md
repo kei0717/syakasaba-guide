@@ -362,7 +362,7 @@
 
 <div class="ss-item">
 
-### 扇風機 {#electric-fan}
+### ![](/game/textures/icon/electric_fan.png){.hicon} 扇風機 {#electric-fan}
 
 クリックで電源のオン・オフを切り替えられる扇風機。置いた向きに合わせて飾れる。
 

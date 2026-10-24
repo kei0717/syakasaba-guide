@@ -436,20 +436,6 @@ img.pixel,
 }
 
 /* ---------- ホーム ---------- */
-.VPHome .VPFeature {
-  border-radius: var(--ss-radius);
-  border: 1px solid var(--ss-border);
-  background: var(--ss-surface);
-  box-shadow: var(--ss-shadow);
-  transition: transform 0.15s;
-}
-.VPHome .VPFeature:hover {
-  transform: translateY(-3px);
-}
-.VPHome .VPFeature .icon {
-  background: var(--vp-c-brand-soft);
-  border-radius: 12px;
-}
 .VPHero .name {
   font-weight: 800;
 }
@@ -522,6 +508,226 @@ img.pixel,
   .ss-home-steps {
     grid-template-columns: 1fr;
   }
+}
+.ss-home h2 + .ss-home-steps,
+.ss-home h2 + .ss-tiles {
+  margin-top: 4px;
+}
+.ss-home > h2:not(:first-child),
+.ss-home-col > h2 {
+  margin-top: 56px;
+}
+
+/* ---------- ホームの「どんなサーバー?」(スクショ付きのタイル) ---------- */
+.ss-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.ss-tile {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--ss-radius);
+  border: 1px solid var(--ss-border);
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow);
+  text-decoration: none !important;
+  color: var(--vp-c-text-1) !important;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.ss-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--vp-c-brand-1);
+}
+.ss-tile > img,
+.ss-tile-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--ss-surface-2);
+}
+/* 写真のないタイル(スキルツリー)は、ブランド色の地にドット絵を大きく */
+.ss-tile-art {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, var(--vp-c-brand-2), #1f6b45 70%, #9a7a1e);
+}
+.ss-tile-art img {
+  width: 36%;
+  max-width: 120px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.3));
+}
+.ss-tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px 18px;
+}
+.ss-tile-body b {
+  font-family: var(--ss-font-round);
+  font-size: 17px;
+  font-weight: 800;
+}
+.ss-tile-body span {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--vp-c-text-2);
+}
+@media (max-width: 960px) {
+  .ss-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .ss-tiles {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- ホームの「数字で見る」 ---------- */
+.ss-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+.ss-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: var(--ss-radius);
+  background: var(--vp-c-brand-soft);
+  text-decoration: none !important;
+  color: var(--vp-c-text-1) !important;
+  transition: transform 0.15s;
+}
+.ss-stat:hover {
+  transform: translateY(-2px);
+}
+.ss-stat b {
+  font-family: var(--ss-font-round);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--vp-c-brand-1);
+}
+.ss-stat span {
+  font-size: 14px;
+  color: var(--vp-c-text-2);
+}
+@media (max-width: 760px) {
+  .ss-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* ---------- ホームの下段(最近の変更・困ったら) ---------- */
+.ss-home-row {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 32px;
+}
+@media (max-width: 760px) {
+  .ss-home-row {
+    grid-template-columns: 1fr;
+  }
+}
+.ss-log-entry {
+  padding: 4px 0 14px;
+  border-left: 2px solid var(--vp-c-brand-soft);
+  padding-left: 18px;
+  position: relative;
+}
+.ss-log-entry::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1);
+}
+.ss-log-date {
+  display: block;
+  font-family: var(--ss-font-round);
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 4px;
+}
+.ss-log-entry ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.ss-log-entry li {
+  font-size: 14px;
+  line-height: 1.75;
+  margin: 2px 0;
+}
+.ss-log-entry li a {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ss-log-entry li code {
+  font-size: 13px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--vp-c-default-soft);
+}
+.ss-more {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}
+.ss-more::after {
+  content: ' \2192';
+}
+.ss-help {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ss-help-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 18px;
+  border-radius: var(--ss-radius);
+  border: 1px solid var(--ss-border);
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow);
+  text-decoration: none !important;
+  color: var(--vp-c-text-1) !important;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.ss-help-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--vp-c-brand-1);
+}
+.ss-help-item b {
+  font-size: 15px;
+}
+.ss-help-item span {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+.ss-help-item code {
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--vp-c-default-soft);
 }
 
 /* バッジや表の中の小さいアイコン */

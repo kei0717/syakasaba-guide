@@ -505,7 +505,7 @@
       "id": "craft_electric_fan",
       "category": "temp",
       "name": "そよ風をあなたに",
-      "icon": "/game/textures/blocks/electric_fan_off.png",
+      "icon": "/game/textures/icon/electric_fan.png",
       "parent": null,
       "levels": [
         {

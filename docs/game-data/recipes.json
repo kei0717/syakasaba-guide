@@ -1645,13 +1645,13 @@
     {
       "tag": "crafting_recipe_electric_fan",
       "name": "扇風機",
-      "icon": "/game/textures/blocks/electric_fan_off.png",
+      "icon": "/game/textures/icon/electric_fan.png",
       "items": [
         {
           "id": "kei:electric_fan",
           "name": "扇風機",
           "count": 1,
-          "icon": "/game/textures/blocks/electric_fan_off.png",
+          "icon": "/game/textures/icon/electric_fan.png",
           "materials": [
             {
               "id": "minecraft:iron_ingot",

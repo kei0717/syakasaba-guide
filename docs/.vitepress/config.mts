@@ -56,6 +56,7 @@ export default defineConfig({
           { text: 'チャットコマンド', link: '/play/commands' },
           { text: 'K-phoneアプリ', link: '/play/kphone' },
           { text: 'スキルツリー', link: '/play/skilltree' },
+          { text: 'ダウンと蘇生', link: '/play/down' },
           { text: 'Discord botで追加できるもの', link: '/play/bot' }
         ]
       },

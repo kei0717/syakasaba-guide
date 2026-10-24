@@ -14,6 +14,8 @@ import KeizonRest from './components/KeizonRest.vue'
 
 
 import SkillTree from './components/SkillTree.vue'
+import HomeStats from './components/HomeStats.vue'
+import HomeChangelog from './components/HomeChangelog.vue'
 
 export default {
   extends: DefaultTheme,
@@ -25,5 +27,7 @@ export default {
     app.component('Keizon', Keizon)
     app.component('KeizonRest', KeizonRest)
     app.component('SkillTree', SkillTree)
+    app.component('HomeStats', HomeStats)
+    app.component('HomeChangelog', HomeChangelog)
   }
 } satisfies Theme
