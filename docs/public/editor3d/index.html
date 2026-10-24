@@ -166,6 +166,20 @@
   .res-pick button small{ display:block; font-size:11px; color:var(--sub); }
   .res-pick button.active{ border-color:var(--accent); color:var(--accent); background:rgba(94, 230, 196, 0.08); }
 
+  .import-panel{ background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:12px; margin:-2px 0 10px; }
+  .import-panel .hint{ margin:0 0 10px; }
+  .import-row{ display:flex; align-items:center; gap:10px; padding:6px 0; border-top:1px solid var(--line); }
+  .import-row:first-child{ border-top:none; }
+  .import-row b{ font-size:13px; width:52px; flex-shrink:0; }
+  .import-row .thumb{ width:36px; height:36px; flex-shrink:0; border-radius:4px; border:1px solid var(--line); background:#0d0e12;
+    display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .import-row .thumb img{ width:100%; height:100%; image-rendering:pixelated; object-fit:contain; }
+  .import-row .fname{ flex:1; min-width:0; font-size:11px; color:var(--sub); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .import-row .fname.set{ color:var(--text); }
+  .import-actions{ display:flex; gap:8px; margin-top:10px; }
+  .import-actions .dl{ flex:1; padding:10px 12px; }
+  .import-msg{ font-size:11px; color:var(--accent2); margin:8px 0 0; min-height:0; }
+
   @media (max-width: 880px){
     body{ overflow-y:auto; height:auto; }
     .app{ flex-direction:column; height:auto; min-height:100vh; }
@@ -197,6 +211,20 @@
     <div class="choice" id="choiceBlank">
       <div class="txt"><b>透明なキャンバスで作成</b><span>すべて透明な状態から新しく描き始めます。</span></div>
     </div>
+    <div class="choice" id="choiceImportModal">
+      <div class="txt"><b>画像をインポートして作成</b><span>手持ちの画像を読み込んで始めます。64×64・128×128 の画像はその大きさのまま、それ以外は選んだ解像度に合わせます。</span></div>
+    </div>
+    <div class="import-panel" id="importPanel" style="display:none;">
+      <p class="hint">部位ごとに画像を選んでください。「まとめて選ぶ」では、ファイル名に head / chest / legs / feet(または 帽子・服・ズボン・靴)が入っていれば自動で振り分けます。選ばなかった部位は透明になります。</p>
+      <div id="importRows"></div>
+      <div class="import-actions">
+        <button class="reset-btn" id="importPickAllBtn">まとめて選ぶ</button>
+        <button class="dl" id="importApplyBtn">この画像で作成</button>
+      </div>
+      <p class="import-msg" id="importMsg"></p>
+    </div>
+    <input type="file" id="modalImportInput" accept="image/png,image/*" multiple style="display:none;">
+    <input type="file" id="rowImportInput" accept="image/png,image/*" style="display:none;">
 
     <div style="margin-top:16px; text-align:right; display:none;" id="cancelModalWrap">
        <button class="reset-btn" id="cancelModalBtn" style="border:none;">キャンセル</button>
@@ -1160,7 +1188,8 @@ function renderResPick(){
 renderResPick();
 const choiceButtons = [
   document.getElementById('choiceTemplate'),
-  document.getElementById('choiceBlank')
+  document.getElementById('choiceBlank'),
+  document.getElementById('choiceImportModal')
 ];
 
 fetch(DATA_BASE + 'geometries.json')
@@ -1190,11 +1219,13 @@ document.getElementById('showModalBtn').onclick = ()=>{
   
   selectedRes = currentPart === 'all' ? Math.max(...PART_KEYS.map(sz)) : sz(currentPart);
   renderResPick();
+  resetImportPanel();
   document.getElementById('cancelModalWrap').style.display = 'block';
   startModal.style.display = 'flex';
 };
 
 document.getElementById('cancelModalBtn').onclick = ()=>{
+  resetImportPanel();
   startModal.style.display = 'none';
 };
 
@@ -1222,6 +1253,97 @@ document.getElementById('choiceTemplate').onclick = ()=>{
       if(loadedCount === keysToReset.length) closeModalAfterApply();
     }, selectedRes, false);
   });
+};
+
+// ---- 画像をインポートして作成 ----
+let pendingImports = {};      // 部位 -> { name, data(dataURL) }
+let rowImportTarget = null;   // 1つずつ選ぶときの部位
+function importKeys(){ return (!hasStarted || currentPart === 'all') ? PART_KEYS : [currentPart]; }
+// ファイル名から部位を当てる(書き出したファイル名 head_texture.png なども)
+function guessPartFromName(name){
+  const s = name.toLowerCase();
+  if (/head|hat|helmet|cap|帽子|頭/.test(s)) return 'head';
+  if (/chest|body|shirt|jacket|服|上着|胴/.test(s)) return 'chest';
+  if (/legs?|pants|trousers|ズボン|脚/.test(s)) return 'legs';
+  if (/feet|foot|boots?|shoes?|靴|足/.test(s)) return 'feet';
+  return null;
+}
+function readFileAsDataURL(file){
+  return new Promise((ok, ng) => { const r = new FileReader(); r.onload = ev => ok(ev.target.result); r.onerror = ng; r.readAsDataURL(file); });
+}
+function renderImportRows(){
+  const wrap = document.getElementById('importRows');
+  wrap.innerHTML = '';
+  importKeys().forEach(key => {
+    const row = document.createElement('div');
+    row.className = 'import-row';
+    const it = pendingImports[key];
+    row.innerHTML = `<b>${GEOMETRIES[key].label}</b>
+      <div class="thumb">${it ? `<img src="${it.data}" alt="">` : ''}</div>
+      <span class="fname ${it ? 'set' : ''}">${it ? it.name.replace(/[<>&"]/g, '') : '未選択(透明)'}</span>
+      <button class="reset-btn">${it ? '選びなおす' : '選ぶ'}</button>`;
+    row.querySelector('button').onclick = () => { rowImportTarget = key; document.getElementById('rowImportInput').click(); };
+    wrap.appendChild(row);
+  });
+  document.getElementById('importMsg').textContent = '';
+}
+function resetImportPanel(){
+  pendingImports = {};
+  document.getElementById('importPanel').style.display = 'none';
+}
+// 選んだ画像で部位を準備する(画像の無い部位は透明)
+function applyImports(keys){
+  let left = keys.length;
+  const done = () => { if (--left === 0) { resetImportPanel(); closeModalAfterApply(); } };
+  keys.forEach(key => {
+    const it = pendingImports[key];
+    if (it) loadImageIntoPart(key, it.data, done, selectedRes, true);
+    else { clearPart(key, selectedRes); done(); }
+  });
+}
+document.getElementById('choiceImportModal').onclick = ()=>{
+  const keys = importKeys();
+  if (keys.length === 1) {   // 1つの部位だけ: そのままファイルを選ぶ
+    rowImportTarget = keys[0]; pendingImports = {};
+    document.getElementById('rowImportInput').dataset.direct = '1';
+    document.getElementById('rowImportInput').click();
+    return;
+  }
+  const panel = document.getElementById('importPanel');
+  const open = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  if (open) renderImportRows();
+};
+document.getElementById('rowImportInput').addEventListener('change', async e => {
+  const input = e.target, file = input.files[0];
+  const direct = input.dataset.direct === '1'; input.dataset.direct = '';
+  input.value = '';
+  if (!file || !rowImportTarget) return;
+  pendingImports[rowImportTarget] = { name: file.name, data: await readFileAsDataURL(file) };
+  if (direct) { applyImports([rowImportTarget]); return; }
+  renderImportRows();
+});
+document.getElementById('importPickAllBtn').onclick = ()=> document.getElementById('modalImportInput').click();
+document.getElementById('modalImportInput').addEventListener('change', async e => {
+  const files = [...e.target.files]; e.target.value = '';
+  const keys = importKeys(); const unknown = [];
+  for (const f of files) {
+    const k = guessPartFromName(f.name);
+    if (k && keys.includes(k)) pendingImports[k] = { name: f.name, data: await readFileAsDataURL(f) };
+    else unknown.push(f);
+  }
+  // 名前で分からなかったものは、空いている部位に上から順に入れる
+  for (const f of unknown) {
+    const k = keys.find(k => !pendingImports[k]);
+    if (!k) break;
+    pendingImports[k] = { name: f.name, data: await readFileAsDataURL(f) };
+  }
+  renderImportRows();
+});
+document.getElementById('importApplyBtn').onclick = ()=>{
+  const keys = importKeys();
+  if (!keys.some(k => pendingImports[k])) { document.getElementById('importMsg').textContent = '画像が1つも選ばれていません。'; return; }
+  applyImports(keys);
 };
 
 document.getElementById('choiceBlank').onclick = ()=>{
