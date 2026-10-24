@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>2D テクスチャエディタ (アイテム/オリジナルブロック用)</title>
+<style>
+  :root{
+    --bg:#15171c; --panel:#1c1f26; --panel2:#22262f; --line:#2c313c;
+    --text:#e8eaef; --sub:#8a90a0; --accent:#5ee6c4; --accent2:#ff8a5b;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Segoe UI',-apple-system,'Hiragino Kaku Gothic ProN',sans-serif;
+    height:100vh; overflow:hidden;
+  }
+  .app{ display:flex; height:100vh; }
+  .side{
+    width:400px; flex-shrink:0; background:var(--panel); display:flex; flex-direction:column;
+    border-right:1px solid var(--line); overflow:hidden;
+  }
+  .side-header { padding:18px 18px 0; flex-shrink:0; }
+  .side-scroll { padding:0 18px 18px; overflow-y:auto; flex:1; }
+
+  h1{ font-size:18px; font-weight:600; letter-spacing:.02em; margin:0 0 4px; color:var(--text); }
+  .subtitle{ font-size:12px; color:var(--sub); margin:0 0 16px; }
+  .block{ margin-bottom:20px; }
+  .label{ font-size:11px; color:var(--sub); text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; display:block; }
+
+  .setting-badge{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin-bottom:20px;
+  }
+  .setting-badge .info b{ display:block; font-size:14px; color:var(--accent); }
+  .setting-badge .info span{ font-size:11px; color:var(--sub); }
+
+  .reset-btn{
+    background:var(--panel2); color:var(--text); border:1px solid var(--line); padding:7px 12px; border-radius:6px;
+    font-size:11px; cursor:pointer; transition:all 0.2s; white-space: nowrap;
+  }
+  .reset-btn:hover{ border-color:var(--accent2); color:var(--accent2); }
+
+  .row{ display:flex; align-items:center; gap:10px; }
+  .swatches{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .swatch{ width:26px; height:26px; border-radius:5px; border:1px solid var(--line); cursor:pointer; }
+  #colorPicker{ width:44px; height:38px; border:none; background:none; padding:0; cursor:pointer; }
+  .tool-toggle{
+    display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; flex:1;
+  }
+  .tool-toggle button{
+    flex:1; padding:11px 0; background:var(--panel2); color:var(--sub); border:none; cursor:pointer; font-size:13px;
+    border-right:1px solid var(--line); transition:background 0.2s, color 0.2s;
+  }
+  .tool-toggle button:last-child{ border-right:none; }
+  .tool-toggle button.pen.active{ background:var(--accent); color:#0d1512; }
+  .tool-toggle button.eraser.active{ background:var(--accent2); color:#2a1305; }
+  .tool-toggle button.spoid.active{ background:#f4d35e; color:#2a1305; }
+  .undo-redo{ display:flex; gap:8px; }
+  .undo-redo button{
+    flex:1; background:var(--panel2); border:1px solid var(--line); color:var(--text);
+    padding:10px 0; border-radius:6px; font-size:13px; cursor:pointer;
+  }
+  .undo-redo button:disabled{ color:#4a5162; cursor:default; border-color:transparent; }
+  .undo-redo button:not(:disabled):hover{ border-color:var(--accent); }
+
+  .grid-btn{
+    background:var(--panel2); border:1px solid var(--line); color:var(--text);
+    padding:8px 10px; border-radius:6px; font-size:12px; cursor:pointer; transition:all 0.2s;
+  }
+  .grid-btn:hover{ border-color:var(--accent); }
+  .grid-btn.active{ border-color:var(--accent); color:var(--accent); }
+
+  .zoom-row{ display:flex; align-items:center; gap:8px; }
+  .zoom-row .zoom-step-btn{
+    background:var(--panel2); border:1px solid var(--line); color:var(--text); width:32px; height:32px;
+    flex-shrink:0; border-radius:6px; font-size:15px; cursor:pointer; padding:0;
+  }
+  .zoom-row .zoom-step-btn:hover{ border-color:var(--accent); }
+  .zoom-row span{ font-size:12px; color:var(--sub); min-width:44px; text-align:center; }
+  .zoom-row .zoom-reset-btn{
+    width:auto; height:32px; padding:0 12px; white-space:nowrap; font-size:11px;
+  }
+
+  .dl-block{ margin-top:24px; }
+  .dl{
+    width:100%; background:var(--text); color:#0d1512;
+    border:none; padding:12px 16px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer;
+    transition: filter 0.2s;
+  }
+  .dl:hover{ filter: brightness(1.1); }
+
+  .import-btn{
+    width:100%; background:var(--panel2); color:var(--accent); border:1px solid var(--accent);
+    padding:10px 16px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; margin-top:8px;
+  }
+  .import-btn:hover{ background:rgba(94,230,196,0.08); }
+
+  .hint{ font-size:11px; color:var(--sub); line-height:1.5; margin:8px 2px 0; }
+
+  .main{
+    flex:1; position:relative; min-width:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; background:var(--bg);
+  }
+  .badge{
+    position:absolute; top:16px; left:16px; background:rgba(28,31,38,.85);
+    border:1px solid var(--line); border-radius:6px; padding:8px 12px; font-size:12px; color:var(--sub);
+    backdrop-filter:blur(4px); pointer-events: none;
+  }
+  .badge b{ color:var(--text); }
+
+  .canvas-stage{
+    display:flex; align-items:center; justify-content:center; width:100%; height:100%;
+    overflow:auto; padding:40px;
+  }
+  .canvas-frame{
+    background:#0d0e12; border:1px solid var(--line); border-radius:10px; padding:16px;
+    display:inline-flex; box-shadow:0 8px 30px rgba(0,0,0,0.35);
+  }
+  .ui-canvas{
+    cursor:crosshair; border-radius:2px; touch-action:none; display:block;
+    image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges;
+    background-image:
+      linear-gradient(45deg, #3a3f4b 25%, transparent 25%),
+      linear-gradient(-45deg, #3a3f4b 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #3a3f4b 75%),
+      linear-gradient(-45deg, transparent 75%, #3a3f4b 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    background-color:#2c313c;
+  }
+
+  /* Modal */
+  #startModal{
+    position:fixed; inset:0; background:rgba(10,11,14,.94); z-index:50;
+    display:flex; align-items:center; justify-content:center; padding:16px; overflow-y:auto;
+    backdrop-filter:blur(4px);
+  }
+  .modal-card{
+    width:520px; max-width:100%; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:32px 24px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  }
+  .modal-card h2{ margin:0 0 8px; font-size:18px; color:var(--text); }
+  .modal-card p.sub{ margin:0 0 24px; font-size:13px; line-height:1.5; color:var(--sub); }
+  .choice{
+    display:flex; align-items:flex-start; gap:12px; background:var(--panel2);
+    border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:10px; cursor:pointer; transition:all 0.2s;
+  }
+  .choice:hover{ border-color:var(--accent); background:rgba(94, 230, 196, 0.05); }
+  .choice .txt b{ display:block; font-size:14px; margin-bottom:4px; color:var(--text); }
+  .choice .txt span{ font-size:12px; color:var(--sub); line-height:1.4; display:block; }
+  .choice.res-choice{ align-items:center; }
+  .choice .preview-thumb{
+    width:48px; height:48px; flex-shrink:0; border-radius:6px; border:1px solid var(--line);
+    background-image:
+      linear-gradient(45deg, #3a3f4b 25%, transparent 25%),
+      linear-gradient(-45deg, #3a3f4b 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #3a3f4b 75%),
+      linear-gradient(-45deg, transparent 75%, #3a3f4b 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+    background-color:#2c313c;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .preview-thumb img{ width:100%; height:100%; image-rendering: pixelated; border-radius:5px; }
+
+  .modal-back{
+    display:inline-block; margin-bottom:14px; font-size:12px; color:var(--sub); cursor:pointer; user-select:none;
+  }
+  .modal-back:hover{ color:var(--accent); }
+
+  @media (max-width: 880px){
+    body{ overflow-y:auto; height:auto; }
+    .app{ flex-direction:column; height:auto; min-height:100vh; }
+    .side{ width:100%; max-height:none; border-right:none; border-bottom:1px solid var(--line); order:2; }
+    .side-scroll{ overflow:visible; }
+    .main{ height:60vh; min-height:340px; order:1; }
+    .modal-card{ padding:24px 16px; }
+    .swatch{ width:30px; height:30px; }
+    .tool-toggle button{ padding:13px 0; font-size:14px; }
+  }
+</style>
+</head>
+<body>
+
+<input type="file" id="directFileInput" accept="image/png" style="display:none;">
+
+<div id="startModal">
+  <div class="modal-card">
+
+    <!-- STEP 1: 用途選択 -->
+    <div id="step1">
+      <h2>作成するテクスチャの種類</h2>
+      <p class="sub">用途に合わせてキャンバスの解像度候補が変わります。</p>
+
+      <div class="choice" id="choiceModeItem">
+        <div class="txt"><b>アイテム用テクスチャ</b><span>剣・道具・食材などのアイテムアイコン。16×16 または 32×32 に対応。</span></div>
+      </div>
+      <div class="choice" id="choiceModePainting">
+        <div class="txt"><b>オリジナルブロック用テクスチャ</b><span>絵画のように配置するオリジナルブロックの面テクスチャ。16×16 / 32×32 / 64×64 に対応。</span></div>
+      </div>
+    </div>
+
+    <!-- STEP 2: 解像度選択 -->
+    <div id="step2" style="display:none;">
+      <span class="modal-back" id="backToStep1">← 種類の選択に戻る</span>
+      <h2 id="step2Title">解像度を選択</h2>
+      <p class="sub" id="step2Sub"></p>
+      <div id="resChoices"></div>
+    </div>
+
+    <!-- STEP 3: テンプレート選択 -->
+    <div id="step3" style="display:none;">
+      <span class="modal-back" id="backToStep2">← 解像度の選択に戻る</span>
+      <h2 id="step3Title">キャンバスの準備</h2>
+      <p class="sub" id="step3Sub"></p>
+
+      <div class="choice" id="choiceTemplate">
+        <div class="preview-thumb"><img id="templatePreviewImg" src="" alt=""></div>
+        <div class="txt"><b>テンプレートから作成</b><span>ダイヤの剣のテクスチャを選択した解像度に引き伸ばした画像から開始します。位置合わせの参考になります。</span></div>
+      </div>
+      <div class="choice" id="choiceBlank">
+        <div class="txt"><b>透明なキャンバスで作成</b><span>すべて透明な状態から新しく描き始めます。</span></div>
+      </div>
+      <div class="choice" id="choiceImportModal">
+        <div class="txt"><b>画像をインポートして作成</b><span>手持ちの画像を選択した解像度に自動でリサイズして読み込みます。</span></div>
+      </div>
+
+      <input type="file" id="modalImportInput" accept="image/png,image/*" style="display:none;">
+
+      <div style="margin-top:16px; text-align:right; display:none;" id="cancelModalWrap">
+         <button class="reset-btn" id="cancelModalBtn" style="border:none;">キャンセル</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="app">
+  <div class="side">
+    <div class="side-header">
+      <h1>2D Texture Editor</h1>
+      <p class="subtitle">アイテム / オリジナルブロック 専用</p>
+
+      <div class="setting-badge">
+        <div class="info">
+          <b id="settingLabel">未設定</b>
+          <span id="settingSub">-</span>
+        </div>
+        <button class="reset-btn" id="changeSettingBtn">設定を変更</button>
+      </div>
+    </div>
+
+    <div class="side-scroll">
+
+      <div class="block">
+        <span class="label">操作履歴</span>
+        <div class="undo-redo">
+          <button id="undoBtn" disabled>↶ 取り消す</button>
+          <button id="redoBtn" disabled>↷ やり直す</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="label">ツール (B:ペン / E:消しゴム / Space:スポイト)</span>
+        <div class="row">
+          <div class="tool-toggle">
+            <button class="pen active" id="penBtn">ペン</button>
+            <button class="eraser" id="eraserBtn">消しゴム</button>
+            <button class="spoid" id="spoidBtn">スポイト</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <input type="color" id="colorPicker" value="#5ee6c4">
+          <input type="range" id="brushSize" min="1" max="6" value="1" style="flex:1;">
+          <span id="brushLabel" style="font-size:12px; color:var(--sub); width:24px; text-align:right;">1px</span>
+        </div>
+        <span class="label" style="margin-top:16px;">カラー履歴</span>
+        <div class="swatches" id="swatches"></div>
+      </div>
+
+      <div class="block">
+        <span class="label">表示設定</span>
+        <div class="row">
+          <button class="grid-btn active" id="toggleGridBtn">ピクセルグリッド</button>
+        </div>
+        <div class="zoom-row" style="margin-top:10px;">
+          <button class="zoom-step-btn" id="zoomOutBtn">−</button>
+          <span id="zoomLabel">100%</span>
+          <button class="zoom-step-btn" id="zoomInBtn">+</button>
+          <button class="grid-btn zoom-reset-btn" id="zoomFitBtn" style="margin-left:auto;">リセット</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <span class="label">読み込み</span>
+        <button class="import-btn" id="importBtn">既存の画像を読み込んで編集</button>
+        <p class="hint">※PNG画像を選択した解像度に合わせて読み込みます。</p>
+      </div>
+
+      <div class="block dl-block">
+        <button class="dl" id="downloadBtn">PNGとしてエクスポート</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="badge">編集中: <b id="canvasBadge">-</b></div>
+    <div class="canvas-stage">
+      <div class="canvas-frame">
+        <canvas class="ui-canvas" id="uiCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// テンプレート画像 (ダイヤの剣を各解像度に引き伸ばした画像)
+// ============================================================
+const DATA_BASE = './data/templates/';
+const TEMPLATES = {
+  item:     { 16: DATA_BASE + 'item_16.png',     32: DATA_BASE + 'item_32.png' },
+  painting: { 16: DATA_BASE + 'painting_16.png', 32: DATA_BASE + 'painting_32.png', 64: DATA_BASE + 'painting_64.png' }
+};
+
+const MODE_CONFIG = {
+  item: {
+    label: 'アイテム用',
+    resolutions: [16, 32],
+    step2Title: 'アイテムの解像度を選択',
+    step2Sub: 'アイテムアイコンとして使う解像度を選んでください。'
+  },
+  painting: {
+    label: 'オリジナルブロック用',
+    resolutions: [16, 32, 64],
+    step2Title: 'オリジナルブロックの解像度を選択',
+    step2Sub: 'ブロックの1面分の解像度を選んでください（絵画のように配置するブロックにも使えます）。'
+  }
+};
+
+let currentMode = null;   // 'item' | 'painting'
+let currentRes  = null;   // 16 | 32 | 64
+let TEX_SIZE    = 16;
+const MAX_HISTORY = 40;
+
+// モデル用オフスクリーンキャンバス（実データ）
+const modelCanvas = document.createElement('canvas');
+const modelCtx = modelCanvas.getContext('2d');
+modelCtx.imageSmoothingEnabled = false;
+
+let globalUndo = [];
+let globalRedo = [];
+
+let tool = 'pen';
+let brushColor = '#5ee6c4';
+let brushSize = 1;
+let painting = false;
+let isSpoiding = false;
+let lastPaintPx = null;
+
+let showGrid = true;
+let zoomLevel = 1;
+const CELL_PX_BY_RES = { 16:30, 32:15, 64:8 };
+let baseCellPx = 30;
+
+let colorHistory = ['#5ee6c4','#ff8a5b','#f4d35e','#ee6c8b','#7b7ff3','#3a86ff','#2b2118','#ffffff','#5c3d2e','#8b5cf6'];
+const swatchWrap = document.getElementById('swatches');
+
+function updateColorHistoryUI() {
+  swatchWrap.innerHTML = '';
+  colorHistory.forEach(c => {
+    const s = document.createElement('div');
+    s.className = 'swatch';
+    s.style.background = c;
+    s.onclick = () => { changeColor(c); };
+    swatchWrap.appendChild(s);
+  });
+}
+function changeColor(hex) {
+  brushColor = hex;
+  document.getElementById('colorPicker').value = hex;
+}
+function addColorToHistory(hex) {
+  if (colorHistory[0].toLowerCase() === hex.toLowerCase()) return;
+  colorHistory = colorHistory.filter(c => c.toLowerCase() !== hex.toLowerCase());
+  colorHistory.unshift(hex);
+  if (colorHistory.length > 10) colorHistory.pop();
+  updateColorHistoryUI();
+}
+updateColorHistoryUI();
+
+function rgbToHex(r, g, b) {
+  return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+function getSpoidColor(px, py) {
+  if(px<0||py<0||px>=TEX_SIZE||py>=TEX_SIZE) return false;
+  const pixel = modelCtx.getImageData(px, py, 1, 1).data;
+  if (pixel[3] > 0) {
+    const hex = rgbToHex(pixel[0], pixel[1], pixel[2]);
+    changeColor(hex);
+    addColorToHistory(hex);
+    return true;
+  }
+  return false;
+}
+
+function updateUndoRedoButtons(){
+  document.getElementById('undoBtn').disabled = globalUndo.length===0;
+  document.getElementById('redoBtn').disabled = globalRedo.length===0;
+}
+function snapshotBeforeStroke(){
+  const data = modelCtx.getImageData(0,0,TEX_SIZE,TEX_SIZE);
+  globalUndo.push(data);
+  if(globalUndo.length > MAX_HISTORY) globalUndo.shift();
+  globalRedo = [];
+  updateUndoRedoButtons();
+}
+function undo(){
+  const snap = globalUndo.pop();
+  if(!snap) return;
+  const current = modelCtx.getImageData(0,0,TEX_SIZE,TEX_SIZE);
+  globalRedo.push(current);
+  modelCtx.putImageData(snap, 0, 0);
+  refreshDisplay();
+  updateUndoRedoButtons();
+}
+function redo(){
+  const snap = globalRedo.pop();
+  if(!snap) return;
+  const current = modelCtx.getImageData(0,0,TEX_SIZE,TEX_SIZE);
+  globalUndo.push(current);
+  modelCtx.putImageData(snap, 0, 0);
+  refreshDisplay();
+  updateUndoRedoButtons();
+}
+document.getElementById('undoBtn').onclick = undo;
+document.getElementById('redoBtn').onclick = redo;
+
+window.addEventListener('keydown', e=>{
+  if(e.ctrlKey || e.metaKey){
+    if(e.key.toLowerCase()==='z' && !e.shiftKey){ e.preventDefault(); undo(); }
+    else if(e.key.toLowerCase()==='y' || (e.key.toLowerCase()==='z' && e.shiftKey)){ e.preventDefault(); redo(); }
+    return;
+  }
+  if(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+  const k = e.key.toLowerCase();
+  if (k === 'b') { e.preventDefault(); setTool('pen'); }
+  else if (k === 'e') { e.preventDefault(); setTool('eraser'); }
+  else if (k === ' ') { e.preventDefault(); setTool('spoid'); }
+});
+
+function setTool(t){
+  tool = t;
+  document.getElementById('penBtn').classList.toggle('active', t==='pen');
+  document.getElementById('eraserBtn').classList.toggle('active', t==='eraser');
+  document.getElementById('spoidBtn').classList.toggle('active', t==='spoid');
+}
+document.getElementById('penBtn').onclick = ()=> setTool('pen');
+document.getElementById('eraserBtn').onclick = ()=> setTool('eraser');
+document.getElementById('spoidBtn').onclick = ()=> setTool('spoid');
+
+document.getElementById('colorPicker').oninput = e=>{ brushColor = e.target.value; };
+document.getElementById('colorPicker').onchange = e=>{ addColorToHistory(e.target.value); };
+document.getElementById('brushSize').oninput = e=>{ brushSize = parseInt(e.target.value); document.getElementById('brushLabel').textContent = brushSize+'px'; };
+
+// ============================================================
+// 描画処理
+// ============================================================
+function paintPixel(px, py){
+  if(px<0||py<0||px>=TEX_SIZE||py>=TEX_SIZE) return;
+  const size = brushSize;
+  const half = Math.floor(size/2);
+  if(tool === 'eraser'){
+    modelCtx.clearRect(px-half, py-half, size, size);
+  } else {
+    modelCtx.fillStyle = brushColor;
+    modelCtx.fillRect(px-half, py-half, size, size);
+  }
+}
+// 高速なドラッグでも隙間ができないよう直線補間する
+function paintLine(x0,y0,x1,y1){
+  const dx = Math.abs(x1-x0), dy = Math.abs(y1-y0);
+  const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy;
+  let x = x0, y = y0;
+  while(true){
+    paintPixel(x,y);
+    if(x===x1 && y===y1) break;
+    const e2 = 2*err;
+    if(e2 > -dy){ err -= dy; x += sx; }
+    if(e2 < dx){ err += dx; y += sy; }
+  }
+}
+
+function refreshDisplay(){
+  const uiCanvas = document.getElementById('uiCanvas');
+  const ctx = uiCanvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  ctx.clearRect(0,0,uiCanvas.width,uiCanvas.height);
+  ctx.drawImage(modelCanvas, 0,0, TEX_SIZE, TEX_SIZE, 0,0, uiCanvas.width, uiCanvas.height);
+
+  if(showGrid){
+    ctx.lineWidth = 1.0;
+    ctx.strokeStyle = 'rgba(150, 150, 150, 0.4)';
+    ctx.beginPath();
+    const cellSize = uiCanvas.width / TEX_SIZE;
+    for(let i = 0; i <= TEX_SIZE; i++){
+      const pos = Math.floor(i * cellSize) + 0.5;
+      ctx.moveTo(pos, 0); ctx.lineTo(pos, uiCanvas.height);
+      ctx.moveTo(0, pos); ctx.lineTo(uiCanvas.width, pos);
+    }
+    ctx.stroke();
+  }
+}
+
+function canvasEventToPixel(e){
+  const uiCanvas = document.getElementById('uiCanvas');
+  const rect = uiCanvas.getBoundingClientRect();
+  let cx = e.clientX, cy = e.clientY;
+  if (e.touches && e.touches.length > 0) { cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
+  const x = Math.floor((cx - rect.left) / (rect.width / TEX_SIZE));
+  const y = Math.floor((cy - rect.top) / (rect.height / TEX_SIZE));
+  return [x,y];
+}
+
+function bindCanvasEvents(){
+  const uiCanvas = document.getElementById('uiCanvas');
+
+  function handleStart(e){
+    e.preventDefault();
+    const [x,y] = canvasEventToPixel(e);
+    if (tool === 'spoid') { isSpoiding = true; getSpoidColor(x, y); return; }
+    painting = true;
+    lastPaintPx = [x,y];
+    snapshotBeforeStroke();
+    if(tool === 'pen') addColorToHistory(brushColor);
+    paintPixel(x,y);
+    refreshDisplay();
+  }
+  function handleMove(e){
+    e.preventDefault();
+    const [x,y] = canvasEventToPixel(e);
+    if (isSpoiding) { getSpoidColor(x, y); return; }
+    if(!painting) return;
+    if(lastPaintPx) paintLine(lastPaintPx[0], lastPaintPx[1], x, y);
+    else paintPixel(x,y);
+    lastPaintPx = [x,y];
+    refreshDisplay();
+  }
+  function handleEnd(){
+    painting = false;
+    lastPaintPx = null;
+    if (isSpoiding) { isSpoiding = false; setTool('pen'); }
+  }
+
+  uiCanvas.addEventListener('mousedown', handleStart);
+  uiCanvas.addEventListener('mousemove', handleMove);
+  window.addEventListener('mouseup', handleEnd);
+  uiCanvas.addEventListener('touchstart', handleStart, { passive:false });
+  uiCanvas.addEventListener('touchmove', handleMove, { passive:false });
+  window.addEventListener('touchend', handleEnd);
+}
+bindCanvasEvents();
+
+document.getElementById('toggleGridBtn').onclick = (e) => {
+  showGrid = !showGrid;
+  e.target.classList.toggle('active', showGrid);
+  refreshDisplay();
+};
+
+// ============================================================
+// ズーム
+// ============================================================
+function applyZoom(){
+  const uiCanvas = document.getElementById('uiCanvas');
+  const displaySize = TEX_SIZE * baseCellPx * zoomLevel;
+  uiCanvas.style.width = displaySize + 'px';
+  uiCanvas.style.height = displaySize + 'px';
+  document.getElementById('zoomLabel').textContent = Math.round(zoomLevel*100) + '%';
+}
+document.getElementById('zoomInBtn').onclick = ()=>{ zoomLevel = Math.min(zoomLevel + 0.25, 4); applyZoom(); };
+document.getElementById('zoomOutBtn').onclick = ()=>{ zoomLevel = Math.max(zoomLevel - 0.25, 0.25); applyZoom(); };
+document.getElementById('zoomFitBtn').onclick = ()=>{ zoomLevel = 1; applyZoom(); };
+
+// ============================================================
+// 画像読み込み / エクスポート
+// ============================================================
+function loadImageIntoModel(src, cb){
+  const img = new Image();
+  img.onload = ()=>{
+    modelCtx.clearRect(0,0,TEX_SIZE,TEX_SIZE);
+    modelCtx.drawImage(img, 0, 0, TEX_SIZE, TEX_SIZE);
+    if(cb) cb();
+  };
+  img.src = src;
+}
+
+document.getElementById('importBtn').onclick = () => {
+  document.getElementById('directFileInput').click();
+};
+document.getElementById('directFileInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    snapshotBeforeStroke();
+    loadImageIntoModel(ev.target.result, () => {
+      refreshDisplay();
+      updateUndoRedoButtons();
+    });
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
+document.getElementById('downloadBtn').onclick = ()=>{
+  const modeTag = currentMode === 'item' ? 'item' : 'custom_block';
+  const link = document.createElement('a');
+  link.download = `${modeTag}_texture_${TEX_SIZE}x${TEX_SIZE}.png`;
+  link.href = modelCanvas.toDataURL('image/png');
+  link.click();
+};
+
+// ============================================================
+// スタート/設定変更モーダル制御
+// ============================================================
+const startModal = document.getElementById('startModal');
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
+let hasStarted = false;
+let pendingMode = null;
+let pendingRes = null;
+
+function showStep(n){
+  step1.style.display = n===1 ? 'block' : 'none';
+  step2.style.display = n===2 ? 'block' : 'none';
+  step3.style.display = n===3 ? 'block' : 'none';
+}
+
+function openModalFromStart(){
+  document.getElementById('cancelModalWrap').style.display = hasStarted ? 'block' : 'none';
+  showStep(1);
+  startModal.style.display = 'flex';
+}
+
+document.getElementById('changeSettingBtn').onclick = openModalFromStart;
+
+document.getElementById('choiceModeItem').onclick = ()=>{ selectMode('item'); };
+document.getElementById('choiceModePainting').onclick = ()=>{ selectMode('painting'); };
+
+function selectMode(mode){
+  pendingMode = mode;
+  const cfg = MODE_CONFIG[mode];
+  document.getElementById('step2Title').textContent = cfg.step2Title;
+  document.getElementById('step2Sub').textContent = cfg.step2Sub;
+
+  const resChoicesEl = document.getElementById('resChoices');
+  resChoicesEl.innerHTML = '';
+  cfg.resolutions.forEach(res=>{
+    const div = document.createElement('div');
+    div.className = 'choice res-choice';
+    div.innerHTML = `
+      <div class="preview-thumb"><img src="${TEMPLATES[mode][res]}" alt=""></div>
+      <div class="txt"><b>${res} × ${res}</b><span>${res}px 四方のテクスチャを作成します。</span></div>
+    `;
+    div.onclick = ()=> selectResolution(res);
+    resChoicesEl.appendChild(div);
+  });
+
+  showStep(2);
+}
+
+document.getElementById('backToStep1').onclick = ()=> showStep(1);
+document.getElementById('backToStep2').onclick = ()=> showStep(2);
+
+function selectResolution(res){
+  pendingRes = res;
+  document.getElementById('templatePreviewImg').src = TEMPLATES[pendingMode][res];
+  document.getElementById('step3Sub').textContent =
+    `${MODE_CONFIG[pendingMode].label} / ${res}×${res} のキャンバスを準備します。`;
+  showStep(3);
+}
+
+document.getElementById('cancelModalBtn').onclick = ()=>{
+  startModal.style.display = 'none';
+};
+
+// source: 'template' | 'blank' | 画像のdataURL文字列（インポート用）
+function finalizeSetup(source){
+  currentMode = pendingMode;
+  currentRes = pendingRes;
+  TEX_SIZE = pendingRes;
+  baseCellPx = CELL_PX_BY_RES[TEX_SIZE] || 16;
+
+  modelCanvas.width = TEX_SIZE;
+  modelCanvas.height = TEX_SIZE;
+  modelCtx.imageSmoothingEnabled = false;
+
+  const uiCanvas = document.getElementById('uiCanvas');
+  uiCanvas.width = TEX_SIZE * baseCellPx;
+  uiCanvas.height = TEX_SIZE * baseCellPx;
+  zoomLevel = 1;
+  applyZoom();
+
+  const cfg = MODE_CONFIG[currentMode];
+  document.getElementById('settingLabel').textContent = `${cfg.label}`;
+  document.getElementById('settingSub').textContent = `${TEX_SIZE} × ${TEX_SIZE} px`;
+  document.getElementById('canvasBadge').textContent = `${cfg.label} (${TEX_SIZE}×${TEX_SIZE})`;
+
+  globalUndo = []; globalRedo = [];
+  updateUndoRedoButtons();
+
+  function afterLoad(){
+    startModal.style.display = 'none';
+    hasStarted = true;
+    refreshDisplay();
+  }
+
+  if(source === 'template'){
+    loadImageIntoModel(TEMPLATES[currentMode][TEX_SIZE], afterLoad);
+  } else if(source === 'blank'){
+    modelCtx.clearRect(0,0,TEX_SIZE,TEX_SIZE);
+    afterLoad();
+  } else {
+    // カスタム画像（dataURL）を選択解像度に自動リサイズして読み込む
+    loadImageIntoModel(source, afterLoad);
+  }
+}
+
+
+document.getElementById('choiceTemplate').onclick = ()=> finalizeSetup('template');
+document.getElementById('choiceBlank').onclick = ()=> finalizeSetup('blank');
+
+document.getElementById('choiceImportModal').onclick = ()=>{
+  document.getElementById('modalImportInput').click();
+};
+document.getElementById('modalImportInput').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => finalizeSetup(ev.target.result);
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
+// 起動時にモーダルを表示
+openModalFromStart();
+</script>
+</body>
+</html>

@@ -32,7 +32,7 @@ Discordのbot用チャンネルでコマンドを使うと、自分で描いた�
 
 - 形式は **PNG** だけです。
 - アイコンやブロックの画像は **16×16 / 32×32 / 64×64** のどれかの正方形です。
-- 服を着たときの画像(テクスチャ)は **64×64**、スキンは **64×64** か **128×128** です。
+- 服を着たときの画像(テクスチャ)とスキンは **64×64** か **128×128** です。128×128 にすると、同じ大きさのまま細かく描けます。
 - 色の付いたピクセルが少なすぎる画像(ほとんど透明な画像)は登録できません。
 
 ## 画像を描けるサイト {#tools}
@@ -41,16 +41,16 @@ Discordのbot用チャンネルでコマンドを使うと、自分で描いた�
 
 <div class="ss-tools">
 
-<a class="ss-tool" href="https://kei0717.github.io/2D-viewer-test/" target="_blank" rel="noreferrer">
+<a class="ss-tool" href="../editor2d/" target="_blank">
   <b>2Dエディター</b>
   <span>アイテムのアイコンや、ブロックの面の画像を描けます。</span>
   <small>アイテム 16×16 / 32×32、ブロック 16×16 / 32×32 / 64×64</small>
 </a>
 
-<a class="ss-tool" href="https://kei0717.github.io/3D-viewer-test/" target="_blank" rel="noreferrer">
+<a class="ss-tool" href="../editor3d/" target="_blank">
   <b>3Dエディター</b>
   <span>服の着たときの画像を、3Dで着せた見た目を確かめながら描けます。</span>
-  <small>64×64(帽子・服・ズボン・靴)</small>
+  <small>64×64 / 128×128(帽子・服・ズボン・靴)</small>
 </a>
 
 </div>
@@ -107,7 +107,7 @@ Discordのbot用チャンネルでコマンドを使うと、自分で描いた�
 | --- | --- |
 | `clothing_type` | 部位: 帽子 / 服 / ズボン / 靴 |
 | `icon` | インベントリ用のアイコン画像 |
-| `texture` | 着たときの画像(64×64)。[3Dエディター](#tools) で描けます |
+| `texture` | 着たときの画像(64×64 か 128×128)。[3Dエディター](#tools) で描けます |
 | `name` | 装備の名前 |
 | `password` | 受け取り用のパスワード |
 

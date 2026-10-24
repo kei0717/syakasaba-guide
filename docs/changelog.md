@@ -17,6 +17,8 @@
 - スキルツリーで手に入るレシピに、[換金ブロック](/items/recipes#add-exchange)・[自動換金ブロック](/items/recipes#auto-exchange)・[請求ブロック](/items/recipes#billing)・[出金/入金ブロック](/items/recipes#bank-io)・[メッセージブロック](/items/recipes#message-block)・[ドリルパック](/items/recipes#drill-pack) を追加しました。
 - Keizonに [ホッピング](/items/keizon#hopping) を追加しました(スキルツリーで解放)。ダイヤモンドの売却は換金ブロックに移りました。
 - 「そのほかの仕様」をアイテム図鑑から分け、[ダウンと蘇生](/play/down) と同じカテゴリにしました。
+- [オシャレ装備](/play/bot#add_clothing) の着たときの画像が 128×128 でも使えるようになりました。[3Dエディター](/play/bot#tools) でも 128×128 で描けます。
+- [2Dエディター・3Dエディター](/play/bot#tools) をこのサイトの中に移しました(前のURLから開いても、新しい場所へ移動します)。
 
 ## 2026-10-03
 
