@@ -40,6 +40,14 @@
     "icon": "/game/textures/items/item_merio_b_dare.png"
   },
   {
+    "name": "ホッピング",
+    "id": "kei:item_hopping",
+    "unit": "block",
+    "cost": 64,
+    "count": 1,
+    "icon": "/game/textures/items/item_hopping.png"
+  },
+  {
     "name": "マリカダッシュ板",
     "id": "kei:speed_boost_1",
     "unit": "ingot",
@@ -335,14 +343,5 @@
     "cost": 16,
     "count": 32,
     "icon": "/game/textures/items/fireworks.png"
-  },
-  {
-    "name": "ダイヤモンド売却",
-    "id": "diamond",
-    "unit": "ingot",
-    "cost": 1,
-    "count": 5,
-    "icon": "/game/textures/items/diamond.png",
-    "sell": true
   }
 ]

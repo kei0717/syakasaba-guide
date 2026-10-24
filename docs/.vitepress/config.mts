@@ -36,8 +36,9 @@ export default defineConfig({
 
     nav: [
       { text: 'はじめに', link: '/guide/rules', activeMatch: '/guide/(rules|join)' },
-      { text: '遊び方', link: '/play/commands', activeMatch: '/play/' },
-      { text: 'アイテム図鑑', link: '/items/', activeMatch: '/items/' },
+      { text: '遊び方', link: '/play/commands', activeMatch: '/play/(?!down)' },
+      { text: 'アイテム図鑑', link: '/items/', activeMatch: '/items/(?!others)' },
+      { text: 'そのほかの仕様', link: '/play/down', activeMatch: '/(play/down|items/others)' },
       { text: 'よくある質問', link: '/guide/faq' },
       { text: '変更履歴', link: '/changelog' }
     ],
@@ -56,7 +57,6 @@ export default defineConfig({
           { text: 'チャットコマンド', link: '/play/commands' },
           { text: 'K-phoneアプリ', link: '/play/kphone' },
           { text: 'スキルツリー', link: '/play/skilltree' },
-          { text: 'ダウンと蘇生', link: '/play/down' },
           { text: 'Discord botで追加できるもの', link: '/play/bot' }
         ]
       },
@@ -65,8 +65,15 @@ export default defineConfig({
         items: [
           { text: '追加アイテム・ブロック', link: '/items/' },
           { text: '工作・料理レシピ', link: '/items/recipes' },
-          { text: 'Keizonラインナップ', link: '/items/keizon' },
-          { text: 'そのほかの仕様', link: '/items/others' }
+          { text: 'Keizonラインナップ', link: '/items/keizon' }
+        ]
+      },
+      {
+        // アイテムだけでなく、モブ・設備・決まりごとなども書いてあるので、アイテム図鑑とは別にする
+        text: 'そのほかの仕様',
+        items: [
+          { text: 'ダウンと蘇生', link: '/play/down' },
+          { text: 'モブ・設備・イベントなど', link: '/items/others' }
         ]
       },
       {

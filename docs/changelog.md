@@ -14,6 +14,9 @@
 
 - [ダウンと蘇生](/play/down) を追加しました。体力が0になってもすぐには死なず、仲間がしゃがんで起こせます。
 - ガイドのホームを作り直しました。
+- スキルツリーで手に入るレシピに、[換金ブロック](/items/recipes#add-exchange)・[自動換金ブロック](/items/recipes#auto-exchange)・[請求ブロック](/items/recipes#billing)・[出金/入金ブロック](/items/recipes#bank-io)・[メッセージブロック](/items/recipes#message-block)・[ドリルパック](/items/recipes#drill-pack) を追加しました。
+- Keizonに [ホッピング](/items/keizon#hopping) を追加しました(スキルツリーで解放)。ダイヤモンドの売却は換金ブロックに移りました。
+- 「そのほかの仕様」をアイテム図鑑から分け、[ダウンと蘇生](/play/down) と同じカテゴリにしました。
 
 ## 2026-10-03
 

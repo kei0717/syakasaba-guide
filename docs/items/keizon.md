@@ -2,10 +2,6 @@
 
 [K-phone](/play/kphone#keizon) の **Keizon** アプリで買えるアイテムです。
 
-::: info
-値段はゲームのデータから自動で表示しています。黄色のバッジが値段です(金インゴット・金ブロックの数)。
-:::
-
 ## 乗り物
 
 <div class="ss-item">
@@ -45,6 +41,17 @@
 :::
 
 <Shots :images="['keizon_speed_boost.webp']" alt="ダッシュ板とジャンプ台" />
+</div>
+
+<div class="ss-item">
+
+### ホッピング {#hopping}
+
+<Keizon id="kei:item_hopping" />
+
+乗って跳ねながら進める乗り物。[スキルツリー](/play/skilltree) の「弾む足取り」を解放すると、Keizon で買えるようになる。
+
+ジャンプ力は最初は約1.5ブロック。スキル「もっと高く跳びたい」のレベルを上げると、約2 → 約2.5 → 約3ブロックまで高く跳べる。
 </div>
 
 <div class="ss-item">

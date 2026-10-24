@@ -31,7 +31,10 @@ hero:
 
 <div class="ss-tiles">
   <a class="ss-tile" href="./play/kphone">
-    <img src="/images/public_phone.webp" alt="" loading="lazy" />
+    <div class="ss-tile-art ss-art-phone">
+      <img src="/game/textures/items/telephone.png" alt="" class="ss-art-main" />
+      <div class="ss-art-apps"><img src="/game/textures/icon/telephone.png" alt="" /><img src="/game/textures/icon/keizon.png" alt="" /><img src="/game/textures/icon/camera.png" alt="" /><img src="/game/textures/icon/live.png" alt="" /><img src="/game/textures/icon/text.png" alt="" /><img src="/game/textures/icon/bank.png" alt="" /></div>
+    </div>
     <div class="ss-tile-body">
       <b>K-phone</b>
       <span>手に持って使うスマホ。プレイヤーに電話をかける、Keizonで買い物、固定カメラや自撮り、配信モードの切り替えまで、ここから。</span>
@@ -59,14 +62,21 @@ hero:
     </div>
   </a>
   <a class="ss-tile" href="./play/bot">
-    <img src="/images/monitor.webp" alt="" loading="lazy" />
+    <div class="ss-tile-art ss-art-bot">
+      <div class="ss-bot-input"><span class="ss-bot-cmd">/add_item</span><span class="ss-bot-arg">name: 麦茶</span><span class="ss-bot-caret"></span></div>
+      <div class="ss-bot-cmds"><span>/add_block</span><span>/add_clothing</span><span>/add_tool</span></div>
+    </div>
     <div class="ss-tile-body">
       <b>Discord botで追加</b>
       <span>自分で描いた画像から、ブロック・飲み物・服・道具の見た目をサーバーに追加できます。</span>
     </div>
   </a>
   <a class="ss-tile" href="./play/down">
-    <img src="/images/down.webp" alt="" loading="lazy" />
+    <div class="ss-tile-art ss-art-down">
+      <div class="ss-down-label">ダウン中</div>
+      <div class="ss-down-time">42<small>秒</small></div>
+      <div class="ss-down-bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
     <div class="ss-tile-body">
       <b>ダウンと蘇生</b>
       <span>体力が0になっても、60秒はダウンで踏みとどまります。仲間が近くでしゃがめば起こせます。</span>

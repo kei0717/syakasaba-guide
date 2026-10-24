@@ -562,6 +562,157 @@ img.pixel,
   image-rendering: pixelated;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.3));
 }
+/* K-phone: スマホのアイテムと、中のアプリのアイコン */
+.ss-art-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
+  background:
+    radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.22), transparent 50%),
+    linear-gradient(135deg, #3b7bd6, #24539c 65%, #1b3a6e);
+}
+.ss-tile-art.ss-art-phone img.ss-art-main {
+  width: 26%;
+}
+.ss-art-apps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.ss-tile-art .ss-art-apps img {
+  width: 34px;
+  height: 34px;
+  max-width: none;
+  padding: 5px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  filter: none;
+}
+
+/* Discord bot: コマンドの入力欄 */
+.ss-art-bot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 7%;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(88, 101, 242, 0.35), transparent 55%),
+    #2b2d31;
+  font-family: var(--vp-font-family-mono);
+}
+.ss-bot-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #383a40;
+  color: #dbdee1;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ss-bot-cmd {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(88, 101, 242, 0.3);
+  color: #c9cdfb;
+  font-weight: 700;
+}
+.ss-bot-arg {
+  color: #b5bac1;
+}
+.ss-bot-caret {
+  width: 2px;
+  height: 1.1em;
+  background: #dbdee1;
+  animation: ss-caret 1s steps(1) infinite;
+}
+@keyframes ss-caret {
+  50% {
+    opacity: 0;
+  }
+}
+.ss-bot-cmds {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 6px;
+}
+.ss-bot-cmds span {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #949ba4;
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+/* ダウン: 残り時間 */
+.ss-art-down {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background:
+    radial-gradient(ellipse at center, #3a1414 30%, #1a0707 100%);
+  box-shadow: inset 0 0 40px rgba(220, 40, 40, 0.45);
+  animation: ss-down-pulse 1.6s ease-in-out infinite;
+  color: #fff;
+}
+@keyframes ss-down-pulse {
+  50% {
+    box-shadow: inset 0 0 64px rgba(220, 40, 40, 0.75);
+  }
+}
+.ss-down-label {
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: #d23b3b;
+  font-family: var(--ss-font-round);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+.ss-down-time {
+  font-family: var(--ss-font-round);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.ss-down-time small {
+  margin-left: 4px;
+  font-size: 18px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+.ss-down-bar {
+  display: flex;
+  gap: 3px;
+  width: 64%;
+}
+.ss-down-bar i {
+  flex: 1;
+  height: 8px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+}
+.ss-down-bar i.on {
+  background: #ff6b5e;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-art-down,
+  .ss-bot-caret {
+    animation: none;
+  }
+}
 .ss-tile-body {
   display: flex;
   flex-direction: column;

@@ -142,7 +142,9 @@ function sliceBracket(src, start) {
     }
     if (it.jump === "diamond") return { ...toItem(it), sell: true };
     return toItem(it);
-  });
+  })
+    // ダイヤモンド売却は換金ブロックに移ったので、サイトには出さない
+    .filter((it) => !it.sell);
   fs.writeFileSync(path.join(DATA_OUT, "keizon.json"), JSON.stringify(items, null, 2));
   console.log(`Keizon: ${items.length}件`);
 }

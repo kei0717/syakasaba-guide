@@ -71,6 +71,61 @@
       ]
     },
     {
+      "tag": "crafting_recipe_message_block",
+      "name": "メッセージブロック",
+      "icon": "/game/textures/icon/message_block.png",
+      "items": [
+        {
+          "id": "kei:message_block",
+          "name": "メッセージブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/message_block.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 1
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_bank_io",
+      "name": "出金/入金ブロック",
+      "icon": "/game/textures/icon/bank_io.png",
+      "items": [
+        {
+          "id": "kei:bank_io",
+          "name": "出金/入金ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/bank_io.png",
+          "materials": [
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 4
+            },
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 1
+            },
+            {
+              "id": "minecraft:hopper",
+              "name": "ホッパー",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
       "tag": "crafting_recipe_mohikan",
       "name": "モヒカン",
       "icon": "/game/textures/items/item_mohikan.png",
@@ -650,6 +705,36 @@
               "id": "minecraft:diamond",
               "name": "ダイヤモンド",
               "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_drill_pack",
+      "name": "ドリルパック",
+      "icon": "/game/textures/items/item_drill_pack.png",
+      "items": [
+        {
+          "id": "kei:item_drill_pack",
+          "name": "ドリルパック",
+          "count": 1,
+          "icon": "/game/textures/items/item_drill_pack.png",
+          "materials": [
+            {
+              "id": "minecraft:iron_block",
+              "name": "鉄ブロック",
+              "count": 6
+            },
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 2
+            },
+            {
+              "id": "minecraft:piston",
+              "name": "ピストン",
+              "count": 2
             }
           ]
         }
@@ -2193,6 +2278,96 @@
               "id": "minecraft:iron_ingot",
               "name": "鉄インゴット",
               "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_add_exchange",
+      "name": "換金ブロック",
+      "icon": "/game/textures/icon/add_exchange.png",
+      "items": [
+        {
+          "id": "kei:add_exchange",
+          "name": "換金ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/add_exchange.png",
+          "materials": [
+            {
+              "id": "minecraft:chest",
+              "name": "チェスト",
+              "count": 1
+            },
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 4
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_auto_exchange",
+      "name": "自動換金ブロック",
+      "icon": "/game/textures/icon/auto_exchange.png",
+      "items": [
+        {
+          "id": "kei:auto_exchange",
+          "name": "自動換金ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/auto_exchange.png",
+          "materials": [
+            {
+              "id": "kei:add_exchange",
+              "name": "換金ブロック",
+              "count": 1
+            },
+            {
+              "id": "minecraft:hopper",
+              "name": "ホッパー",
+              "count": 1
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_billing",
+      "name": "請求ブロック",
+      "icon": "/game/textures/icon/billing.png",
+      "items": [
+        {
+          "id": "kei:billing",
+          "name": "請求ブロック",
+          "count": 1,
+          "icon": "/game/textures/icon/billing.png",
+          "materials": [
+            {
+              "id": "minecraft:paper",
+              "name": "紙",
+              "count": 3
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 4
+            },
+            {
+              "id": "minecraft:redstone",
+              "name": "レッドストーンダスト",
+              "count": 2
             }
           ]
         }
