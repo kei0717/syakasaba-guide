@@ -167,7 +167,10 @@
     padding:10px 4px; border-radius:8px; font-size:13px; cursor:pointer; transition:all 0.2s;
   }
   .res-pick button small{ display:block; font-size:11px; color:var(--sub); }
-  .res-pick button.active{ border-color:var(--accent); color:var(--accent); background:rgba(94, 230, 196, 0.08); }
+  .part-pick{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:16px; }
+  .part-pick button{ background:var(--panel2); border:1px solid var(--line); color:var(--text); padding:9px 2px; border-radius:8px; font-size:13px; cursor:pointer; transition:all 0.2s; }
+  .part-pick button.active{ border-color:var(--accent); color:var(--accent); background:rgba(94, 230, 196, 0.08); }
+  .res-pick button.active{border-color:var(--accent); color:var(--accent); background:rgba(94, 230, 196, 0.08); }
 
   .import-panel{ background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:12px; margin:-2px 0 10px; }
   .import-panel .hint{ margin:0 0 10px; }
@@ -211,6 +214,10 @@
     <div class="choice resume" id="choiceResume" style="display:none; margin-bottom:16px;">
       <div class="resume-thumbs" id="resumeThumbs"></div>
       <div class="txt"><b>前回の続きから</b><span id="resumeInfo"></span></div>
+    </div>
+    <div id="startPartWrap">
+      <span class="res-label">作る部位</span>
+      <div class="part-pick" id="partPick"></div>
     </div>
     <span class="res-label">解像度</span>
     <div class="res-pick" id="resPick"></div>
@@ -1459,6 +1466,33 @@ document.getElementById('downloadAllBtn').onclick = ()=>{
 // Initialization Modal & Startup
 // ============================================================
 const startModal = document.getElementById('startModal');
+// 作る部位(最初の画面だけ)。'all' = 全身(4部位)
+const START_PART_LABELS = { all: '全身', head: '帽子', chest: '服', legs: 'ズボン', feet: '靴' };
+let startPart = 'all';
+function startKeys(){ return startPart === 'all' ? PART_KEYS : [startPart]; }
+function renderPartPick(){
+  const wrap = document.getElementById('partPick');
+  wrap.innerHTML = '';
+  Object.keys(START_PART_LABELS).forEach(k => {
+    const b = document.createElement('button');
+    b.textContent = START_PART_LABELS[k];
+    b.className = k === startPart ? 'active' : '';
+    b.onclick = () => { startPart = k; renderPartPick(); };
+    wrap.appendChild(b);
+  });
+  if (!hasStarted) {
+    document.getElementById('modalSub').innerHTML = startPart === 'all'
+      ? '<span style="color:var(--accent)">※全身(4部位)のキャンバスが一括でセットアップされます。</span>'
+      : `<span style="color:var(--accent)">※${START_PART_LABELS[startPart]}だけを作ります(ほかの部位は透明のまま。あとからタブで描くこともできます)。</span>`;
+    if (document.getElementById('importPanel').style.display !== 'none') renderImportRows();
+  }
+}
+// 1つの部位だけ作るときは、ほかの部位を透明にしておく
+function clearOtherParts(){
+  if (hasStarted || startPart === 'all') return;
+  PART_KEYS.filter(k => k !== startPart).forEach(k => clearPart(k, selectedRes));
+}
+renderPartPick();
 function renderResPick(){
   const wrap = document.getElementById('resPick');
   wrap.innerHTML = '';
@@ -1502,6 +1536,7 @@ document.getElementById('showModalBtn').onclick = ()=>{
     document.getElementById('modalSub').innerHTML = `<span style="color:var(--accent2)">※現在編集中の部位 (${GEOMETRIES[currentPart].label}) のみが破棄されます。</span>`;
   }
   
+  document.getElementById('startPartWrap').style.display = 'none';
   selectedRes = currentPart === 'all' ? Math.max(...PART_KEYS.map(sz)) : sz(currentPart);
   renderResPick();
   resetImportPanel();
@@ -1519,7 +1554,7 @@ function closeModalAfterApply(){
   startModal.style.display = 'none';
   if(!hasStarted){
     hasStarted = true;
-    currentPart = 'all'; 
+    currentPart = startPart;
     switchToPart(currentPart);
     resize();
     animate();
@@ -1531,7 +1566,8 @@ function closeModalAfterApply(){
 }
 
 document.getElementById('choiceTemplate').onclick = ()=>{
-  const keysToReset = (!hasStarted || currentPart === 'all') ? PART_KEYS : [currentPart];
+  const keysToReset = !hasStarted ? startKeys() : (currentPart === 'all' ? PART_KEYS : [currentPart]);
+  clearOtherParts();
   let loadedCount = 0;
   keysToReset.forEach(key => {
     loadImageIntoPart(key, TEMPLATES[key], () => {
@@ -1544,7 +1580,7 @@ document.getElementById('choiceTemplate').onclick = ()=>{
 // ---- 画像をインポートして作成 ----
 let pendingImports = {};      // 部位 -> { name, data(dataURL) }
 let rowImportTarget = null;   // 1つずつ選ぶときの部位
-function importKeys(){ return (!hasStarted || currentPart === 'all') ? PART_KEYS : [currentPart]; }
+function importKeys(){ return !hasStarted ? startKeys() : (currentPart === 'all' ? PART_KEYS : [currentPart]); }
 // ファイル名から部位を当てる(書き出したファイル名 head_texture.png なども)
 function guessPartFromName(name){
   const s = name.toLowerCase();
@@ -1579,6 +1615,7 @@ function resetImportPanel(){
 }
 // 選んだ画像で部位を準備する(画像の無い部位は透明)
 function applyImports(keys){
+  clearOtherParts();
   let left = keys.length;
   const done = () => { if (--left === 0) { resetImportPanel(); closeModalAfterApply(); } };
   keys.forEach(key => {
@@ -1659,7 +1696,8 @@ document.getElementById('choiceResume').onclick = ()=>{
 setupResumeChoice();
 
 document.getElementById('choiceBlank').onclick = ()=>{
-const keysToReset = (!hasStarted || currentPart === 'all') ? PART_KEYS : [currentPart];
+const keysToReset = !hasStarted ? startKeys() : (currentPart === 'all' ? PART_KEYS : [currentPart]);
+  clearOtherParts();
   keysToReset.forEach(key => clearPart(key, selectedRes));
   closeModalAfterApply();
 };
