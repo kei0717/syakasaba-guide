@@ -4,7 +4,6 @@ layout: home
 hero:
   name: 社会性サバイバル
   text: しゃかさば ガイド
-  tagline: 電話とお金とスキルツリー。ちょっとにぎやかな、マイクラ統合版のサバイバルサーバー
   image:
     src: /game/textures/icon/logo.png
     alt: しゃかさば

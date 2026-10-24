@@ -25,8 +25,8 @@
   --vp-c-bg-alt: #f4f7f3;
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(120deg, #2a8a57 10%, #c9a227 90%);
-  --vp-home-hero-image-background-image: radial-gradient(circle, rgba(52, 160, 103, 0.35), rgba(231, 179, 26, 0.25) 60%, transparent 70%);
-  --vp-home-hero-image-filter: blur(48px);
+  --vp-home-hero-image-background-image: none;
+  --vp-home-hero-image-filter: none;
 }
 
 .dark {
@@ -438,6 +438,23 @@ img.pixel,
 /* ---------- ホーム ---------- */
 .VPHero .name {
   font-weight: 800;
+}
+/* ロゴはドット絵ではないので、ぼかさない設定から外す。少し大きめに、うっすら影だけ */
+.VPHero .VPImage.image-src {
+  image-rendering: auto;
+  filter: drop-shadow(0 4px 8px rgba(20, 40, 30, 0.16));
+}
+.dark .VPHero .VPImage.image-src {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+@media (min-width: 960px) {
+  .VPHero .image-container {
+    transform: translate(-32px, -32px);
+  }
+  .VPHero .VPImage.image-src {
+    max-width: 360px;
+    max-height: 360px;
+  }
 }
 
 @media (max-width: 640px) {
