@@ -74,7 +74,10 @@
     padding:8px 4px; border-radius:6px; font-size:11px; cursor:pointer;
   }
   .quick-actions button:hover{ color:var(--text); }
-  
+  .quick-actions button.on{ color:var(--accent); border-color:var(--accent); background:rgba(94, 230, 196, 0.08); }
+  .quick-actions button:disabled{ opacity:.4; cursor:default; }
+  .pv-msg{ color:var(--accent2); }
+
   .cube-list{ display:flex; flex-direction:column; gap:6px; max-height:200px; overflow-y:auto; padding-right:4px; }
   .cube-list::-webkit-scrollbar { width: 4px; }
   .cube-list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
@@ -273,6 +276,26 @@
           <button id="showOuterOnlyBtn">外側のみ</button>
         </div>
         <div class="cube-list" id="cubeList"></div>
+      </div>
+
+      <div class="block">
+        <span class="label">装着プレビュー(プレイヤーが着た状態で確かめる)</span>
+        <div class="quick-actions">
+          <button id="pvBodyBtn">体を表示</button>
+          <button id="pvClearBtn">すけさせる</button>
+          <button id="pvWalkBtn">歩かせる</button>
+        </div>
+        <div class="quick-actions">
+          <button id="pvGrayBtn">灰色の人形</button>
+          <button id="pvSkinLookBtn">スキン</button>
+          <button id="pvSkinLoadBtn">スキンを読み込む</button>
+        </div>
+        <div class="quick-actions">
+          <button id="pvWideBtn">うで: 太い (Steve)</button>
+          <button id="pvSlimBtn">うで: 細い (Alex)</button>
+        </div>
+        <p class="hint" id="pvHint">体はプレビュー用で、書き出す画像には入りません。スキンは 64×64 / 128×128 の PNG を読み込めます(このブラウザに保存されます)。</p>
+        <input type="file" id="pvSkinInput" accept="image/png" style="display:none;">
       </div>
 
       <div class="block">
@@ -813,6 +836,201 @@ PART_KEYS.forEach(k => {
 let modelGroup = new THREE.Group();
 scene.add(modelGroup);
 
+// ============================================================
+// 装着プレビュー(体を表示・すけさせる・歩かせる・スキン)
+// ============================================================
+// 骨の回転の中心(このエディターの座標 = 統合版の geo の x を反転したもの)
+const BONE_PIVOT = { head: [0, 24, 0], body: [0, 24, 0], armL: [-5, 22, 0], armR: [5, 22, 0], legL: [-1.9, 12, 0], legR: [1.9, 12, 0] };
+// 服の部品の名前と位置から骨を決める(左右は位置で決める: x がマイナス = 左)
+function boneOfCube(cube){
+  const cx = cube.origin[0] + cube.size[0] / 2;
+  const side = cx < 0 ? 'L' : 'R';
+  if (/腕|arm/i.test(cube.name)) return 'arm' + side;
+  if (/脚|足|leg|foot|feet/i.test(cube.name)) return 'leg' + side;
+  if (/頭|head/i.test(cube.name)) return 'head';
+  return 'body';
+}
+function assignBone(mesh, cube){
+  mesh.userData.bone = boneOfCube(cube);
+}
+// 統合版のスキンの形(64×64 のスキンの box UV)。o / s は統合版の geo の座標
+const SKIN_PARTS = [
+  { bone: 'head', o: [-4, 24, -4], s: [8, 8, 8], uv: [0, 0],  layer: [32, 0],  inflate: 0.5 },
+  { bone: 'body', o: [-4, 12, -2], s: [8, 12, 4], uv: [16, 16], layer: [16, 32], inflate: 0.25 },
+  // 右うで・右足(統合版の geo では x がマイナス)
+  { bone: 'armR', o: [-8, 12, -2], s: [4, 12, 4], slim: { o: [-7, 11.5, -2], s: [3, 12, 4] }, uv: [40, 16], layer: [40, 32], inflate: 0.25 },
+  { bone: 'armL', o: [4, 12, -2],  s: [4, 12, 4], slim: { o: [4, 11.5, -2],  s: [3, 12, 4] }, uv: [32, 48], layer: [48, 48], inflate: 0.25 },
+  { bone: 'legR', o: [-3.9, 0, -2], s: [4, 12, 4], uv: [0, 16],  layer: [0, 32],  inflate: 0.25 },
+  { bone: 'legL', o: [-0.1, 0, -2], s: [4, 12, 4], uv: [16, 48], layer: [0, 48],  inflate: 0.25 }
+];
+// box UV → 面ごとの UV([u, v, 幅, 高さ]。geometries.json と同じ書き方)
+function boxUV(u, v, s){
+  const w = Math.floor(s[0]), h = Math.floor(s[1]), d = Math.floor(s[2]);
+  return {
+    north: [u + d, v + d, w, h], south: [u + 2 * d + w, v + d, w, h],
+    east: [u, v + d, d, h], west: [u + d + w, v + d, d, h],
+    up: [u + d, v, w, d], down: [u + d + w, v + d, w, -d]
+  };
+}
+// 統合版の geo の箱 → このエディターの箱(x を反転、inflate を足す)
+function toEditorCube(o, s, inflate, uv){
+  const i = inflate || 0;
+  return { origin: [-(o[0] + s[0]) - i, o[1] - i, o[2] - i], size: [s[0] + 2 * i, s[1] + 2 * i, s[2] + 2 * i], uv };
+}
+function buildGhostMesh(cube, mat){
+  const faces = facesForCube(cube);
+  const positions = [], uvs = [], indices = [];
+  let vi = 0;
+  Object.keys(cube.uv).forEach(faceName => {
+    const f = faces[faceName];
+    if (!f) return;
+    const [uvX, uvY, uvW, uvH] = cube.uv[faceName];
+    const v0 = f.v0, v1 = f.v1, v3 = f.v3;
+    const v2 = [v1[0] + v3[0] - v0[0], v1[1] + v3[1] - v0[1], v1[2] + v3[2] - v0[2]];
+    positions.push(...v0, ...v1, ...v2, ...v3);
+    const u0 = uvX / UV_BASE, u1 = (uvX + uvW) / UV_BASE;
+    const vTop = 1 - uvY / UV_BASE, vBottom = 1 - (uvY + uvH) / UV_BASE;
+    uvs.push(u1, vTop, u0, vTop, u0, vBottom, u1, vBottom);   // 服と同じ貼り方
+    indices.push(vi, vi + 1, vi + 2, vi, vi + 2, vi + 3);
+    vi += 4;
+  });
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geo.setIndex(indices);
+  geo.computeVertexNormals();
+  return new THREE.Mesh(geo, mat);
+}
+
+const PREVIEW_KEY = 'shakasaba.editor3d.preview.v1';
+const preview = { show: true, clear: false, walk: false, look: 'gray', slim: false, skin: null };
+try { Object.assign(preview, JSON.parse(localStorage.getItem(PREVIEW_KEY) || '{}'), { walk: false }); } catch(e) {}
+function savePreview(){
+  try { localStorage.setItem(PREVIEW_KEY, JSON.stringify({ show: preview.show, clear: preview.clear, look: preview.look, slim: preview.slim, skin: preview.skin })); }
+  catch(e) { console.warn('プレビューの設定を保存できませんでした', e); }
+}
+const bodyGroup = new THREE.Group();
+bodyGroup.renderOrder = -1;
+scene.add(bodyGroup);
+let skinTexture = null, skinImage = null;
+function loadSkinTexture(cb){
+  if (!preview.skin) { skinTexture = null; cb && cb(); return; }
+  const img = new Image();
+  img.onload = () => {
+    skinImage = img;
+    const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const cx = c.getContext('2d'); cx.imageSmoothingEnabled = false; cx.drawImage(img, 0, 0);
+    if (skinTexture) skinTexture.dispose();
+    skinTexture = makeTexture(c);
+    cb && cb();
+  };
+  img.onerror = () => { preview.skin = null; preview.look = 'gray'; savePreview(); cb && cb(); };
+  img.src = preview.skin;
+}
+function ghostMaterial(isLayer){
+  const clear = preview.clear;
+  const common = { side: THREE.FrontSide, transparent: clear, opacity: clear ? (isLayer ? 0.3 : 0.38) : 1, depthWrite: !clear };
+  if (preview.look === 'skin' && skinTexture) return new THREE.MeshLambertMaterial({ map: skinTexture, alphaTest: 0.5, ...common });
+  return new THREE.MeshLambertMaterial({ color: 0x9097a1, ...common });
+}
+function rebuildBody(){
+  while (bodyGroup.children.length) {
+    const m = bodyGroup.children[0]; bodyGroup.remove(m); m.geometry.dispose(); m.material.dispose();
+  }
+  if (!preview.show) return;
+  const useSkin = preview.look === 'skin' && skinTexture;
+  SKIN_PARTS.forEach(pt => {
+    const shape = (preview.slim && pt.slim) ? pt.slim : pt;
+    const base = buildGhostMesh(toEditorCube(shape.o, shape.s, 0, boxUV(pt.uv[0], pt.uv[1], shape.s)), ghostMaterial(false));
+    base.userData.bone = pt.bone; bodyGroup.add(base);
+    if (useSkin) {   // スキンの2枚目(帽子・上着などのレイヤー)
+      const lay = buildGhostMesh(toEditorCube(shape.o, shape.s, pt.inflate, boxUV(pt.layer[0], pt.layer[1], shape.s)), ghostMaterial(true));
+      lay.userData.bone = pt.bone; bodyGroup.add(lay);
+    }
+  });
+  applyPose(walkPhase());
+}
+// ---- 歩かせる ----
+let walkStart = 0;
+function walkPhase(){ return preview.walk ? (performance.now() - walkStart) / 1000 : null; }
+const WALK_HZ = 1.1, LEG_DEG = 34, ARM_DEG = 28;
+const _pv = new THREE.Vector3(), _e = new THREE.Euler();
+function poseMesh(m, t){
+  const b = m.userData.bone;
+  let a = 0;
+  if (t !== null && b) {
+    const s = Math.sin(t * Math.PI * 2 * WALK_HZ);
+    if (b === 'legL') a = LEG_DEG * s; else if (b === 'legR') a = -LEG_DEG * s;
+    else if (b === 'armL') a = -ARM_DEG * s; else if (b === 'armR') a = ARM_DEG * s;
+  }
+  if (!a) { m.rotation.set(0, 0, 0); m.position.set(0, 0, 0); return; }
+  const P = BONE_PIVOT[b];
+  _e.set(a * Math.PI / 180, 0, 0);
+  _pv.set(P[0], P[1], P[2]).applyEuler(_e);
+  m.rotation.copy(_e);
+  m.position.set(P[0] - _pv.x, P[1] - _pv.y, P[2] - _pv.z);   // 骨の中心のまわりに回す
+}
+function applyPose(t){
+  bodyGroup.children.forEach(m => poseMesh(m, t));
+  modelGroup.children.forEach(m => poseMesh(m, t));
+}
+function stopWalk(){
+  if (!preview.walk) return;
+  preview.walk = false; applyPose(null); updatePreviewUI();
+}
+// ---- ボタン ----
+function updatePreviewUI(){
+  const on = (id, v) => document.getElementById(id).classList.toggle('on', !!v);
+  on('pvBodyBtn', preview.show); on('pvClearBtn', preview.clear); on('pvWalkBtn', preview.walk);
+  on('pvGrayBtn', preview.look !== 'skin'); on('pvSkinLookBtn', preview.look === 'skin');
+  on('pvWideBtn', !preview.slim); on('pvSlimBtn', preview.slim);
+  document.getElementById('pvWalkBtn').textContent = preview.walk ? '止める' : '歩かせる';
+  document.getElementById('pvClearBtn').disabled = !preview.show;
+}
+function pvMsg(text, bad){
+  const el = document.getElementById('pvHint');
+  el.textContent = text; el.classList.toggle('pv-msg', !!bad);
+}
+document.getElementById('pvBodyBtn').onclick = () => { preview.show = !preview.show; savePreview(); rebuildBody(); updatePreviewUI(); };
+document.getElementById('pvClearBtn').onclick = () => { preview.clear = !preview.clear; savePreview(); rebuildBody(); updatePreviewUI(); };
+document.getElementById('pvWalkBtn').onclick = () => {
+  if (preview.walk) { stopWalk(); return; }
+  preview.walk = true; walkStart = performance.now(); updatePreviewUI();
+};
+document.getElementById('pvGrayBtn').onclick = () => { preview.look = 'gray'; savePreview(); rebuildBody(); updatePreviewUI(); };
+document.getElementById('pvSkinLookBtn').onclick = () => {
+  if (!preview.skin) { document.getElementById('pvSkinInput').click(); return; }   // まだスキンが無いときは読み込みへ
+  preview.look = 'skin'; savePreview(); rebuildBody(); updatePreviewUI();
+};
+document.getElementById('pvSkinLoadBtn').onclick = () => document.getElementById('pvSkinInput').click();
+document.getElementById('pvWideBtn').onclick = () => { preview.slim = false; savePreview(); rebuildBody(); updatePreviewUI(); };
+document.getElementById('pvSlimBtn').onclick = () => { preview.slim = true; savePreview(); rebuildBody(); updatePreviewUI(); };
+document.getElementById('pvSkinInput').addEventListener('change', e => {
+  const file = e.target.files[0]; e.target.value = '';
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      const w = img.naturalWidth, h = img.naturalHeight;
+      if (!(w === h && (w === 64 || w === 128))) { pvMsg(`スキンは 64×64 か 128×128 の PNG にしてください(この画像は ${w}×${h} です)。`, true); return; }
+      // 細いうでの判定: 右うでの前の面の右側(細いうでなら使わない場所)が透明か
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const cx = c.getContext('2d'); cx.drawImage(img, 0, 0);
+      const k = w / 64;
+      const a = cx.getImageData(Math.floor(54.5 * k), Math.floor(25 * k), 1, 1).data[3];
+      preview.slim = a === 0;
+      preview.skin = ev.target.result; preview.look = 'skin'; preview.show = true;
+      savePreview();
+      loadSkinTexture(() => { rebuildBody(); updatePreviewUI(); });
+      pvMsg(`スキンを読み込みました(うでは${preview.slim ? '細い (Alex)' : '太い (Steve)'}と判定しました。違うときは下のボタンで切り替えてください)。`);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+loadSkinTexture(() => { if (!skinTexture && preview.look === 'skin') preview.look = 'gray'; rebuildBody(); updatePreviewUI(); });
+
 function facesForCube(cube){
   const [ox,oy,oz] = cube.origin;
   const [w,h,d] = cube.size;
@@ -860,7 +1078,8 @@ function buildCubeMesh(cube, partKey){
   mesh.userData.outer = isOuterLayer(cube);
   mesh.userData.partKey = partKey;
   mesh.userData.faceBounds = faceBounds;
-  return mesh;
+  assignBone(mesh, cube);
+return mesh;
 }
 
 function rebuildModel(){
@@ -873,6 +1092,7 @@ function rebuildModel(){
     });
   });
   
+  if (preview.walk) applyPose(walkPhase());
   document.getElementById('partNameBadge').textContent = currentPart === 'all' ? '全身 (All)' : GEOMETRIES[currentPart].label;
   buildCubeListUI();
   centerCameraOnModel();
@@ -1086,8 +1306,9 @@ renderer.domElement.addEventListener('mousedown', e=>{
       executeSpoid3D(hits);
       return;
     }
+    stopWalk();
     painting3D = true;
-    const hit = hits[0]; 
+    const hit = hits[0];
     lastPaintedPart = hit.object.userData.partKey;
     snapshotBeforeStroke(lastPaintedPart);
     if(tool === 'pen') addColorToHistory(brushColor);
@@ -1150,7 +1371,8 @@ renderer.domElement.addEventListener('touchstart', e=>{
       executeSpoid3D(hits);
       return;
     }
-    painting3D=true; 
+    stopWalk();
+    painting3D=true;
     const hit = hits[0];
     lastPaintedPart = hit.object.userData.partKey;
     snapshotBeforeStroke(lastPaintedPart); 
@@ -1209,7 +1431,7 @@ function resize(){
   camera.updateProjectionMatrix();
 }
 window.addEventListener('resize', resize);
-function animate(){ requestAnimationFrame(animate); renderer.render(scene, camera); }
+function animate(){ requestAnimationFrame(animate); if (preview.walk) applyPose(walkPhase()); renderer.render(scene, camera); }
 
 // ============================================================
 // Exports
