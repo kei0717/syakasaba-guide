@@ -164,6 +164,7 @@
     display:flex; align-items:center; justify-content:center;
   }
   .preview-thumb img{ width:100%; height:100%; image-rendering: pixelated; border-radius:5px; }
+  .choice.resume{ border-color:var(--accent); align-items:center; }
 
   .modal-back{
     display:inline-block; margin-bottom:14px; font-size:12px; color:var(--sub); cursor:pointer; user-select:none;
@@ -194,6 +195,10 @@
       <h2>作成するテクスチャの種類</h2>
       <p class="sub">用途に合わせてキャンバスの解像度候補が変わります。</p>
 
+      <div class="choice resume" id="choiceResume" style="display:none;">
+        <div class="preview-thumb"><img id="resumeThumb" src="" alt=""></div>
+        <div class="txt"><b>前回の続きから</b><span id="resumeInfo"></span></div>
+      </div>
       <div class="choice" id="choiceModeItem">
         <div class="txt"><b>アイテム用テクスチャ</b><span>剣・道具・食材などのアイテムアイコン。16×16 または 32×32 に対応。</span></div>
       </div>
@@ -513,6 +518,7 @@ function refreshDisplay(){
     }
     ctx.stroke();
   }
+  try { scheduleAutosave(); } catch(e) {}   // 準備が終わる前(hasStarted の宣言前)は何もしない
 }
 
 function canvasEventToPixel(e){
@@ -631,6 +637,42 @@ const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 let hasStarted = false;
+
+// ---- 自動保存(このブラウザの中だけ。別の PC・ブラウザには引き継がれない)----
+const AUTOSAVE_KEY = 'shakasaba.editor2d.autosave.v1';
+let autosaveTimer = null;
+function writeAutosave(){
+  autosaveTimer = null;
+  if(!hasStarted || !currentMode) return;
+  try {
+    localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ v: 1, at: Date.now(), mode: currentMode, res: TEX_SIZE, png: modelCanvas.toDataURL('image/png') }));
+  } catch(e) { console.warn('自動保存できませんでした', e); }
+}
+function scheduleAutosave(){
+  if(!hasStarted) return;
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(writeAutosave, 400);
+}
+function readAutosave(){
+  try {
+    const s = JSON.parse(localStorage.getItem(AUTOSAVE_KEY) || 'null');
+    if(s && s.png && MODE_CONFIG[s.mode] && MODE_CONFIG[s.mode].resolutions.includes(s.res)) return s;
+  } catch(e) {}
+  return null;
+}
+// タブを閉じる・別のアプリに切り替える直前に、まだ書いていない分を保存する
+window.addEventListener('pagehide', () => { if(autosaveTimer){ clearTimeout(autosaveTimer); writeAutosave(); } });
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden' && autosaveTimer){ clearTimeout(autosaveTimer); writeAutosave(); } });
+// 「前回の続きから」(まだ描き始めていないときだけ出す)
+function setupResumeChoice(){
+  const el = document.getElementById('choiceResume');
+  const s = hasStarted ? null : readAutosave();
+  if(!s){ el.style.display = 'none'; return; }
+  document.getElementById('resumeThumb').src = s.png;
+  const when = new Date(s.at).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  document.getElementById('resumeInfo').textContent = `${when} に自動保存した内容(${MODE_CONFIG[s.mode].label} / ${s.res}×${s.res})から再開します。新しく作成すると、この内容は上書きされます。`;
+  el.style.display = 'flex';
+}
 let pendingMode = null;
 let pendingRes = null;
 
@@ -642,12 +684,19 @@ function showStep(n){
 
 function openModalFromStart(){
   document.getElementById('cancelModalWrap').style.display = hasStarted ? 'block' : 'none';
+  setupResumeChoice();
   showStep(1);
   startModal.style.display = 'flex';
 }
 
 document.getElementById('changeSettingBtn').onclick = openModalFromStart;
 
+document.getElementById('choiceResume').onclick = ()=>{
+  const s = readAutosave();
+  if(!s) return;
+  pendingMode = s.mode; pendingRes = s.res;
+  finalizeSetup(s.png);
+};
 document.getElementById('choiceModeItem').onclick = ()=>{ selectMode('item'); };
 document.getElementById('choiceModePainting').onclick = ()=>{ selectMode('painting'); };
 

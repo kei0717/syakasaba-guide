@@ -178,7 +178,10 @@
   .import-row .fname.set{ color:var(--text); }
   .import-actions{ display:flex; gap:8px; margin-top:10px; }
   .import-actions .dl{ flex:1; padding:10px 12px; }
-  .import-msg{ font-size:11px; color:var(--accent2); margin:8px 0 0; min-height:0; }
+  .choice.resume{ border-color:var(--accent); align-items:center; }
+  .resume-thumbs{ display:grid; grid-template-columns:repeat(2, 24px); gap:3px; flex-shrink:0; }
+  .resume-thumbs img{ width:24px; height:24px; image-rendering:pixelated; background:#0d0e12; border-radius:3px; border:1px solid var(--line); }
+  .import-msg{font-size:11px; color:var(--accent2); margin:8px 0 0; min-height:0; }
 
   @media (max-width: 880px){
     body{ overflow-y:auto; height:auto; }
@@ -202,6 +205,10 @@
     <h2 id="modalTitle">キャンバスの準備</h2>
     <p class="sub" id="modalSub"><span style="color:var(--accent)">※全身(4部位)のキャンバスが一括でセットアップされます。</span></p>
 
+    <div class="choice resume" id="choiceResume" style="display:none; margin-bottom:16px;">
+      <div class="resume-thumbs" id="resumeThumbs"></div>
+      <div class="txt"><b>前回の続きから</b><span id="resumeInfo"></span></div>
+    </div>
     <span class="res-label">解像度</span>
     <div class="res-pick" id="resPick"></div>
 
@@ -380,6 +387,31 @@ let showGrid2D = false;
 let showGrid3D = true; 
 let hasStarted = false;
 
+// ---- 自動保存(このブラウザの中だけ。別の PC・ブラウザには引き継がれない)----
+const AUTOSAVE_KEY = 'shakasaba.editor3d.autosave.v1';
+let autosaveTimer = null;
+function writeAutosave(){
+  autosaveTimer = null;
+  if(!hasStarted) return;
+  try {
+    const parts = {}, sizes = {};
+    PART_KEYS.forEach(k => { parts[k] = partCanvases[k].toDataURL('image/png'); sizes[k] = sz(k); });
+    localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ v: 1, at: Date.now(), parts, sizes }));
+  } catch(e) { console.warn('自動保存できませんでした', e); }
+}
+function scheduleAutosave(){
+  if(!hasStarted) return;
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(writeAutosave, 400);
+}
+function readAutosave(){
+  try { const s = JSON.parse(localStorage.getItem(AUTOSAVE_KEY) || 'null'); if(s && s.parts) return s; } catch(e) {}
+  return null;
+}
+// タブを閉じる・別のアプリに切り替える直前に、まだ書いていない分を保存する
+window.addEventListener('pagehide', () => { if(autosaveTimer){ clearTimeout(autosaveTimer); writeAutosave(); } });
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden' && autosaveTimer){ clearTimeout(autosaveTimer); writeAutosave(); } });
+
 document.getElementById('toggleGrid2DBtn').onclick = (e) => {
   showGrid2D = !showGrid2D;
   e.target.classList.toggle('active', showGrid2D);
@@ -423,6 +455,7 @@ function refreshAllDisplayCanvases(){
   PART_KEYS.forEach(k => {
     if(textures[k]) textures[k].needsUpdate = true;
   });
+  scheduleAutosave();
 }
 
 function loadImageIntoPart(partKey, src, cb, size, keepImageSize){
@@ -553,8 +586,8 @@ function getSpoidColor(partKey, px, py) {
 }
 
 // 描画（3Dの指定した面の境界内にクリップして描画する）
-function paintAt(partKey, px, py, bounds = null){
-  if(px<0||py<0||px>=sz(partKey)||py>=sz(partKey)) return;
+function paintAt(partKey, px, py, bounds = null, refresh = true){
+if(px<0||py<0||px>=sz(partKey)||py>=sz(partKey)) return;
   const ctx = partCanvases[partKey].getContext('2d');
   
   if (tool === 'spoid') {
@@ -579,12 +612,27 @@ function paintAt(partKey, px, py, bounds = null){
     ctx.fillRect(px-half, py-half, size, size);
   }
   ctx.restore();
-  
+
+  if (refresh) refreshAllDisplayCanvases();
+}
+// 前の点から今の点まで、1 マスずつ埋める(速く動かしても隙間ができないように)
+function paintLine(partKey, x0, y0, x1, y1, bounds = null){
+  const dx = Math.abs(x1-x0), dy = Math.abs(y1-y0);
+  const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy, x = x0, y = y0, guard = 0;
+  while(guard++ < 1024){
+    paintAt(partKey, x, y, bounds, false);
+    if(x === x1 && y === y1) break;
+    const e2 = 2*err;
+    if(e2 > -dy){ err -= dy; x += sx; }
+    if(e2 < dx){ err += dx; y += sy; }
+  }
   refreshAllDisplayCanvases();
 }
 
 function bind2DCanvasEvents(uiCanvas, partKey) {
-  function canvasEventToPixel(e){
+  let last2D = null;   // 前に塗った点(線で埋めるため)
+function canvasEventToPixel(e){
     const rect = uiCanvas.getBoundingClientRect();
     let cx = e.clientX;
     let cy = e.clientY;
@@ -607,7 +655,7 @@ function bind2DCanvasEvents(uiCanvas, partKey) {
     painting = true;
     snapshotBeforeStroke(partKey);
     if(tool === 'pen') addColorToHistory(brushColor);
-    const [x,y] = canvasEventToPixel(e); paintAt(partKey, x,y);
+    const [x,y] = canvasEventToPixel(e); paintAt(partKey, x,y); last2D = [x,y];
   });
 
   uiCanvas.addEventListener('mousemove', e=>{ 
@@ -616,8 +664,10 @@ function bind2DCanvasEvents(uiCanvas, partKey) {
       getSpoidColor(partKey, x, y);
       return;
     }
-    if(!painting) return; 
-    const [x,y] = canvasEventToPixel(e); paintAt(partKey, x,y); 
+    if(!painting) return;
+    const [x,y] = canvasEventToPixel(e);
+    if (last2D) paintLine(partKey, last2D[0], last2D[1], x, y); else paintAt(partKey, x,y);
+    last2D = [x,y];
   });
 
   uiCanvas.addEventListener('touchstart', e=>{
@@ -628,10 +678,10 @@ function bind2DCanvasEvents(uiCanvas, partKey) {
       getSpoidColor(partKey, x, y);
       return;
     }
-    painting = true; 
+    painting = true;
     snapshotBeforeStroke(partKey);
     if(tool === 'pen') addColorToHistory(brushColor);
-    const [x,y] = canvasEventToPixel(e); paintAt(partKey, x,y);
+    const [x,y] = canvasEventToPixel(e); paintAt(partKey, x,y); last2D = [x,y];
   }, { passive:false });
 
   uiCanvas.addEventListener('touchmove', e=>{
@@ -642,7 +692,9 @@ function bind2DCanvasEvents(uiCanvas, partKey) {
       return;
     }
     if(!painting) return;
-    const [x,y] = canvasEventToPixel(e); paintAt(partKey, x,y);
+    const [x,y] = canvasEventToPixel(e);
+    if (last2D) paintLine(partKey, last2D[0], last2D[1], x, y); else paintAt(partKey, x,y);
+    last2D = [x,y];
   }, { passive:false });
 }
 
@@ -984,7 +1036,7 @@ function executeSpoid3D(hits) {
   return false;
 }
 
-function paintFromHit(hit){
+function paintFromHit(hit, refresh = true){
   if(!hit || !hit.uv) return;
   const px = Math.floor(hit.uv.x*sz(hit.object.userData.partKey));
   const py = Math.floor((1-hit.uv.y)*sz(hit.object.userData.partKey));
@@ -996,7 +1048,31 @@ function paintFromHit(hit){
     const k = sz(hit.object.userData.partKey) / UV_BASE;
     if (b) bounds = { x: b.x * k, y: b.y * k, w: b.w * k, h: b.h * k };
   }
-  paintAt(hit.object.userData.partKey, px, py, bounds);
+  paintAt(hit.object.userData.partKey, px, py, bounds, refresh);
+}
+// 3D の線: 画面上の前の位置 → 今の位置を 3px ごとに区切り、それぞれ当たった面を塗る(面や部位をまたいでも埋まる)
+let last3D = null;
+function pointerXY(e){
+  if (e.touches && e.touches.length > 0) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  return { x: e.clientX, y: e.clientY };
+}
+function paint3DTo(e){
+  const p = pointerXY(e);
+  const from = last3D || p;
+  const steps = Math.min(96, Math.max(1, Math.ceil(Math.hypot(p.x - from.x, p.y - from.y) / 3)));
+  for (let i = 1; i <= steps; i++) {
+    const u = i / steps;
+    const hits = raycastAll({ clientX: from.x + (p.x - from.x) * u, clientY: from.y + (p.y - from.y) * u });
+    if (!hits.length) continue;
+    const hit = hits[0];
+    if (hit.object.userData.partKey !== lastPaintedPart) {
+      lastPaintedPart = hit.object.userData.partKey;
+      snapshotBeforeStroke(lastPaintedPart);
+    }
+    paintFromHit(hit, false);
+  }
+  last3D = p;
+  refreshAllDisplayCanvases();
 }
 
 let dragging=false, painting3D=false, lastX=0, lastY=0;
@@ -1017,6 +1093,7 @@ renderer.domElement.addEventListener('mousedown', e=>{
     if(tool === 'pen') addColorToHistory(brushColor);
     renderer.domElement.style.cursor = 'crosshair';
     paintFromHit(hit);
+    last3D = pointerXY(e);
   } else {
     dragging = true;
     lastX = e.clientX; lastY = e.clientY;
@@ -1030,17 +1107,9 @@ window.addEventListener('mousemove', e=>{
     if(hits.length > 0) executeSpoid3D(hits);
     return;
   }
-  if(painting3D){ 
-    const hits = raycastAll(e);
-    if(hits.length > 0) {
-      const hit = hits[0];
-      if(hit.object.userData.partKey !== lastPaintedPart) {
-         lastPaintedPart = hit.object.userData.partKey;
-         snapshotBeforeStroke(lastPaintedPart);
-      }
-      paintFromHit(hit); 
-    }
-    return; 
+  if(painting3D){
+    paint3DTo(e);
+    return;
   }
   if(!dragging) return;
   const dx = e.clientX-lastX, dy = e.clientY-lastY;
@@ -1086,9 +1155,10 @@ renderer.domElement.addEventListener('touchstart', e=>{
     lastPaintedPart = hit.object.userData.partKey;
     snapshotBeforeStroke(lastPaintedPart); 
     if(tool === 'pen') addColorToHistory(brushColor);
-    paintFromHit(hit); 
+    paintFromHit(hit);
+    last3D = pointerXY(e);
   }
-  else { dragging=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; }
+  else { dragging=true;lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; }
 }, { passive:false });
 
 renderer.domElement.addEventListener('touchmove', e=>{
@@ -1104,17 +1174,9 @@ renderer.domElement.addEventListener('touchmove', e=>{
     if(hits.length > 0) executeSpoid3D(hits);
     return;
   }
-  if(painting3D){ 
-    const hits = raycastAll(e);
-    if(hits.length > 0) {
-      const hit = hits[0];
-      if(hit.object.userData.partKey !== lastPaintedPart) {
-         lastPaintedPart = hit.object.userData.partKey;
-         snapshotBeforeStroke(lastPaintedPart);
-      }
-      paintFromHit(hit); 
-    }
-    return; 
+  if(painting3D){
+    paint3DTo(e);
+    return;
   }
   if(!dragging) return;
   const dx = e.touches[0].clientX-lastX, dy = e.touches[0].clientY-lastY;
@@ -1127,9 +1189,10 @@ renderer.domElement.addEventListener('touchmove', e=>{
 function handlePointerUp() {
   dragging = false; 
   painting = false;
-  painting3D = false; 
-  pinchDist = null; 
+  painting3D = false;
+  pinchDist = null;
   lastPaintedPart = null;
+  last3D = null;
   
   if (isSpoiding) {
     isSpoiding = false;
@@ -1220,6 +1283,7 @@ document.getElementById('showModalBtn').onclick = ()=>{
   selectedRes = currentPart === 'all' ? Math.max(...PART_KEYS.map(sz)) : sz(currentPart);
   renderResPick();
   resetImportPanel();
+  setupResumeChoice();
   document.getElementById('cancelModalWrap').style.display = 'block';
   startModal.style.display = 'flex';
 };
@@ -1346,8 +1410,34 @@ document.getElementById('importApplyBtn').onclick = ()=>{
   applyImports(keys);
 };
 
+// ---- 前回の続きから ----
+function setupResumeChoice(){
+  const el = document.getElementById('choiceResume');
+  const s = hasStarted ? null : readAutosave();
+  if(!s){ el.style.display = 'none'; return; }
+  const thumbs = document.getElementById('resumeThumbs');
+  thumbs.innerHTML = '';
+  PART_KEYS.forEach(k => { if(s.parts[k]){ const img = document.createElement('img'); img.src = s.parts[k]; img.alt = ''; thumbs.appendChild(img); } });
+  const when = new Date(s.at).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  const sizes = [...new Set(PART_KEYS.map(k => s.sizes && s.sizes[k] || UV_BASE))].map(v => v + '×' + v).join(' / ');
+  document.getElementById('resumeInfo').textContent = `${when} に自動保存した内容(${sizes})から再開します。新しく作成すると、この内容は上書きされます。`;
+  el.style.display = 'flex';
+}
+document.getElementById('choiceResume').onclick = ()=>{
+  const s = readAutosave();
+  if(!s) return;
+  let left = PART_KEYS.length;
+  const done = () => { if(--left === 0) closeModalAfterApply(); };
+  PART_KEYS.forEach(k => {
+    const size = (s.sizes && s.sizes[k]) || UV_BASE;
+    if(s.parts[k]) loadImageIntoPart(k, s.parts[k], done, size, true);
+    else { clearPart(k, size); done(); }
+  });
+};
+setupResumeChoice();
+
 document.getElementById('choiceBlank').onclick = ()=>{
-  const keysToReset = (!hasStarted || currentPart === 'all') ? PART_KEYS : [currentPart];
+const keysToReset = (!hasStarted || currentPart === 'all') ? PART_KEYS : [currentPart];
   keysToReset.forEach(key => clearPart(key, selectedRes));
   closeModalAfterApply();
 };
