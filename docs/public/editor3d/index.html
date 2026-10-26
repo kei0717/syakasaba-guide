@@ -528,11 +528,12 @@ function drawUiCanvas(uiCanvas){
     if (hover && hover.part === key) {
       const c = uiCanvas.width / S;
       hover.rects.forEach(([x0, y0, x1, y1], i) => {
-        ctx.fillStyle = i === 0 ? 'rgba(255, 244, 150, 0.35)' : 'rgba(150, 200, 255, 0.3)';
-        ctx.fillRect(x0 * c, y0 * c, (x1 - x0) * c, (y1 - y0) * c);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = i === 0 ? 'rgba(255, 236, 110, 0.95)' : 'rgba(140, 190, 255, 0.95)';
-        ctx.strokeRect(x0 * c + 1, y0 * c + 1, (x1 - x0) * c - 2, (y1 - y0) * c - 2);
+        // 縁取りだけ(中の色が見えるように)。明るい色の上でも見えるよう、暗いふちの上に明るい線
+        const rx = x0 * c, ry = y0 * c, rw = (x1 - x0) * c, rh = (y1 - y0) * c;
+        ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0, 0, 0, 0.55)';
+        ctx.strokeRect(rx + 1.5, ry + 1.5, rw - 3, rh - 3);
+        ctx.lineWidth = 1.5; ctx.strokeStyle = i === 0 ? 'rgba(255, 236, 110, 1)' : 'rgba(140, 190, 255, 1)';
+        ctx.strokeRect(rx + 1.5, ry + 1.5, rw - 3, rh - 3);
       });
     }
   }
@@ -992,9 +993,13 @@ PART_KEYS.forEach(k => {
       }
       // カーソルのマス(2D と連動)。透明なマスでも見えるように消さない
       float isHover = 0.0;
-      vec2 hoverTx = floor(vec2(vUv.x, 1.0 - vUv.y) * texSize);
-      if (hoverTx.x >= hoverA.x && hoverTx.y >= hoverA.y && hoverTx.x < hoverA.z && hoverTx.y < hoverA.w) isHover = 1.0;
-      if (hoverTx.x >= hoverB.x && hoverTx.y >= hoverB.y && hoverTx.x < hoverB.z && hoverTx.y < hoverB.w) isHover = 2.0;
+      vec2 hoverC = vec2(vUv.x, 1.0 - vUv.y) * texSize;
+      float hoverW = 2.6 * max(fwidth(hoverC.x), fwidth(hoverC.y));
+      float hoverD = 99.0;
+      if (hoverC.x >= hoverA.x && hoverC.y >= hoverA.y && hoverC.x < hoverA.z && hoverC.y < hoverA.w
+          && min(min(hoverC.x - hoverA.x, hoverA.z - hoverC.x), min(hoverC.y - hoverA.y, hoverA.w - hoverC.y)) < hoverW) { isHover = 1.0; hoverD = min(min(hoverC.x - hoverA.x, hoverA.z - hoverC.x), min(hoverC.y - hoverA.y, hoverA.w - hoverC.y)); }
+      if (hoverC.x >= hoverB.x && hoverC.y >= hoverB.y && hoverC.x < hoverB.z && hoverC.y < hoverB.w
+          && min(min(hoverC.x - hoverB.x, hoverB.z - hoverC.x), min(hoverC.y - hoverB.y, hoverB.w - hoverC.y)) < hoverW) { isHover = 2.0; hoverD = min(min(hoverC.x - hoverB.x, hoverB.z - hoverC.x), min(hoverC.y - hoverB.y, hoverB.w - hoverC.y)); }
       #ifdef ALPHATEST
           if ( diffuseColor.a < ALPHATEST && isGrid <= 0.0 && isHover <= 0.0 ) discard;
       #endif
@@ -1010,8 +1015,9 @@ PART_KEYS.forEach(k => {
       }
       if (isHover > 0.0) {
           vec3 hc = isHover > 1.5 ? vec3(0.55, 0.75, 1.0) : vec3(1.0, 0.93, 0.45);
-          gl_FragColor.rgb = mix(gl_FragColor.rgb, hc, 0.6);
-          gl_FragColor.a = max(gl_FragColor.a, 0.8);
+          // 外側は明るい線、内側は暗い線(明るい色の上でも暗い色の上でも見える)
+          gl_FragColor.rgb = hoverD < hoverW * 0.55 ? hc : vec3(0.08);
+          gl_FragColor.a = 1.0;
       }
       `
     );
