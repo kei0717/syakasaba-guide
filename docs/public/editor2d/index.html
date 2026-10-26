@@ -90,6 +90,17 @@
     transition: filter 0.2s;
   }
   .dl:hover{ filter: brightness(1.1); }
+  .dl.check { background: var(--panel2); color: var(--text); border: 1px solid var(--accent); margin-top: 8px; }
+  .check-result { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .check-line { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.5; color: var(--sub); }
+  .check-line > b { flex-shrink: 0; font-size: 10px; padding: 1px 6px; border-radius: 4px; margin-top: 2px; }
+  .check-line.ok > b { background: rgba(94, 230, 196, 0.15); color: var(--accent); }
+  .check-line.warn > b { background: rgba(244, 211, 94, 0.15); color: #f4d35e; }
+  .check-line.bad > b { background: rgba(255, 138, 91, 0.18); color: var(--accent2); }
+  .check-line.info > b { background: #2c313c; color: var(--sub); }
+  .tool-toggle button.fill.active{ background:#7b7ff3; color:#fff; }
+  .tool-row2 { display:flex; align-items:center; gap:8px; margin-top:10px; }
+  .tool-row2 .hint { margin:0; }
 
   .import-btn{
     width:100%; background:var(--panel2); color:var(--accent); border:1px solid var(--accent);
@@ -268,13 +279,18 @@
       </div>
 
       <div class="block">
-        <span class="label">ツール (B:ペン / E:消しゴム / Space:スポイト)</span>
+<span class="label">ツール (B:ペン / E:消しゴム / G:塗りつぶし / Space:スポイト / M:左右対称)</span>
         <div class="row">
           <div class="tool-toggle">
             <button class="pen active" id="penBtn">ペン</button>
             <button class="eraser" id="eraserBtn">消しゴム</button>
             <button class="spoid" id="spoidBtn">スポイト</button>
+            <button class="fill" id="fillBtn">塗りつぶし</button>
           </div>
+        </div>
+        <div class="tool-row2">
+          <button id="mirrorBtn" class="grid-btn">左右対称</button>
+          <p class="hint">オンにすると、左右反対の場所にも同じように描かれます。</p>
         </div>
         <div class="row" style="margin-top:10px;">
           <input type="color" id="colorPicker" value="#5ee6c4">
@@ -306,6 +322,8 @@
 
       <div class="block dl-block">
         <button class="dl" id="downloadBtn">PNGとしてエクスポート</button>
+        <button class="dl check" id="checkBtn">提出前チェック(Discord bot に出せるか)</button>
+        <div class="check-result" id="checkResult"></div>
       </div>
     </div>
   </div>
@@ -454,6 +472,8 @@ window.addEventListener('keydown', e=>{
   if (k === 'b') { e.preventDefault(); setTool('pen'); }
   else if (k === 'e') { e.preventDefault(); setTool('eraser'); }
   else if (k === ' ') { e.preventDefault(); setTool('spoid'); }
+  else if (k === 'g') { e.preventDefault(); setTool('fill'); }
+  else if (k === 'm') { e.preventDefault(); setMirror(!mirrorOn); }
 });
 
 function setTool(t){
@@ -461,7 +481,14 @@ function setTool(t){
   document.getElementById('penBtn').classList.toggle('active', t==='pen');
   document.getElementById('eraserBtn').classList.toggle('active', t==='eraser');
   document.getElementById('spoidBtn').classList.toggle('active', t==='spoid');
+  document.getElementById('fillBtn').classList.toggle('active', t==='fill');
 }
+document.getElementById('fillBtn').onclick = ()=> setTool('fill');
+function setMirror(on){
+  mirrorOn = on;
+  document.getElementById('mirrorBtn').classList.toggle('active', on);
+}
+document.getElementById('mirrorBtn').onclick = ()=> setMirror(!mirrorOn);
 document.getElementById('penBtn').onclick = ()=> setTool('pen');
 document.getElementById('eraserBtn').onclick = ()=> setTool('eraser');
 document.getElementById('spoidBtn').onclick = ()=> setTool('spoid');
@@ -473,16 +500,40 @@ document.getElementById('brushSize').oninput = e=>{ brushSize = parseInt(e.targe
 // ============================================================
 // 描画処理
 // ============================================================
+let mirrorOn = false;   // 左右対称
+function stampAt(x, y, size){
+  if(tool === 'eraser') modelCtx.clearRect(x, y, size, size);
+  else { modelCtx.fillStyle = brushColor; modelCtx.fillRect(x, y, size, size); }
+}
 function paintPixel(px, py){
   if(px<0||py<0||px>=TEX_SIZE||py>=TEX_SIZE) return;
   const size = brushSize;
   const half = Math.floor(size/2);
-  if(tool === 'eraser'){
-    modelCtx.clearRect(px-half, py-half, size, size);
-  } else {
-    modelCtx.fillStyle = brushColor;
-    modelCtx.fillRect(px-half, py-half, size, size);
+  stampAt(px-half, py-half, size);
+  // 左右対称: 左右反対の場所にも
+  if (mirrorOn) stampAt(TEX_SIZE - (px - half + size), py - half, size);
+}
+// 塗りつぶし: 同じ色でつながっている所を塗る
+function hexToRgb(hex){ const v = parseInt(hex.slice(1), 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255]; }
+function fillAt(px, py){
+  if(px<0||py<0||px>=TEX_SIZE||py>=TEX_SIZE) return;
+  const S = TEX_SIZE, img = modelCtx.getImageData(0, 0, S, S), d = img.data;
+  const at = (x, y) => (y * S + x) * 4;
+  const i0 = at(px, py), tr = d[i0], tg = d[i0 + 1], tb = d[i0 + 2], ta = d[i0 + 3];
+  const [r, g, b] = hexToRgb(brushColor);
+  if (ta === 255 && tr === r && tg === g && tb === b) return;
+  const same = i => d[i] === tr && d[i + 1] === tg && d[i + 2] === tb && d[i + 3] === ta;
+  const stack = [[px, py]], seen = new Uint8Array(S * S);
+  while (stack.length) {
+    const [x, y] = stack.pop();
+    if (x < 0 || y < 0 || x >= S || y >= S || seen[y * S + x]) continue;
+    seen[y * S + x] = 1;
+    const i = at(x, y);
+    if (!same(i)) continue;
+    d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = 255;
+    stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
   }
+  modelCtx.putImageData(img, 0, 0);
 }
 // 高速なドラッグでも隙間ができないよう直線補間する
 function paintLine(x0,y0,x1,y1){
@@ -538,6 +589,14 @@ function bindCanvasEvents(){
     e.preventDefault();
     const [x,y] = canvasEventToPixel(e);
     if (tool === 'spoid') { isSpoiding = true; getSpoidColor(x, y); return; }
+    if (tool === 'fill') {   // 1 回のクリックで 1 回だけ
+      snapshotBeforeStroke();
+      fillAt(x, y);
+      if (mirrorOn) fillAt(TEX_SIZE - 1 - x, y);
+      addColorToHistory(brushColor);
+      refreshDisplay();
+      return;
+    }
     painting = true;
     lastPaintPx = [x,y];
     snapshotBeforeStroke();
@@ -794,6 +853,33 @@ document.getElementById('modalImportInput').addEventListener('change', e=>{
   reader.readAsDataURL(file);
   e.target.value = '';
 });
+
+// ---- 提出前チェック(Discord bot と同じ条件)----
+function runCheck(){
+  const out = document.getElementById('checkResult');
+  out.innerHTML = '';
+  if (!hasStarted) return;
+  const line = (cls, tag, html) => { const d = document.createElement('div'); d.className = 'check-line ' + cls; d.innerHTML = `<b>${tag}</b><span>${html}</span>`; out.appendChild(d); };
+  const S = TEX_SIZE, total = S * S, d = modelCtx.getImageData(0, 0, S, S).data;
+  let solid = 0, semi = 0, clear = 0;
+  for (let i = 3; i < d.length; i += 4) { if (d[i] === 255) solid++; else if (d[i] === 0) clear++; else semi++; }
+  line('ok', 'OK', `PNG・${S}×${S} の正方形です。`);
+  if (currentMode === 'item') {
+    const need = Math.ceil(total / 8);
+    if (solid < need) line('bad', 'NG', `色の付いた(透けていない)ピクセルが足りません(${solid} / 必要 ${need})。このままでは Discord bot で登録できません。`);
+    else line('ok', 'OK', `色の付いたピクセル ${solid} / 必要 ${need}。登録できます。`);
+    if (semi) line('warn', '注意', `半透明のピクセルが ${semi} 個あります。色の付いたピクセルには数えられません。`);
+    line('info', 'メモ', '<code>/add_item</code>・<code>/add_tool</code> の画像、<code>/add_clothing</code> の <code>icon</code>(服のアイコン)に使えます。');
+  } else {
+    if (!solid && !semi) { line('bad', 'NG', 'まだ何も描かれていません。'); return; }
+    if (semi) line('bad', 'NG', `半透明のピクセルが ${semi} 個あります。パネル・看板には使えません(Discord bot で登録できません)。フルブロックなら、ガラスのような半透明のブロックになります。`);
+    if (clear) line('warn', '注意', `透明な所が ${clear} 個あります。看板には使えません(くり抜かれた所から看板の内側が見えるため)。パネルではその部分がくり抜かれ、フルブロックでは透けるブロックになります。`);
+    if (!semi && !clear) line('ok', 'OK', 'すべて不透明です。パネル・看板・フルブロックのどれにも使えます。');
+    else if (!semi) line('ok', 'OK', 'パネル・フルブロックに使えます(看板には使えません)。');
+    line('info', 'メモ', '<code>/add_block</code> の <code>texture</code> に使えます。');
+  }
+}
+document.getElementById('checkBtn').onclick = runCheck;
 
 // 起動時にモーダルを表示
 openModalFromStart();

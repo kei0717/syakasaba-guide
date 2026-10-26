@@ -132,6 +132,25 @@
   }
   .dl:hover{ filter: brightness(1.1); }
   .dl.all { background: var(--accent2); color: #2a1305; margin-top: 8px; }
+  .dl.check { background: var(--panel2); color: var(--text); border: 1px solid var(--accent); margin-top: 8px; }
+  .check-result { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .check-part { font-size: 12px; font-weight: 600; color: var(--text); margin-top: 6px; }
+  .check-line { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.5; color: var(--sub); }
+  .check-line b { flex-shrink: 0; font-size: 10px; padding: 1px 6px; border-radius: 4px; margin-top: 2px; }
+  .check-line.ok b { background: rgba(94, 230, 196, 0.15); color: var(--accent); }
+  .check-line.warn b { background: rgba(244, 211, 94, 0.15); color: #f4d35e; }
+  .check-line.bad b { background: rgba(255, 138, 91, 0.18); color: var(--accent2); }
+  .check-line.info b { background: #2c313c; color: var(--sub); }
+  .check-line a { color: var(--accent); }
+  .tool-toggle button.fill.active{ background:#7b7ff3; color:#fff; }
+  .tool-row2 { display:flex; align-items:center; gap:8px; margin-top:10px; }
+  .tool-row2 .hint { margin:0; }
+  .zoom3 { display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+  .zoom3 span.zl { font-size:11px; color:var(--sub); min-width:40px; text-align:center; }
+  .zoom3 .zlabel { font-size:11px; color:var(--sub); margin-right:auto; }
+  .canvases-container.zoomed .canvas-wrap { align-items:flex-start; overflow:auto; max-height:72vh; }
+  .canvases-container.zoomed .ui-canvas { max-width:none; }
+  .ui-canvas { image-rendering: pixelated; }
 
   /* Modal */
   #startModal{
@@ -306,13 +325,18 @@
       </div>
 
       <div class="block">
-        <span class="label">ツール (B:ペン / E:消しゴム / Space:スポイト)</span>
+<span class="label">ツール (B:ペン / E:消しゴム / G:塗りつぶし / Space:スポイト / M:左右対称)</span>
         <div class="row">
           <div class="tool-toggle">
             <button class="pen active" id="penBtn">ペン</button>
             <button class="eraser" id="eraserBtn">消しゴム</button>
             <button class="spoid" id="spoidBtn">スポイト</button>
+            <button class="fill" id="fillBtn">塗りつぶし</button>
           </div>
+        </div>
+        <div class="tool-row2">
+          <button id="mirrorBtn" class="grid-btn">左右対称</button>
+          <p class="hint">オンにすると、反対側(左うで⇔右うで、体や頭の左右)にも同じように描かれます。</p>
         </div>
         <div class="row" style="margin-top:10px;">
           <input type="color" id="colorPicker" value="#5ee6c4">
@@ -331,12 +355,21 @@
             <button id="toggleGrid3DBtn" class="grid-btn active">3Dグリッド</button>
           </div>
         </div>
+        <div class="zoom3">
+          <span class="zlabel">表示の大きさ</span>
+          <button class="grid-btn" id="zoomOut3">−</button>
+          <span class="zl" id="zoomLabel3">100%</span>
+          <button class="grid-btn" id="zoomIn3">+</button>
+          <button class="grid-btn" id="zoomFit3">リセット</button>
+        </div>
         <div class="canvases-container" id="canvasesContainer"></div>
       </div>
 
       <div class="block dl-block" id="downloadBlock">
         <button class="dl" id="downloadBtn">現在の部位をエクスポート</button>
         <button class="dl all" id="downloadAllBtn">全身(4部位)をまとめてエクスポート</button>
+        <button class="dl check" id="checkBtn">提出前チェック(Discord bot に出せるか)</button>
+        <div class="check-result" id="checkResult"></div>
       </div>
     </div>
   </div>
@@ -459,13 +492,24 @@ document.getElementById('toggleGrid3DBtn').onclick = (e) => {
 };
 
 function refreshAllDisplayCanvases(){
-  document.querySelectorAll('.ui-canvas').forEach(uiCanvas => {
+  document.querySelectorAll('.ui-canvas').forEach(drawUiCanvas);
+
+  PART_KEYS.forEach(k => {
+    if(textures[k]) textures[k].needsUpdate = true;
+  });
+  scheduleAutosave();
+}
+// 2D キャンバス 1 枚を描く(絵・グリッド・カーソルのマス)
+const UI_CELL = 8;   // 2D キャンバスの 1 マスの大きさ(画面の点の数。ズームは CSS で広げる)
+function drawUiCanvas(uiCanvas){
+  {
     const key = uiCanvas.dataset.partKey;
     if(!key) return;
+    const S = sz(key);
+    if (uiCanvas.width !== S * UI_CELL) { uiCanvas.width = S * UI_CELL; uiCanvas.height = S * UI_CELL; }
     const ctx = uiCanvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0,0,uiCanvas.width,uiCanvas.height);
-    const S = sz(key);
     ctx.drawImage(partCanvases[key], 0,0, S, S, 0,0, uiCanvas.width, uiCanvas.height);
     
     if(showGrid2D) {
@@ -480,12 +524,18 @@ function refreshAllDisplayCanvases(){
       }
       ctx.stroke();
     }
-  });
-
-  PART_KEYS.forEach(k => {
-    if(textures[k]) textures[k].needsUpdate = true;
-  });
-  scheduleAutosave();
+    // カーソルのマス(3D と連動)
+    if (hover && hover.part === key) {
+      const c = uiCanvas.width / S;
+      hover.rects.forEach(([x0, y0, x1, y1], i) => {
+        ctx.fillStyle = i === 0 ? 'rgba(255, 244, 150, 0.35)' : 'rgba(150, 200, 255, 0.3)';
+        ctx.fillRect(x0 * c, y0 * c, (x1 - x0) * c, (y1 - y0) * c);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = i === 0 ? 'rgba(255, 236, 110, 0.95)' : 'rgba(140, 190, 255, 0.95)';
+        ctx.strokeRect(x0 * c + 1, y0 * c + 1, (x1 - x0) * c - 2, (y1 - y0) * c - 2);
+      });
+    }
+  }
 }
 
 function loadImageIntoPart(partKey, src, cb, size, keepImageSize){
@@ -557,9 +607,15 @@ window.addEventListener('keydown', e=>{
   } else if (k === 'e') {
     e.preventDefault();
     setTool('eraser');
-  } else if (k === ' ') { 
-    e.preventDefault(); 
+  } else if (k === ' ') {
+    e.preventDefault();
     setTool('spoid');
+  } else if (k === 'g') {
+    e.preventDefault();
+    setTool('fill');
+  } else if (k === 'm') {
+    e.preventDefault();
+    setMirror(!mirrorOn);
   }
 });
 
@@ -616,6 +672,93 @@ function getSpoidColor(partKey, px, py) {
 }
 
 // 描画（3Dの指定した面の境界内にクリップして描画する）
+// ---- 道具の状態 ----
+let mirrorOn = false;          // 左右対称
+let fillStrokeDone = false;    // 塗りつぶしは 1 回のクリックで 1 回だけ
+function stampBrush(ctx, x, y){
+  const size = brushSize;
+  if (tool === 'eraser') ctx.clearRect(x, y, size, size);
+  else { ctx.fillStyle = brushColor; ctx.fillRect(x, y, size, size); }
+}
+// ---- 面の場所(UV)と 3D の位置 ----
+// 部位ごとに、すべての箱の面: { rect: [x, y, w, h](64 基準), v0, v1, v3(3D の角) }
+const faceInfoCache = {};
+function faceInfos(part){
+  if (faceInfoCache[part]) return faceInfoCache[part];
+  const out = [];
+  (GEOMETRIES[part] ? GEOMETRIES[part].cubes : []).forEach(cube => {
+    const fs = facesForCube(cube);
+    Object.keys(cube.uv).forEach(face => { if (fs[face]) out.push({ rect: cube.uv[face], v0: fs[face].v0, v1: fs[face].v1, v3: fs[face].v3 }); });
+  });
+  return faceInfoCache[part] = out;
+}
+function rectBounds(r, k){   // 64 基準の [x, y, w, h](負の幅もある)→ 画素の範囲
+  const x0 = Math.min(r[0], r[0] + r[2]), y0 = Math.min(r[1], r[1] + r[3]);
+  return { x: x0 * k, y: y0 * k, w: Math.abs(r[2]) * k, h: Math.abs(r[3]) * k };
+}
+function faceAtTexel(part, px, py){
+  const k = sz(part) / UV_BASE;
+  for (const f of faceInfos(part)) {
+    const b = rectBounds(f.rect, k);
+    if (px >= b.x && px < b.x + b.w && py >= b.y && py < b.y + b.h) return f;
+  }
+  return null;
+}
+// 左右対称の相手のマス: マスの真ん中の 3D の位置を左右に反転し、そこにある面のマスを探す
+function mirrorTexel(part, px, py){
+  const k = sz(part) / UV_BASE;
+  const f = faceAtTexel(part, px, py);
+  if (!f) return null;
+  const [X, Y, W, H] = f.rect;
+  const uc = (px + 0.5) / k, vc = (py + 0.5) / k;
+  const s = ((X + W) - uc) / W, tt = (vc - Y) / H;   // 面の中の位置(貼り方は buildCubeMesh と同じ)
+  const P = [0, 1, 2].map(i => f.v0[i] + s * (f.v1[i] - f.v0[i]) + tt * (f.v3[i] - f.v0[i]));
+  P[0] = -P[0];
+  for (const g of faceInfos(part)) {
+    const e1 = [0, 1, 2].map(i => g.v1[i] - g.v0[i]), e2 = [0, 1, 2].map(i => g.v3[i] - g.v0[i]);
+    const d = [0, 1, 2].map(i => P[i] - g.v0[i]);
+    const n = [e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0]];
+    const nl = Math.hypot(n[0], n[1], n[2]);
+    if (!nl || Math.abs(n[0] * d[0] + n[1] * d[1] + n[2] * d[2]) / nl > 1e-3) continue;
+    const s2 = (d[0] * e1[0] + d[1] * e1[1] + d[2] * e1[2]) / (e1[0] * e1[0] + e1[1] * e1[1] + e1[2] * e1[2]);
+    const t2 = (d[0] * e2[0] + d[1] * e2[1] + d[2] * e2[2]) / (e2[0] * e2[0] + e2[1] * e2[1] + e2[2] * e2[2]);
+    if (s2 < -1e-6 || s2 > 1 + 1e-6 || t2 < -1e-6 || t2 > 1 + 1e-6) continue;
+    const [X2, Y2, W2, H2] = g.rect;
+    const b = rectBounds(g.rect, k);
+    const x = Math.min(b.x + b.w - 1, Math.max(b.x, Math.floor(((X2 + W2) - s2 * W2) * k)));
+    const y = Math.min(b.y + b.h - 1, Math.max(b.y, Math.floor((Y2 + t2 * H2) * k)));
+    return { x, y, bounds: b };
+  }
+  return null;
+}
+// 塗りつぶし: 面の中で、同じ色でつながっている所を塗る(面の外へは広がらない)
+function hexToRgb(hex){ const v = parseInt(hex.slice(1), 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255]; }
+function fillAt(part, px, py, bounds){
+  const k = sz(part) / UV_BASE;
+  if (!bounds) { const f = faceAtTexel(part, px, py); if (!f) return; bounds = rectBounds(f.rect, k); }
+  const S = sz(part), ctx = partCanvases[part].getContext('2d');
+  const x0 = Math.max(0, Math.floor(bounds.x)), y0 = Math.max(0, Math.floor(bounds.y));
+  const x1 = Math.min(S, Math.ceil(bounds.x + bounds.w)), y1 = Math.min(S, Math.ceil(bounds.y + bounds.h));
+  if (px < x0 || px >= x1 || py < y0 || py >= y1) return;
+  const img = ctx.getImageData(0, 0, S, S), d = img.data;
+  const at = (x, y) => (y * S + x) * 4;
+  const i0 = at(px, py), tr = d[i0], tg = d[i0 + 1], tb = d[i0 + 2], ta = d[i0 + 3];
+  const [r, g, b] = hexToRgb(brushColor);
+  if (ta === 255 && tr === r && tg === g && tb === b) return;
+  const same = i => d[i] === tr && d[i + 1] === tg && d[i + 2] === tb && d[i + 3] === ta;
+  const stack = [[px, py]], seen = new Uint8Array(S * S);
+  while (stack.length) {
+    const [x, y] = stack.pop();
+    if (x < x0 || x >= x1 || y < y0 || y >= y1 || seen[y * S + x]) continue;
+    seen[y * S + x] = 1;
+    const i = at(x, y);
+    if (!same(i)) continue;
+    d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = 255;
+    stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
 function paintAt(partKey, px, py, bounds = null, refresh = true){
 if(px<0||py<0||px>=sz(partKey)||py>=sz(partKey)) return;
   const ctx = partCanvases[partKey].getContext('2d');
@@ -624,7 +767,17 @@ if(px<0||py<0||px>=sz(partKey)||py>=sz(partKey)) return;
     getSpoidColor(partKey, px, py);
     return;
   }
-  
+  if (tool === 'fill') {   // 1 回のクリックで 1 回だけ塗る
+    if (!fillStrokeDone) {
+      fillStrokeDone = true;
+      fillAt(partKey, px, py, bounds);
+      if (mirrorOn) { const m = mirrorTexel(partKey, px, py); if (m) fillAt(partKey, m.x, m.y, m.bounds); }
+      addColorToHistory(brushColor);
+      if (refresh) refreshAllDisplayCanvases();
+    }
+    return;
+  }
+
   ctx.save();
   // クリックしたフェイスの領域にクリッピング（はみ出し防止）
   if (bounds) {
@@ -635,13 +788,18 @@ if(px<0||py<0||px>=sz(partKey)||py>=sz(partKey)) return;
 
   const size = brushSize;
   const half = Math.floor(size/2);
-  if(tool === 'eraser'){
-    ctx.clearRect(px-half, py-half, size, size);
-  } else {
-    ctx.fillStyle = brushColor;
-    ctx.fillRect(px-half, py-half, size, size);
-  }
+  stampBrush(ctx, px - half, py - half);
   ctx.restore();
+  // 左右対称: 反対側の同じ場所にも描く(反対側の面からははみ出さない)
+  if (mirrorOn) {
+    const m = mirrorTexel(partKey, px, py);
+    if (m) {
+      ctx.save();
+      ctx.beginPath(); ctx.rect(m.bounds.x, m.bounds.y, m.bounds.w, m.bounds.h); ctx.clip();
+      stampBrush(ctx, m.x - (size - 1 - half), m.y - half);
+      ctx.restore();
+    }
+  }
 
   if (refresh) refreshAllDisplayCanvases();
 }
@@ -661,7 +819,9 @@ function paintLine(partKey, x0, y0, x1, y1, bounds = null){
 }
 
 function bind2DCanvasEvents(uiCanvas, partKey) {
-  let last2D = null;   // 前に塗った点(線で埋めるため)
+  let last2D = null;
+  uiCanvas.addEventListener('mousemove', e => { const [x, y] = canvasEventToPixel(e); setHover(partKey, x, y); });
+  uiCanvas.addEventListener('mouseleave', clearHover);// 前に塗った点(線で埋めるため)
 function canvasEventToPixel(e){
     const rect = uiCanvas.getBoundingClientRect();
     let cx = e.clientX;
@@ -733,7 +893,14 @@ function setTool(t){
   document.getElementById('penBtn').classList.toggle('active', t==='pen');
   document.getElementById('eraserBtn').classList.toggle('active', t==='eraser');
   document.getElementById('spoidBtn').classList.toggle('active', t==='spoid');
+  document.getElementById('fillBtn').classList.toggle('active', t==='fill');
 }
+document.getElementById('fillBtn').onclick = ()=> setTool('fill');
+function setMirror(on){
+  mirrorOn = on;
+  document.getElementById('mirrorBtn').classList.toggle('active', on);
+}
+document.getElementById('mirrorBtn').onclick = ()=> setMirror(!mirrorOn);
 document.getElementById('penBtn').onclick = ()=> setTool('pen');
 document.getElementById('eraserBtn').onclick = ()=> setTool('eraser');
 document.getElementById('spoidBtn').onclick = ()=> setTool('spoid');
@@ -806,11 +973,13 @@ PART_KEYS.forEach(k => {
     map: textures[k], transparent: true, alphaTest: 0.4, side: THREE.DoubleSide 
   });
   mat.extensions = { derivatives: true };
-  mat.userData.gridUniforms = { showGrid3D: { value: 1.0 }, texSize: { value: sz(k) } }; 
+  mat.userData.gridUniforms = { showGrid3D: { value: 1.0 }, texSize: { value: sz(k) }, hoverA: { value: new THREE.Vector4(-1, -1, -1, -1) }, hoverB: { value: new THREE.Vector4(-1, -1, -1, -1) } };
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.showGrid3D = mat.userData.gridUniforms.showGrid3D;
     shader.uniforms.texSize = mat.userData.gridUniforms.texSize;
-    shader.fragmentShader = `uniform float showGrid3D;\nuniform float texSize;\n${shader.fragmentShader}`;
+    shader.uniforms.hoverA = mat.userData.gridUniforms.hoverA;
+    shader.uniforms.hoverB = mat.userData.gridUniforms.hoverB;
+    shader.fragmentShader = `uniform float showGrid3D;\nuniform float texSize;\nuniform vec4 hoverA;\nuniform vec4 hoverB;\n${shader.fragmentShader}`;
     shader.fragmentShader = shader.fragmentShader.replace(
       '#include <alphatest_fragment>',
       `
@@ -821,8 +990,13 @@ PART_KEYS.forEach(k => {
           float lineDist = min(gridDist.x, gridDist.y);
           isGrid = 1.0 - smoothstep(0.0, 1.0, lineDist);
       }
+      // カーソルのマス(2D と連動)。透明なマスでも見えるように消さない
+      float isHover = 0.0;
+      vec2 hoverTx = floor(vec2(vUv.x, 1.0 - vUv.y) * texSize);
+      if (hoverTx.x >= hoverA.x && hoverTx.y >= hoverA.y && hoverTx.x < hoverA.z && hoverTx.y < hoverA.w) isHover = 1.0;
+      if (hoverTx.x >= hoverB.x && hoverTx.y >= hoverB.y && hoverTx.x < hoverB.z && hoverTx.y < hoverB.w) isHover = 2.0;
       #ifdef ALPHATEST
-          if ( diffuseColor.a < ALPHATEST && isGrid <= 0.0 ) discard;
+          if ( diffuseColor.a < ALPHATEST && isGrid <= 0.0 && isHover <= 0.0 ) discard;
       #endif
       `
     );
@@ -834,6 +1008,11 @@ PART_KEYS.forEach(k => {
           gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.55), isGrid * 0.8);
           gl_FragColor.a = max(gl_FragColor.a, isGrid * 0.8);
       }
+      if (isHover > 0.0) {
+          vec3 hc = isHover > 1.5 ? vec3(0.55, 0.75, 1.0) : vec3(1.0, 0.93, 0.45);
+          gl_FragColor.rgb = mix(gl_FragColor.rgb, hc, 0.6);
+          gl_FragColor.a = max(gl_FragColor.a, 0.8);
+      }
       `
     );
   };
@@ -842,6 +1021,48 @@ PART_KEYS.forEach(k => {
 
 let modelGroup = new THREE.Group();
 scene.add(modelGroup);
+
+// ---- カーソルのマス(3D と 2D で同じマスを光らせる)----
+let hover = null;   // { part, rects: [[x0, y0, x1, y1], ...] }(画素。1 つ目 = カーソル、2 つ目 = 左右対称の相手)
+const NO_HOVER = [-1, -1, -1, -1];
+function hoverRectsFor(part, px, py){
+  const size = (tool === 'pen' || tool === 'eraser') ? brushSize : 1;
+  const half = Math.floor(size / 2);
+  const rects = [[px - half, py - half, px - half + size, py - half + size]];
+  if (mirrorOn && tool !== 'spoid') {
+    const m = mirrorTexel(part, px, py);
+    if (m) { const x0 = m.x - (size - 1 - half); rects.push([x0, m.y - half, x0 + size, m.y - half + size]); }
+  }
+  return rects;
+}
+function applyHoverUniforms(){
+  PART_KEYS.forEach(k => {
+    const u = materials[k] && materials[k].userData.gridUniforms;
+    if (!u) return;
+    const on = hover && hover.part === k;
+    u.hoverA.value.set(...(on ? hover.rects[0] : NO_HOVER));
+    u.hoverB.value.set(...(on && hover.rects[1] ? hover.rects[1] : NO_HOVER));
+  });
+}
+function redrawUiFor(part){
+  if (!part) return;
+  document.querySelectorAll('.ui-canvas').forEach(c => { if (c.dataset.partKey === part) drawUiCanvas(c); });
+}
+function setHover(part, px, py){
+  const next = (part && px >= 0 && py >= 0 && px < sz(part) && py < sz(part)) ? { part, rects: hoverRectsFor(part, px, py) } : null;
+  if (JSON.stringify(next) === JSON.stringify(hover)) return;
+  const prevPart = hover && hover.part;
+  hover = next;
+  applyHoverUniforms();
+  redrawUiFor(prevPart);
+  if (next && next.part !== prevPart) redrawUiFor(next.part);
+}
+function clearHover(){ setHover(null); }
+function hoverFromHit(hit){
+  if (!hit || !hit.uv) { clearHover(); return; }
+  const part = hit.object.userData.partKey;
+  setHover(part, Math.floor(hit.uv.x * sz(part)), Math.floor((1 - hit.uv.y) * sz(part)));
+}
 
 // ============================================================
 // 装着プレビュー(体を表示・すけさせる・歩かせる・スキン)
@@ -1186,8 +1407,8 @@ function build2DCanvasesUI() {
 
     const canvas = document.createElement('canvas');
     canvas.className = 'ui-canvas';
-    canvas.width = 384; 
-    canvas.height = 384;
+    canvas.width = sz(key) * UI_CELL;
+    canvas.height = sz(key) * UI_CELL;
     canvas.dataset.partKey = key; 
     wrap.appendChild(canvas);
     container.appendChild(wrap);
@@ -1198,9 +1419,11 @@ function build2DCanvasesUI() {
 
 function switchToPart(key){
   currentPart = key;
+  hover = null; applyHoverUniforms();
   updateResolutionUI();
   renderPartTabs(); 
-  build2DCanvasesUI(); 
+  build2DCanvasesUI();
+  applyZoom3();
   refreshAllDisplayCanvases();
   rebuildModel();
   
@@ -1348,10 +1571,13 @@ window.addEventListener('mousemove', e=>{
 });
 
 renderer.domElement.addEventListener('mousemove', e=>{
-  if(dragging || painting3D || isSpoiding) return;
+  if (dragging) { clearHover(); return; }
   const hits = raycastAll(e);
+  hoverFromHit(hits[0]);
+  if(painting3D || isSpoiding) return;
   renderer.domElement.style.cursor = hits.length > 0 ? 'crosshair' : 'grab';
 });
+renderer.domElement.addEventListener('mouseleave', clearHover);
 
 renderer.domElement.addEventListener('wheel', e=>{
   e.preventDefault();
@@ -1422,6 +1648,7 @@ function handlePointerUp() {
   pinchDist = null;
   lastPaintedPart = null;
   last3D = null;
+  fillStrokeDone = false;
   
   if (isSpoiding) {
     isSpoiding = false;
@@ -1465,6 +1692,54 @@ document.getElementById('downloadAllBtn').onclick = ()=>{
 // ============================================================
 // Initialization Modal & Startup
 // ============================================================
+// ---- 2D キャンバスのズーム ----
+const ZOOM_STEPS = [1, 1.5, 2, 3, 4];
+let zoom3 = 0;
+function applyZoom3(){
+  const z = ZOOM_STEPS[zoom3];
+  const box = document.getElementById('canvasesContainer');
+  box.classList.toggle('zoomed', z > 1);
+  box.querySelectorAll('.ui-canvas').forEach(c => { c.style.width = z > 1 ? (z * 100) + '%' : ''; });
+  document.getElementById('zoomLabel3').textContent = Math.round(z * 100) + '%';
+}
+document.getElementById('zoomIn3').onclick = () => { zoom3 = Math.min(ZOOM_STEPS.length - 1, zoom3 + 1); applyZoom3(); };
+document.getElementById('zoomOut3').onclick = () => { zoom3 = Math.max(0, zoom3 - 1); applyZoom3(); };
+document.getElementById('zoomFit3').onclick = () => { zoom3 = 0; applyZoom3(); };
+
+// ---- 提出前チェック(Discord bot の /add_clothing と同じ条件)----
+// bot: 着たときの画像は PNG で 64×64 か 128×128。アイコンは別の画像(16×16 / 32×32 / 64×64、色の付いたピクセルが 1/8 以上)
+function runCheck(){
+  const out = document.getElementById('checkResult');
+  out.innerHTML = '';
+  const line = (cls, tag, html) => { const d = document.createElement('div'); d.className = 'check-line ' + cls; d.innerHTML = `<b>${tag}</b><span>${html}</span>`; out.appendChild(d); };
+  const keys = currentPart === 'all' ? PART_KEYS : [currentPart];
+  let drawn = 0;
+  keys.forEach(key => {
+    const S = sz(key), k = S / UV_BASE;
+    const head = document.createElement('div'); head.className = 'check-part'; head.textContent = `${GEOMETRIES[key].label}(${S}×${S})`; out.appendChild(head);
+    const mask = new Uint8Array(S * S);
+    faceInfos(key).forEach(f => {
+      const b = rectBounds(f.rect, k);
+      for (let y = Math.floor(b.y); y < Math.ceil(b.y + b.h); y++) for (let x = Math.floor(b.x); x < Math.ceil(b.x + b.w); x++) if (x >= 0 && y >= 0 && x < S && y < S) mask[y * S + x] = 1;
+    });
+    const d = partCanvases[key].getContext('2d').getImageData(0, 0, S, S).data;
+    let solid = 0, semi = 0, outside = 0;
+    for (let i = 0; i < S * S; i++) {
+      const a = d[i * 4 + 3];
+      if (!a) continue;
+      if (!mask[i]) { outside++; continue; }
+      if (a === 255) solid++; else semi++;
+    }
+    if (!solid && !semi) { line('info', 'メモ', 'まだ何も描かれていません(この部位を登録しないなら問題ありません)。'); return; }
+    drawn++;
+    line('ok', 'OK', `着たときの画像として登録できます(PNG・${S}×${S})。「${GEOMETRIES[key].label} をエクスポート」で保存して、<code>/add_clothing</code> の <code>texture</code> に付けてください。`);
+    if (semi) line('warn', '注意', `半透明のピクセルが ${semi} 個あります。ゲームでは半透明のままにならず、薄い所は消え、濃い所はそのまま表示されることがあります。`);
+    if (outside) line('info', 'メモ', `どの面にも使われない場所に色が ${outside} 個あります(ゲームには出ません)。`);
+  });
+  if (drawn) line('info', 'メモ', '<code>/add_clothing</code> には、インベントリに出す<b style="all:unset;color:var(--text)">アイコン画像</b>(16×16 / 32×32 / 64×64)も部位ごとに必要です。アイコンは <a href="../editor2d/" target="_blank">2Dエディター</a> の「アイテム用」で描けます。');
+}
+document.getElementById('checkBtn').onclick = runCheck;
+
 const startModal = document.getElementById('startModal');
 // 作る部位(最初の画面だけ)。'all' = 全身(4部位)
 const START_PART_LABELS = { all: '全身', head: '帽子', chest: '服', legs: 'ズボン', feet: '靴' };
