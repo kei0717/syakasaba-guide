@@ -872,10 +872,10 @@ function runCheck(){
     line('info', 'メモ', '<code>/add_item</code>・<code>/add_tool</code> の画像、<code>/add_clothing</code> の <code>icon</code>(服のアイコン)に使えます。');
   } else {
     if (!solid && !semi) { line('bad', 'NG', 'まだ何も描かれていません。'); return; }
-    if (semi) line('bad', 'NG', `半透明のピクセルが ${semi} 個あります。パネル・看板には使えません(Discord bot で登録できません)。フルブロックなら、ガラスのような半透明のブロックになります。`);
-    if (clear) line('warn', '注意', `透明な所が ${clear} 個あります。看板には使えません(くり抜かれた所から看板の内側が見えるため)。パネルではその部分がくり抜かれ、フルブロックでは透けるブロックになります。`);
-    if (!semi && !clear) line('ok', 'OK', 'すべて不透明です。パネル・看板・フルブロックのどれにも使えます。');
-    else if (!semi) line('ok', 'OK', 'パネル・フルブロックに使えます(看板には使えません)。');
+    if (semi) line('bad', 'NG', `半透明のピクセルが ${semi} 個あります。パネル・看板・フルサイズ看板には使えません(Discord bot で登録できません)。フルブロックなら、ガラスのような半透明のブロックになります。`);
+    if (clear) line('warn', '注意', `透明な所が ${clear} 個あります。看板・フルサイズ看板には使えません(くり抜かれた所から看板の内側が見えるため)。パネルではその部分がくり抜かれ、フルブロックでは透けるブロックになります。`);
+    if (!semi && !clear) line('ok', 'OK', 'すべて不透明です。パネル・看板・フルサイズ看板・フルブロックのどれにも使えます。');
+    else if (!semi) line('ok', 'OK', 'パネル・フルブロックに使えます(看板・フルサイズ看板には使えません)。');
     line('info', 'メモ', '<code>/add_block</code> の <code>texture</code> に使えます。');
   }
 }
