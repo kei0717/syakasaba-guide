@@ -9,7 +9,7 @@
     {
       "id": "life_2",
       "name": "生活2",
-      "icon": "/game/textures/items/compass.png",
+      "icon": null,
       "requiresSkill": "life_more_paths"
     },
     {
@@ -41,7 +41,7 @@
       "id": "star_end",
       "category": "life",
       "name": "どうやってここまで?",
-      "icon": "/game/textures/items/nether_star.png",
+      "icon": null,
       "parent": null,
       "levels": [
         {
@@ -957,7 +957,7 @@
       "id": "minecraft_root",
       "category": "life",
       "name": "サバイバルの始まり",
-      "icon": "/game/textures/blocks/grass_side_carried.png",
+      "icon": null,
       "parent": "origin",
       "levels": [
         {
@@ -1026,7 +1026,7 @@
       "id": "backpack_skill",
       "category": "life",
       "name": "たくさん持ちたい欲張りさんへ",
-      "icon": "/game/textures/blocks/chest_front.png",
+      "icon": null,
       "parent": "life_paths",
       "levels": [
         {
@@ -1255,7 +1255,7 @@
       "id": "redstone_paths",
       "category": "life",
       "name": "仕掛けを作りたい",
-      "icon": "/game/textures/items/redstone_dust.png",
+      "icon": null,
       "parent": "recipe_crafting",
       "levels": [
         {
@@ -1278,7 +1278,7 @@
       "id": "gear_paths",
       "category": "life",
       "name": "もっと遠くへ行きたい",
-      "icon": "/game/textures/items/leather.png",
+      "icon": null,
       "parent": "life_paths",
       "levels": [
         {
@@ -1855,6 +1855,199 @@
           ],
           "gives": [
             "kei:item_crafting_recipe_add_skill"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dungeon_paths",
+      "category": "life",
+      "name": "冒険者の道",
+      "icon": "/game/textures/items/dungeon/dungeon_ingot.png",
+      "parent": "recipe_smithing",
+      "levels": [
+        {
+          "description": "ダンジョンで役割を持って戦うための装備を作れるようになる道。",
+          "materials": [
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 2
+            }
+          ],
+          "reward": [
+            "ダンジョンの装備の道が開く"
+          ],
+          "gives": []
+        }
+      ]
+    },
+    {
+      "id": "craft_magic_stone_table",
+      "category": "life",
+      "name": "石に宿る力",
+      "icon": "/game/textures/icon/magic_stone_table.png",
+      "parent": "dungeon_paths",
+      "levels": [
+        {
+          "description": "ロールの装備に魔法石をはめる、魔法石の台のレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "魔法石の台のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_magic_stone_table"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_role_tank",
+      "category": "life",
+      "name": "盾となる者",
+      "icon": "/game/textures/items/role/tank.png",
+      "parent": "dungeon_paths",
+      "levels": [
+        {
+          "description": "タンクの装備、守護の大盾のレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 6
+            },
+            {
+              "id": "minecraft:shield",
+              "name": "盾",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "守護の大盾のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_role_tank"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_role_healer",
+      "category": "life",
+      "name": "癒しの祈り",
+      "icon": "/game/textures/items/role/healer.png",
+      "parent": "dungeon_paths",
+      "levels": [
+        {
+          "description": "ヒーラーの装備、癒しの杖のレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 6
+            },
+            {
+              "id": "minecraft:golden_apple",
+              "name": "金のリンゴ",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "癒しの杖のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_role_healer"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_role_attacker",
+      "category": "life",
+      "name": "勇者の一太刀",
+      "icon": "/game/textures/items/role/attacker.png",
+      "parent": "dungeon_paths",
+      "levels": [
+        {
+          "description": "アタッカーの装備、勇者の大剣のレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 6
+            },
+            {
+              "id": "minecraft:iron_sword",
+              "name": "鉄の剣",
+              "count": 1
+            }
+          ],
+          "reward": [
+            "勇者の大剣のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_role_attacker"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "craft_role_mage",
+      "category": "life",
+      "name": "闇の叡智",
+      "icon": "/game/textures/items/role/mage.png",
+      "parent": "dungeon_paths",
+      "levels": [
+        {
+          "description": "メイジの装備、黒魔の書のレシピ本を獲得する。",
+          "materials": [
+            {
+              "id": "minecraft:book",
+              "name": "本",
+              "count": 1
+            },
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 6
+            },
+            {
+              "id": "minecraft:ender_pearl",
+              "name": "エンダーパール",
+              "count": 4
+            }
+          ],
+          "reward": [
+            "黒魔の書のレシピ本×1"
+          ],
+          "gives": [
+            "kei:item_crafting_recipe_role_mage"
           ]
         }
       ]

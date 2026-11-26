@@ -2372,6 +2372,156 @@
           ]
         }
       ]
+    },
+    {
+      "tag": "crafting_recipe_role_tank",
+      "name": "守護の大盾",
+      "icon": "/game/textures/items/role/tank.png",
+      "items": [
+        {
+          "id": "kei:role_tank",
+          "name": "守護の大盾",
+          "count": 1,
+          "icon": "/game/textures/items/role/tank.png",
+          "materials": [
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 8
+            },
+            {
+              "id": "minecraft:iron_ingot",
+              "name": "鉄インゴット",
+              "count": 6
+            },
+            {
+              "id": "minecraft:shield",
+              "name": "盾",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_role_healer",
+      "name": "癒しの杖",
+      "icon": "/game/textures/items/role/healer.png",
+      "items": [
+        {
+          "id": "kei:role_healer",
+          "name": "癒しの杖",
+          "count": 1,
+          "icon": "/game/textures/items/role/healer.png",
+          "materials": [
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 8
+            },
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 4
+            },
+            {
+              "id": "minecraft:amethyst_shard",
+              "name": "アメジストの欠片",
+              "count": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_role_attacker",
+      "name": "勇者の大剣",
+      "icon": "/game/textures/items/role/attacker.png",
+      "items": [
+        {
+          "id": "kei:role_attacker",
+          "name": "勇者の大剣",
+          "count": 1,
+          "icon": "/game/textures/items/role/attacker.png",
+          "materials": [
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 8
+            },
+            {
+              "id": "minecraft:iron_sword",
+              "name": "鉄の剣",
+              "count": 1
+            },
+            {
+              "id": "minecraft:diamond",
+              "name": "ダイヤモンド",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_role_mage",
+      "name": "黒魔の書",
+      "icon": "/game/textures/items/role/mage.png",
+      "items": [
+        {
+          "id": "kei:role_mage",
+          "name": "黒魔の書",
+          "count": 1,
+          "icon": "/game/textures/items/role/mage.png",
+          "materials": [
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 8
+            },
+            {
+              "id": "minecraft:obsidian",
+              "name": "黒曜石",
+              "count": 4
+            },
+            {
+              "id": "minecraft:ender_pearl",
+              "name": "エンダーパール",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "crafting_recipe_magic_stone_table",
+      "name": "魔法石の台",
+      "icon": "/game/textures/icon/magic_stone_table.png",
+      "items": [
+        {
+          "id": "kei:magic_stone_table",
+          "name": "魔法石の台",
+          "count": 1,
+          "icon": "/game/textures/icon/magic_stone_table.png",
+          "materials": [
+            {
+              "id": "kei:dungeon_ingot",
+              "name": "ダンジョンインゴット",
+              "count": 4
+            },
+            {
+              "id": "minecraft:stone_bricks",
+              "name": "石レンガ",
+              "count": 8
+            },
+            {
+              "id": "minecraft:gold_ingot",
+              "name": "金インゴット",
+              "count": 2
+            }
+          ]
+        }
+      ]
     }
   ],
   "cooking": [

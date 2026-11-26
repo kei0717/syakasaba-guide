@@ -57,6 +57,7 @@ export default defineConfig({
           { text: 'チャットコマンド', link: '/play/commands' },
           { text: 'K-phoneアプリ', link: '/play/kphone' },
           { text: 'スキルツリー', link: '/play/skilltree' },
+          { text: 'ダンジョン', link: '/play/dungeon' },
           { text: 'Discord botで追加できるもの', link: '/play/bot' }
         ]
       },

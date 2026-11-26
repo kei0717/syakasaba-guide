@@ -104,6 +104,14 @@
     "icon": "/game/textures/items/item_timer.png"
   },
   {
+    "name": "ポケットゲーム機",
+    "id": "kei:item_game_console",
+    "unit": "ingot",
+    "cost": 64,
+    "count": 1,
+    "icon": "/game/textures/items/pocket_game/item_game_console.png"
+  },
+  {
     "name": "ラジオ",
     "id": "kei:item_radio",
     "unit": "ingot",
@@ -334,7 +342,7 @@
     "unit": "block",
     "cost": 10,
     "count": 1,
-    "icon": "/game/textures/items/elytra.png"
+    "icon": null
   },
   {
     "name": "ロケット花火 × 32",
@@ -342,6 +350,6 @@
     "unit": "ingot",
     "cost": 16,
     "count": 32,
-    "icon": "/game/textures/items/fireworks.png"
+    "icon": null
   }
 ]
