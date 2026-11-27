@@ -70,17 +70,6 @@ hero:
       <span>自分で描いた画像から、ブロック・飲み物・服・道具の見た目をサーバーに追加できます。</span>
     </div>
   </a>
-  <a class="ss-tile" href="./play/down">
-    <div class="ss-tile-art ss-art-down">
-      <div class="ss-down-label">ダウン中</div>
-      <div class="ss-down-time">42<small>秒</small></div>
-      <div class="ss-down-bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="ss-tile-body">
-      <b>ダウンと蘇生</b>
-      <span>体力が0になっても、60秒はダウンで踏みとどまります。仲間が近くでしゃがめば起こせます。</span>
-    </div>
-  </a>
 </div>
 
 <HomeStats />
