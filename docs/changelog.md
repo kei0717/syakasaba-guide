@@ -16,6 +16,8 @@
 - 追加アイテム・ブロックに、[枠付きガラス / 枠付き板ガラス](/items/#glass-extra) と [呼び鈴](/items/#yobirin) を追加しました。
 - Keizonに [ポケットゲーム機](/items/keizon#others) を追加しました。
 - [ぴえんの被り物](/items/others#pien) がドロップするレベルを、正しい値(レベル35以上)に直しました。
+- K-phoneアプリに [Music](/play/kphone#music) と [Calendar](/play/kphone#calendar) の説明を追加しました。Bankはスキルツリーの「デジタル財布」で使えるようになることを書き足しました。
+- チャットコマンドに [/music](/play/commands#music) と [/tps](/play/commands#tps) を追加しました。
 
 ## 2026-10-31
 
